@@ -44,15 +44,10 @@
                         </div>
                         <div class="mws-form-row">
                             <label>Fecha Juego</label>
-                            <?php
-                            echo $this->Form->input('fechaJuego', array(
-                                "div" => array(
-                                    "class" => "mws-form-item large"
-                                ),
-                                "class" => "mws-textinput",
-                                "label" => ""
-                            ));
-                            ?>
+                            <div class="mws-form-item large">
+                                <input name="data[Game][fecha_juego]" class="mws-textinput" maxlength="20" id="GameFechaJuego" type="text">
+                            </div>
+                            
                         </div>
                     </div>
                 </div>    	
@@ -176,24 +171,6 @@
 </div>
 
 
-
-<!--<div class="games form">
-
-    <fieldset>
-        <legend><?php echo __('Add Game'); ?></legend>
-<?php
-echo $this->Form->input('altas');
-echo $this->Form->input('bajas');
-echo $this->Form->input('');
-echo $this->Form->input('goles_alta');
-echo $this->Form->input('goles_baja');
-echo $this->Form->input('fecha_juego');
-echo $this->Form->input('goles_local');
-echo $this->Form->input('goles_visitante');
-?>
-    </fieldset>
-
-</div>-->
 
 <script>
     (function()
