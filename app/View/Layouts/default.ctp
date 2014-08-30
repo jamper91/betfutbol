@@ -97,14 +97,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
             <div id="mws-user-tools" class="clearfix">
 
                 <!-- User Notifications -->
-                <div id="mws-user-notif" class="mws-dropdown-menu">
+<!--                <div id="mws-user-notif" class="mws-dropdown-menu">
                     <a href="#" class="mws-i-24 i-alert-2 mws-dropdown-trigger">Notifications</a>
                     <span class="mws-dropdown-notif">35</span>
                     <div class="mws-dropdown-box">
                         <div class="mws-dropdown-content">
                             <ul class="mws-notifications">
 
-                                <!-- Notification Content -->
+                                 Notification Content 
                                 <li class="read">
                                     <a href="#">
                                         <span class="message">
@@ -145,7 +145,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                         </span>
                                     </a>
                                 </li>
-                                <!-- End Notification Content -->
+                                 End Notification Content 
 
                             </ul>
                             <div class="mws-dropdown-viewall">
@@ -153,17 +153,17 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <!-- User Messages -->
-                <div id="mws-user-message" class="mws-dropdown-menu">
+<!--                <div id="mws-user-message" class="mws-dropdown-menu">
                     <a href="#" class="mws-i-24 i-message mws-dropdown-trigger">Messages</a>
                     <span class="mws-dropdown-notif">35</span>
                     <div class="mws-dropdown-box">
                         <div class="mws-dropdown-content">
                             <ul class="mws-messages">
 
-                                <!-- Message Content -->
+                                 Message Content 
                                 <li class="read">
                                     <a href="#">
                                         <span class="sender">John Doe</span>
@@ -208,7 +208,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                         </span>
                                     </a>
                                 </li>
-                                <!-- End Messages -->
+                                 End Messages 
 
                             </ul>
                             <div class="mws-dropdown-viewall">
@@ -216,7 +216,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>-->
 
                 <!-- User Functions -->
                 <div id="mws-user-info" class="mws-inset">
@@ -228,9 +228,9 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             Hello, John Doe
                         </div>
                         <ul>
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Change Password</a></li>
-                            <li><a href="index-2.html">Logout</a></li>
+                            <li><a href="#">Perfil</a></li>
+                            <li><a href="#">Cambiar Contraseña</a></li>
+                            <li><a href="<?= $this->Html->url(array("controller"=>"users","action"=>"logout"))?>">Cerrar Sesion</a></li>
                         </ul>
                     </div>
                 </div>
@@ -259,20 +259,34 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 <!-- Main Navigation -->
                 <div id="mws-navigation">
                     <ul>
-                        <li class="active"><a href="dashboard.html" class="mws-i-24 i-home">Dashboard</a></li>
-                        <li><a href="charts.html" class="mws-i-24 i-chart">Charts</a></li>
-                        <li><a href="calendar.html" class="mws-i-24 i-day-calendar">Calendar</a></li>
-                        <li><a href="files.html" class="mws-i-24 i-file-cabinet">File Manager</a></li>
-                        <li><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
+                        <li class="active"><a href="dashboard.html" class="mws-i-24 i-home">Inicio</a></li>
                         <li>
-                            <a href="#" class="mws-i-24 i-list">Forms</a>
+                            <a href="charts.html" class="mws-i-24 i-chart">Ventas</a>
                             <ul>
-                                <li><a href="form_layouts.html">Layouts</a></li>
-                                <li><a href="form_elements.html">Elements</a></li>
+                                <li><a href="">Generales</a></li>
+                                <li><a href="">Personalizadas</a></li>
                             </ul>
                         </li>
-                        <li><a href="widgets.html" class="mws-i-24 i-cog">Widgets</a></li>
-                        <li><a href="typography.html" class="mws-i-24 i-text-styling">Typography</a></li>
+                        <li><a href="<?=$this->Html->url(array("controller"=>"games","action"=>"add"))?>" class="mws-i-24 i-day-calendar">Crear Partidos</a></li>
+                        <li>
+                            <a href="#" class="mws-i-24 i-file-cabinet">Apuesta</a>
+                            <ul>
+                                <li>
+                                    <a href="<?= $this->Html->url(array("controller"=>"games","action"=>"listar"))?>">Crear Apuesta</a>
+                                    <a href="<?= $this->Html->url(array("controller"=>"bets","action"=>"pagar"))?>">Pagar Apuesta</a>
+                                    <a href="<?= $this->Html->url(array("controller"=>"bets","action"=>"pagadas"))?>">Apuestas Pagadas</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
+                        <li>
+                            <a href="#" class="mws-i-24 i-list">Usuarios</a>
+                            <ul>
+                                <li><a href="#">Crear Cajero</a></li>
+                                <li><a href="<?=$this->Html->url(array("controller"=>"users","action"=>"index"))?>">Editar Usuarios</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="typography.html" class="mws-i-24 i-text-styling">Apuesta</a></li>
                         <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
                         <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
                         <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
@@ -297,7 +311,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
                     <?php echo $this->Session->flash(); ?>
                     <?php echo $this->fetch('content'); ?>
-                    <div class="mws-panel grid_8">
+<!--                    <div class="mws-panel grid_8">
                         <div class="mws-panel-header">
                             <span class="mws-i-24 i-create">Headings</span>
                         </div>
@@ -306,7 +320,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                 <?php echo $this->element('sql_dump'); ?>
                             </div>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
                 <!-- End Main Container -->
 

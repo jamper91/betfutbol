@@ -12,7 +12,7 @@
         <div class="mws-form-inline">
             <div class="mws-form-row">
             
-            <div class="mws-panel grid_3">
+            <div class="mws-panel grid_4">
                 <div class="mws-panel-header">
                     <span class="mws-i-24 i-pencil">Informacion del Juego</span>
                 </div>
@@ -53,7 +53,7 @@
                 </div>    	
             </div>
 
-            <div class="mws-panel grid_2">
+            <div class="mws-panel grid_4">
                 <div class="mws-panel-header">
                     <span class="mws-i-24 i-pencil">MLine</span>
                 </div>
@@ -101,7 +101,7 @@
                 </div>    	
             </div>
 
-            <div class="mws-panel grid_2">
+            <div class="mws-panel grid_4">
                 <div class="mws-panel-header">
                     <span class="mws-i-24 i-pencil">RLine</span>
                 </div>
@@ -148,6 +148,67 @@
                                 <label>Goles Visitante</label>
                                 <?php
                                 echo $this->Form->input('goles_rline_visitante', array(
+                                    "div" => array(
+                                        "class" => "mws-form-item large"
+                                    ),
+                                    "class" => "mws-textinput",
+                                    "label" => ""
+                                ));
+                                ?>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>    	
+            </div>
+                
+                <div class="mws-panel grid_4">
+                <div class="mws-panel-header">
+                    <span class="mws-i-24 i-pencil">A/B</span>
+                </div>
+                <div class="mws-panel-body">
+                    <div class="mws-form-inline">
+                        <div class="mws-form-inline">
+                            <div class="mws-form-row">
+                                <label>Logro Altas</label>
+                                <?php
+                                echo $this->Form->input('altas', array(
+                                    "div" => array(
+                                        "class" => "mws-form-item"
+                                    ),
+                                    "class" => "mws-textinput",
+                                    "label" => ""
+                                ));
+                                ?>
+                            </div>
+                            <div class="mws-form-row">
+                                <label>Goles Altas</label>
+                                <?php
+                                echo $this->Form->input('goleas_alta', array(
+                                    "div" => array(
+                                        "class" => "mws-form-item large"
+                                    ),
+                                    "class" => "mws-textinput",
+                                    "label" => ""
+                                ));
+                                ?>
+                            </div>
+                            <div class="mws-form-row">
+                                <label>Logro Baja</label>
+                                <?php
+                                echo $this->Form->input('bajas', array(
+                                    "div" => array(
+                                        "class" => "mws-form-item large"
+                                    ),
+                                    "class" => "mws-textinput",
+                                    "label" => ""
+                                ));
+                                ?>
+                            </div>
+                            <div class="mws-form-row">
+                                <label>Goles Baja</label>
+                                <?php
+                                echo $this->Form->input('goles_baja', array(
                                     "div" => array(
                                         "class" => "mws-form-item large"
                                     ),

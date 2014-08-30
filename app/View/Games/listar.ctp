@@ -1,7 +1,7 @@
 <script>
     //Cantidad de elementos agregagos
-    var cant=0;
-    function agregarApuesta(parley, equipo, tipo, id, encuentro)
+    var cant = 0;
+    function agregarApuesta(parley, equipo, tipo, id, encuentro,goles)
     {
         var h = false;
         //Determino si esta fila esta habilitada
@@ -12,8 +12,6 @@
                     var game_id, habilitado;
                     game_id = $(this).attr("game_id");
                     habilitado = $(this).attr("habilitado");
-                    console.log("game_id: " + game_id);
-                    console.log("habilitado: " + habilitado);
                     if (game_id == id)
                     {
                         if (habilitado == "true")
@@ -32,24 +30,25 @@
             var html = "";
             html += "<tr class='gradeA odd' logro='" + parley + "' equipo='" + equipo + "' tipo='" + tipo + "' id='" + id + "' encuentro='" + encuentro + "'>";
             html += " <td>";
-            html += tipo;
-            html+="<input type='text' value='"+tipo+"' name='data[Row]["+cant+"][tipo]' style='display:none'>";
+            html += tipo+" "+goles;
+            html += "<input type='text' value='" + tipo + "' name='data[Row][" + cant + "][tipo]' style='display:none'>";
             html += " </td>";
             html += " <td>";
             html += id;
-            html+="<input type='text' value='"+id+"' name='data[Row]["+cant+"][game_id]' style='display:none'>";
+            html += "<input type='text' value='" + id + "' name='data[Row][" + cant + "][game_id]' style='display:none'>";
             html += " </td>";
             html += " <td>";
             html += equipo;
-            html+="<input type='text' value='"+equipo+"' name='data[Row]["+cant+"][equipo]' style='display:none'>";
+            html += "<input type='text' value='" + equipo + "' name='data[Row][" + cant + "][equipo]' style='display:none'>";
             html += " </td>";
             html += " <td>";
             html += parley;
-            html+="<input type='text' value='"+parley+"' name='data[Row]["+cant+"][logro]' style='display:none'>";
+            html += "<input type='text' value='" + parley + "' name='data[Row][" + cant + "][logro]' style='display:none'>";
+            html += "<input type='text' value='" + goles + "' name='data[Row][" + cant + "][goles]' style='display:none'>";
             html += " </td>";
             html += " <td>";
             html += "<a class='deleteLink' onclick='eliminar(\"" + id + "\")'>Eliminar</a>";
-            html+="<input type='text' value='-1' name='data[Row]["+cant+"][bet_id]' style='display:none'>";
+            html += "<input type='text' value='-1' name='data[Row][" + cant + "][bet_id]' style='display:none'>";
             html += " </td>";
             html += "</tr>";
             $("#tblApuesta").append(html);
@@ -140,6 +139,7 @@
                     <th>Partido</th>
                     <th>MLine</th>
                     <th>RLine</th>
+                    <th>A/B</th>
                 </tr>
             </thead>
             <tbody>
@@ -150,28 +150,39 @@
                             Empate
                         </td>
                         <td>
-                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_mline_local"] ?>', '<?= $partido["Game"]["local"] ?>', 'ML',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["local"] . " Vs " . substr($partido["Game"]["visitante"], 0, 2) ?>')">
+                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_mline_local"] ?>', '<?= $partido["Game"]["local"] ?>', 'ML',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["local"] . " Vs " . substr($partido["Game"]["visitante"], 0, 2) ?>','0')">
                                 <?= $partido["Game"]["logro_mline_local"] ?>
                             </a>    
                             <br>
-                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_mline_visitante"] ?>', '<?= $partido["Game"]["visitante"] ?>', 'ML',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["visitante"] . " Vs " . substr($partido["Game"]["local"], 0, 2) ?>')">
+                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_mline_visitante"] ?>', '<?= $partido["Game"]["visitante"] ?>', 'ML',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["visitante"] . " Vs " . substr($partido["Game"]["local"], 0, 2) ?>','0')">
                                 <?= $partido["Game"]["logro_mline_visitante"] ?>
                             </a>
                             <br>
-                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_rline_empate"] ?>', 'Empate', 'ML',<?= $partido["Game"]["id"] ?>, 'Empate vs <?= substr($partido["Game"]["visitante"], 0, 2) ?>')">
+                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_rline_empate"] ?>', 'Empate', 'ML',<?= $partido["Game"]["id"] ?>, 'Empate vs <?= substr($partido["Game"]["visitante"], 0, 2) ?>','0')">
                                 <?= $partido["Game"]["logro_rline_empate"] ?>
                             </a>
                         </td>
                         </td>
                         <td>
-                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_rline_local"] ?>', '<?= $partido["Game"]["local"] ?>', 'RL <?= $partido["Game"]["goles_rline_local"] ?>',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["local"] . " Vs " . substr($partido["Game"]["visitante"], 0, 2) ?>')">
+                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_rline_local"] ?>', '<?= $partido["Game"]["local"] ?>', 'RL',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["local"] . " Vs " . substr($partido["Game"]["visitante"], 0, 2) ?>','<?= $partido["Game"]["goles_rline_local"] ?>')">
                                 <?= $partido["Game"]["goles_rline_local"] ?><?= $partido["Game"]["logro_rline_local"] ?>
                             </a>    
                             <br>
-                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_rline_visitante"] ?>', '<?= $partido["Game"]["visitante"] ?>', 'RL <?= $partido["Game"]["goles_rline_visitante"] ?>',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["visitante"] . " Vs " . substr($partido["Game"]["local"], 0, 2) ?>')">
+                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_rline_visitante"] ?>', '<?= $partido["Game"]["visitante"] ?>', 'RL',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["visitante"] . " Vs " . substr($partido["Game"]["local"], 0, 2) ?>','<?= $partido["Game"]["goles_rline_visitante"] ?>')">
                                 <?= $partido["Game"]["goles_rline_visitante"] ?><?= $partido["Game"]["logro_rline_visitante"] ?>
                             </a>
                             <br>
+                        </td>
+                        <td >
+                            <a onclick="agregarApuesta('<?= $partido["Game"]["altas"] ?>', '<?= $partido["Game"]["local"] ?>', 'A',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["local"] . " Vs " . substr($partido["Game"]["visitante"], 0, 2) ?>','<?= $partido["Game"]["goles_alta"] ?>')">
+                                A <?= $partido["Game"]["goles_alta"] ?><?= $partido["Game"]["altas"] ?>
+                            </a>    
+                            <br>
+                            <a onclick="agregarApuesta('<?= $partido["Game"]["bajas"] ?>', '<?= $partido["Game"]["visitante"] ?>', 'B',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["visitante"] . " Vs " . substr($partido["Game"]["local"], 0, 2) ?>','<?= $partido["Game"]["goles_baja"] ?>')">
+                                B <?= $partido["Game"]["goles_baja"] ?><?= $partido["Game"]["bajas"] ?>
+                            </a>
+                            <br>
+
                         </td>
                     </tr>
                 <?php endforeach; ?>

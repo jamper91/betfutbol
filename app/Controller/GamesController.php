@@ -51,7 +51,7 @@ class GamesController extends AppController {
         if ($this->request->is('post')) {
             $this->Game->create();
             if ($this->Game->save($this->request->data)) {
-                
+
                 $this->Session->setFlash(__('The game has been saved.'));
                 return $this->redirect(array('action' => 'index'));
             } else {
@@ -118,6 +118,113 @@ class GamesController extends AppController {
         $partidos = $this->Game->find('all', $options);
         //$partidos=  $this->Game->findAllByVisible("1");
         $this->set("partidos", $partidos);
+    }
+
+    public function encurso() {
+        $fecha = date("Y-m-d H:i:s");
+        $options = array(
+            "conditions" => array(
+//                "Game.fecha_juego >" => $fecha,
+                "Game.finalizado" => 0
+            )
+        );
+        $games = $this->Game->find('all', $options);
+        $this->set("games", $games);
+    }
+
+    public function finalizar($id) {
+        if ($this->request->is(array('post', 'put'))) {
+            if ($this->Game->save($this->request->data)) {
+                $this->Session->setFlash(__('El juego se cerro correctamente.'));
+                //Ahora verifico quien gano o perdio en todas las filas
+                $this->loadModel("Row");
+                $rows = $this->Row->findAllByGameId($id);
+                debug($rows);
+                foreach ($rows as $row) {
+                    //VAriable que determina quien gano, si local, visitante o empate
+                    $gano = "";
+                    //Diferencia de goles
+                    $diferencia = "";
+                    //Total de goles
+                    $totalGoles = "";
+                    if ($this->request->data["Game"]["goles_local"] > $this->request->data["Game"]["goles_visitante"]) {
+                        $gano = $this->request->data["Game"]["local"];
+                        $diferencia = $this->request->data["Game"]["goles_local"] - $this->request->data["Game"]["goles_visitante"];
+                    } else if ($this->request->data["Game"]["goles_local"] < $this->request->data["Game"]["goles_visitante"]) {
+                        $gano = $this->request->data["Game"]["visitante"];
+                        $diferencia = $this->request->data["Game"]["goles_visitante"] - $this->request->data["Game"]["goles_local"];
+                    } else {
+                        $gano = "Empate";
+                        $diferencia = 0;
+                    }
+                    $totalGoles=$this->request->data["Game"]["goles_visitante"] + $this->request->data["Game"]["goles_local"];
+                    
+                    switch ($row["Row"]["tipo"]) {
+                        case "ML":
+                            //Para determinar si gano con ML, el equipo por el que aposto debio ganar
+
+                            if ($row["Row"]["equipo"] == $gano)
+                                $row["Row"]["estado"] = "2";
+                            else
+                                $row["Row"]["estado"] = "1";
+
+                            break;
+                        case "RL":
+                            /**
+                             * Para determinar si gano con RL debo:
+                             * Si goles son negativos, el equipo debe perder
+                             * Si goles son positivos, el equipo debe ganar
+                             * Si goles de diferencia son mayores a los goles, gana
+                             * Si goles de diferencia son iguales a los goles, empata
+                             */
+                            if ($row["Row"]["goles"] < 0) {
+                                if ($row["Row"]["equipo"] == $gano) {
+                                    if ($diferencia > $row["Row"]["goles"])
+                                        $row["Row"]["estado"] = "2";
+                                    else if ($diferencia == $row["Row"]["goles"])
+                                        $row["Row"]["estado"] = "0";
+                                    else
+                                        $row["Row"]["estado"] = "1";
+                                }
+                            }else if ($row["Row"]["goles"] > 0) {
+                                if ($row["Row"]["equipo"] != $gano) {
+                                    if ($diferencia < abs($row["Row"]["goles"]))
+                                        $row["Row"]["estado"] = "2";
+                                    else if ($diferencia == abs($row["Row"]["goles"]))
+                                        $row["Row"]["estado"] = "0";
+                                    else
+                                        $row["Row"]["estado"] = "1";
+                                }
+                            }
+                            break;
+                        case "A":
+                            if($totalGoles> $row["Row"]["goles"])
+                                $row["Row"]["estado"] = "2";
+                            else if($totalGoles== $row["Row"]["goles"])
+                                $row["Row"]["estado"] = "0";
+                            else if($totalGoles < $row["Row"]["goles"])
+                                $row["Row"]["estado"] = "1";
+                            break;
+                        case "B":
+                            if($totalGoles< $row["Row"]["goles"])
+                                $row["Row"]["estado"] = "2";
+                            else if($totalGoles== $row["Row"]["goles"])
+                                $row["Row"]["estado"] = "0";
+                            else if($totalGoles > $row["Row"]["goles"])
+                                $row["Row"]["estado"] = "1";
+                            break;
+                        default:
+                            break;
+                    }
+                    $this->Row->save($row);
+                }
+                return $this->redirect(array('action' => 'encurso'));
+            } else {
+                $this->Session->setFlash(__('The game could not be saved. Please, try again.'));
+            }
+        }
+        $game = $this->Game->findById($id);
+        $this->set("game", $game);
     }
 
 }

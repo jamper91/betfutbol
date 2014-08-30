@@ -5,6 +5,7 @@
         <group>
             <file>file:/C:/xampp/htdocs/betfutbol/app/View/Bets/add.ctp</file>
             <file>file:/C:/xampp/htdocs/betfutbol/app/Controller/BetsController.php</file>
+            <file>file:/C:/xampp/htdocs/betfutbol/app/View/Layouts/default.ctp</file>
         </group>
     </open-files>
 </project-private>
