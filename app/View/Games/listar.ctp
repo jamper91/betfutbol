@@ -27,8 +27,11 @@
         //encuentro=encuentro.substring(1, 4);
         if (h == true)
         {
+            var clase="gradeA odd";
+            if(cant%2==0)
+                clase="gradeA even";
             var html = "";
-            html += "<tr class='gradeA odd' logro='" + parley + "' equipo='" + equipo + "' tipo='" + tipo + "' id='" + id + "' encuentro='" + encuentro + "'>";
+            html += "<tr class='"+clase+"' logro='" + parley + "' equipo='" + equipo + "' tipo='" + tipo + goles+ "' id='" + id + "' encuentro='" + encuentro + "'>";
             html += " <td>";
             html += tipo+" "+goles;
             html += "<input type='text' value='" + tipo + "' name='data[Row][" + cant + "][tipo]' style='display:none'>";
@@ -123,6 +126,23 @@
     {
         $("#" + id).remove();
         calcularGanancias();
+        $("#partidos tr").each(
+                function()
+                {
+                    //Obtengo los atributos game_id y habilitado
+                    var game_id, habilitado;
+                    game_id = $(this).attr("game_id");
+                    habilitado = $(this).attr("habilitado");
+                    console.log("game_id: " + game_id);
+                    console.log("habilitado: " + habilitado);
+                    if (game_id == id)
+                    {
+                            $(this).attr("habilitado", "true");
+                            $(this).css("background-color", "#ffffff");
+
+                    }
+                }
+        );
     }
 
 </script>
@@ -143,8 +163,13 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($partidos as $partido): ?>
+
+                <?php foreach ($partidos as $i=>$partido): ?>
+                    <?php if($i%2==0){ ?>
                     <tr class="gradeA even" game_id="<?= $partido["Game"]["id"] ?>" habilitado="true">
+                    <?php  }else{ ?>
+                    <tr class="gradeA odd" game_id="<?= $partido["Game"]["id"] ?>" habilitado="true">
+                    <?php } ?>
                         <td> <?= $partido["Game"]["local"] ?><br>
                             <?= $partido["Game"]["visitante"] ?><br>
                             Empate
@@ -220,9 +245,11 @@ echo $this->Form->input('texto', array(
     <div class="mws-panel-body">
         <div class="mws-panel-content">
             <label>Apuesta 
-                $<input id="txtApuesta"  onchange="calcularGanancias()" type="number"/>
+
+                $<input id="txtApuesta"  onkeyup="calcularGanancias()" value="0" class="mws-textinput" type="number"/>
+                
             </label>
-            <label>Ganancia: 
+            <label style="float: right">Ganancia: 
                 <label id="lblGanancias">0</label>
             </label>
         </div>

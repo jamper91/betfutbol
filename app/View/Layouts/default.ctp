@@ -35,7 +35,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
         echo $this->Html->script(array('jquery-1.7.1.min', '/plugins/jimgareaselect/jquery.imgareaselect.min', '/plugins/jquery.dualListBox-1.3.min', '/plugins/jgrowl/jquery.jgrowl', '/plugins/jquery.filestyle', '/plugins/fullcalendar/fullcalendar.min', '/plugins/jquery.dataTables'));
         echo $this->Html->script(array('/plugins/flot/jquery.flot.min', '/plugins/flot/jquery.flot.pie.min', '/plugins/flot/jquery.flot.stack.min', '/plugins/flot/jquery.flot.resize.min', '/plugins/colorpicker/colorpicker', '/plugins/tipsy/jquery.tipsy', '/plugins/sourcerer/Sourcerer-1.2', '/plugins/jquery.placeholder', '/plugins/jquery.validate', '/plugins/jquery.mousewheel', '/plugins/spinner/ui.spinner'));
-        echo $this->Html->script(array('jquery-ui', 'mws', 'demo', 'themer', 'demo.dashboard','jquery-ui-timepicker-addon'));
+        echo $this->Html->script(array('jquery-ui', 'mws', 'demo', 'themer', 'demo.dashboard', 'jquery-ui-timepicker-addon'));
 
 
         echo $this->fetch('meta');
@@ -97,126 +97,126 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
             <div id="mws-user-tools" class="clearfix">
 
                 <!-- User Notifications -->
-<!--                <div id="mws-user-notif" class="mws-dropdown-menu">
-                    <a href="#" class="mws-i-24 i-alert-2 mws-dropdown-trigger">Notifications</a>
-                    <span class="mws-dropdown-notif">35</span>
-                    <div class="mws-dropdown-box">
-                        <div class="mws-dropdown-content">
-                            <ul class="mws-notifications">
-
-                                 Notification Content 
-                                <li class="read">
-                                    <a href="#">
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="read">
-                                    <a href="#">
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="unread">
-                                    <a href="#">
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="unread">
-                                    <a href="#">
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                 End Notification Content 
-
-                            </ul>
-                            <div class="mws-dropdown-viewall">
-                                <a href="#">View All Notifications</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+                <!--                <div id="mws-user-notif" class="mws-dropdown-menu">
+                                    <a href="#" class="mws-i-24 i-alert-2 mws-dropdown-trigger">Notifications</a>
+                                    <span class="mws-dropdown-notif">35</span>
+                                    <div class="mws-dropdown-box">
+                                        <div class="mws-dropdown-content">
+                                            <ul class="mws-notifications">
+                
+                                                 Notification Content 
+                                                <li class="read">
+                                                    <a href="#">
+                                                        <span class="message">
+                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
+                                                        </span>
+                                                        <span class="time">
+                                                            January 21, 2012
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="read">
+                                                    <a href="#">
+                                                        <span class="message">
+                                                            Lorem ipsum dolor sit amet
+                                                        </span>
+                                                        <span class="time">
+                                                            January 21, 2012
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="unread">
+                                                    <a href="#">
+                                                        <span class="message">
+                                                            Lorem ipsum dolor sit amet
+                                                        </span>
+                                                        <span class="time">
+                                                            January 21, 2012
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="unread">
+                                                    <a href="#">
+                                                        <span class="message">
+                                                            Lorem ipsum dolor sit amet
+                                                        </span>
+                                                        <span class="time">
+                                                            January 21, 2012
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                 End Notification Content 
+                
+                                            </ul>
+                                            <div class="mws-dropdown-viewall">
+                                                <a href="#">View All Notifications</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
 
                 <!-- User Messages -->
-<!--                <div id="mws-user-message" class="mws-dropdown-menu">
-                    <a href="#" class="mws-i-24 i-message mws-dropdown-trigger">Messages</a>
-                    <span class="mws-dropdown-notif">35</span>
-                    <div class="mws-dropdown-box">
-                        <div class="mws-dropdown-content">
-                            <ul class="mws-messages">
-
-                                 Message Content 
-                                <li class="read">
-                                    <a href="#">
-                                        <span class="sender">John Doe</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="read">
-                                    <a href="#">
-                                        <span class="sender">John Doe</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="unread">
-                                    <a href="#">
-                                        <span class="sender">John Doe</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="unread">
-                                    <a href="#">
-                                        <span class="sender">John Doe</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet
-                                        </span>
-                                        <span class="time">
-                                            January 21, 2012
-                                        </span>
-                                    </a>
-                                </li>
-                                 End Messages 
-
-                            </ul>
-                            <div class="mws-dropdown-viewall">
-                                <a href="#">View All Messages</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
+                <!--                <div id="mws-user-message" class="mws-dropdown-menu">
+                                    <a href="#" class="mws-i-24 i-message mws-dropdown-trigger">Messages</a>
+                                    <span class="mws-dropdown-notif">35</span>
+                                    <div class="mws-dropdown-box">
+                                        <div class="mws-dropdown-content">
+                                            <ul class="mws-messages">
+                
+                                                 Message Content 
+                                                <li class="read">
+                                                    <a href="#">
+                                                        <span class="sender">John Doe</span>
+                                                        <span class="message">
+                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
+                                                        </span>
+                                                        <span class="time">
+                                                            January 21, 2012
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="read">
+                                                    <a href="#">
+                                                        <span class="sender">John Doe</span>
+                                                        <span class="message">
+                                                            Lorem ipsum dolor sit amet
+                                                        </span>
+                                                        <span class="time">
+                                                            January 21, 2012
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="unread">
+                                                    <a href="#">
+                                                        <span class="sender">John Doe</span>
+                                                        <span class="message">
+                                                            Lorem ipsum dolor sit amet
+                                                        </span>
+                                                        <span class="time">
+                                                            January 21, 2012
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                <li class="unread">
+                                                    <a href="#">
+                                                        <span class="sender">John Doe</span>
+                                                        <span class="message">
+                                                            Lorem ipsum dolor sit amet
+                                                        </span>
+                                                        <span class="time">
+                                                            January 21, 2012
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                                 End Messages 
+                
+                                            </ul>
+                                            <div class="mws-dropdown-viewall">
+                                                <a href="#">View All Messages</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
 
                 <!-- User Functions -->
                 <div id="mws-user-info" class="mws-inset">
@@ -230,7 +230,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                         <ul>
                             <li><a href="#">Perfil</a></li>
                             <li><a href="#">Cambiar Contraseña</a></li>
-                            <li><a href="<?= $this->Html->url(array("controller"=>"users","action"=>"logout"))?>">Cerrar Sesion</a></li>
+                            <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "logout")) ?>">Cerrar Sesion</a></li>
                         </ul>
                     </div>
                 </div>
@@ -267,34 +267,42 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                 <li><a href="">Personalizadas</a></li>
                             </ul>
                         </li>
-                        <li><a href="<?=$this->Html->url(array("controller"=>"games","action"=>"add"))?>" class="mws-i-24 i-day-calendar">Crear Partidos</a></li>
+                        <li>
+                            <a href="#" class="mws-i-24 i-day-calendar">Partidos</a>
+                            <ul>
+                                <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "add")) ?>" >Crear Partido</a></li>
+                                <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "index")) ?>">Editar Partido</a></li>
+                                <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "encurso")) ?>" >Finalizar Partido</a></li>
+
+                            </ul>
+                        </li>
                         <li>
                             <a href="#" class="mws-i-24 i-file-cabinet">Apuesta</a>
                             <ul>
                                 <li>
-                                    <a href="<?= $this->Html->url(array("controller"=>"games","action"=>"listar"))?>">Crear Apuesta</a>
-                                    <a href="<?= $this->Html->url(array("controller"=>"bets","action"=>"pagar"))?>">Pagar Apuesta</a>
-                                    <a href="<?= $this->Html->url(array("controller"=>"bets","action"=>"pagadas"))?>">Apuestas Pagadas</a>
+                                    <a href="<?= $this->Html->url(array("controller" => "games", "action" => "listar")) ?>">Crear Apuesta</a>
+                                    <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "estado")) ?>">Pagar Apuesta</a>
+                                    <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "pagados")) ?>">Apuestas Pagadas</a>
                                 </li>
                             </ul>
                         </li>
-                        <li><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>
+                        <!--<li><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>-->
                         <li>
                             <a href="#" class="mws-i-24 i-list">Usuarios</a>
                             <ul>
-                                <li><a href="#">Crear Cajero</a></li>
-                                <li><a href="<?=$this->Html->url(array("controller"=>"users","action"=>"index"))?>">Editar Usuarios</a></li>
+                                <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "add")) ?>">Crear Cajero</a></li>
+                                <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "index")) ?>">Editar Usuarios</a></li>
                             </ul>
                         </li>
-                        <li><a href="typography.html" class="mws-i-24 i-text-styling">Apuesta</a></li>
-                        <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
-                        <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
-                        <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
-                        <li>
-                            <a href="icons.html" class="mws-i-24 i-pacman">
-                                Icons <span class="mws-nav-tooltip">2000+</span>
-                            </a>
-                        </li>
+                        <!--                        <li><a href="typography.html" class="mws-i-24 i-text-styling">Apuesta</a></li>
+                                                <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
+                                                <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
+                                                <li><a href="error.html" class="mws-i-24 i-alert-2">Error Page</a></li>
+                                                <li>
+                                                    <a href="icons.html" class="mws-i-24 i-pacman">
+                                                        Icons <span class="mws-nav-tooltip">2000+</span>
+                                                    </a>
+                                                </li>-->
                     </ul>
                 </div>
                 <!-- End Navigation -->
@@ -308,19 +316,36 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 <!-- Main Container -->
                 <div class="container">
 
+                    <div class="mws-report-container clearfix">
 
-                    <?php echo $this->Session->flash(); ?>
+
+                        <a class="mws-report" href="#">
+                            <span class="mws-report-icon mws-ic ic-bug"></span>
+                            <span class="mws-report-content">
+
+                                <span class="mws-report-title">Mensaje</span>
+                                <span class="mws-report-value up">
+                                        <?php echo $this->Session->flash(); ?>
+                                </span>
+                            </span>
+
+                        </a>
+
+                    </div>
+
+
+
                     <?php echo $this->fetch('content'); ?>
-<!--                    <div class="mws-panel grid_8">
-                        <div class="mws-panel-header">
-                            <span class="mws-i-24 i-create">Headings</span>
-                        </div>
-                        <div class="mws-panel-body">
-                            <div class="mws-panel-content">
-                                <?php echo $this->element('sql_dump'); ?>
-                            </div>
-                        </div>
-                    </div>-->
+                    <!--                    <div class="mws-panel grid_8">
+                                            <div class="mws-panel-header">
+                                                <span class="mws-i-24 i-create">Headings</span>
+                                            </div>
+                                            <div class="mws-panel-body">
+                                                <div class="mws-panel-content">
+                    <?php echo $this->element('sql_dump'); ?>
+                                                </div>
+                                            </div>
+                                        </div>-->
                 </div>
                 <!-- End Main Container -->
 

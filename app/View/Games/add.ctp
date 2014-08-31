@@ -46,6 +46,7 @@
                             <label>Fecha Juego</label>
                             <div class="mws-form-item large">
                                 <input name="data[Game][fecha_juego]" class="mws-textinput" maxlength="20" id="GameFechaJuego" type="text">
+                                
                             </div>
                             
                         </div>
@@ -184,7 +185,7 @@
                             <div class="mws-form-row">
                                 <label>Goles Altas</label>
                                 <?php
-                                echo $this->Form->input('goleas_alta', array(
+                                echo $this->Form->input('goles_alta', array(
                                     "div" => array(
                                         "class" => "mws-form-item large"
                                     ),

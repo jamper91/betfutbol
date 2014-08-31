@@ -107,4 +107,16 @@ class RowsController extends AppController {
 		}
 		return $this->redirect(array('action' => 'index'));
 	}
+        /**
+         * Esta funcion se encarga de listar todas las fila de una apuesta basado
+         * en el id de la apuesta
+         * @param type $bet_id
+         */
+        public function estado($bet_id)
+        {
+            
+            $rows= $this->Row->findAllByBetId($bet_id);
+            $this->set("rows",$rows);
+            $this->set("bet",$rows[0]["Bet"]);
+        }
 }

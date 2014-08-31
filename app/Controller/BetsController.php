@@ -15,7 +15,7 @@ class BetsController extends AppController {
      *
      * @var array
      */
-    public $components = array('Paginator');
+    public $components = array('Paginator','RequestHandler');
 
     /**
      * index method
@@ -132,10 +132,12 @@ class BetsController extends AppController {
             $this->Bet->id = $this->request->data["Bet"]["id"];
             //$this->Bet->id=$this->request->data["Bet"]["id"];
             $this->Bet->set("pagado", "1");
+            $this->Bet->set("ganancia",$this->request->data["Bet"]["ganancia"]);
             $fecha = date("Y-m-d H:i:s");
-            $this->Bet->set("fecha_pago", $fecha);
+            $this->Bet->set("fecha_pagado", $fecha);
             if ($this->Bet->save()) {
                 $this->Session->setFlash(__('La apuesta ha sido pagada'));
+                $this->redirect(array('controller'=>'rows', 'action' => 'estado'));
             } else {
                 $this->Session->setFlash(__('La apuesta no se ha podido actualizar'));
                 debug($this->Bet->validationErrors);
@@ -150,8 +152,8 @@ class BetsController extends AppController {
                 "Bet.id",
                 "Bet.pagado",
                 "Bet.ganancia",
-                "Bet.fecha",
-                "Bet.fecha_pago"
+                "Bet.created",
+                "Bet.fecha_pagado"
             ),
             "conditions" => array(
                 "Bet.pagado" => 1
@@ -211,14 +213,62 @@ class BetsController extends AppController {
         $this->set("datos", $datos);
     }
 
+    public function getbets() {
+        $this->layout = "webservice";
+        //Obtengo una lista de todas las apuestas
+        $options = array(
+            "fields" => array(
+                "Bet.id",
+                "Bet.pagado"
+            )
+        );
+        $datos = $this->Bet->find('all', $options);
+        $this->set(
+                array(
+                    'datos' => $datos,
+                    '_serialize' => array('datos')
+        ));
+    }
+
+    /**
+     * Esta funcion se encarga de habilitar una apuesta.
+     * Esto ocurre porque puede ser que se de clic en crear apuesta, pero
+     * no quedo bien, entonces si se da clic en imprimir, se crea, si no, no se valida
+     * 
+     */
+    public function habilitarbet() {
+        $this->layout = "webservice";
+        if ($this->request->is('post')) {
+            //debug(print_r($this->request->data));
+            $this->Bet->id = $this->request->data["idBet"];
+            //$this->Bet->id=$this->request->data["Bet"]["id"];
+            $this->Bet->set("valido", "1");
+            if ($this->Bet->save()) {
+//                $this->Session->setFlash(__('La apuesta ha sido creada'));
+                $datos = array("Resultado" => "ok");
+            } else {
+//                $this->Session->setFlash(__('La apuesta no se ha podido crear'));
+                $datos = array("Resultado" => "Error");
+                debug($this->Bet->validationErrors);
+            }
+
+            $this->set(
+                    array(
+                        'datos' => $datos,
+                        '_serialize' => array('datos')
+            ));
+        }
+    }
     /**
      * Lista todas aquellas apuestas que ganaron, estan suspendidas, o aun no han 
      * finalizado y que aun no se han pagado
      */
     public function estado() {
-        $bets = $this->Bet->find('all', NULL);
-        debug("Bet: \n");
-        debug("Bet: \n");
+        $bets = $this->Bet->find('all', array(
+            "conditions"=>array(
+                "Bet.pagado"=>0
+            )
+        ));
         foreach ($bets as $key => $bet) {
             //Variable para determinar el estado
             $estado = "Ganador";
@@ -239,7 +289,6 @@ class BetsController extends AppController {
                 if ($salir)
                     $index = count($bet["Row"]);
             }
-            debug("Estado: " . $estado);
             $bet["Bet"]["estado"] = $estado;
             $bets[$key] = $bet;
         }

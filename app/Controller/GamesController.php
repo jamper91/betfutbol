@@ -23,8 +23,17 @@ class GamesController extends AppController {
      * @return void
      */
     public function index() {
-        $this->Game->recursive = 0;
-        $this->set('games', $this->Paginator->paginate());
+//        $this->Game->recursive = 0;
+//        $this->set('games', $this->Paginator->paginate());
+        
+        $options=array(
+            "order"=>array(
+                "Game.fecha_juego DESC"
+            ),
+            "recursive"=>"0"
+        );
+        $games=  $this->Game->find('all', $options);
+        $this->set('games', $games);
     }
 
     /**
@@ -81,6 +90,7 @@ class GamesController extends AppController {
         } else {
             $options = array('conditions' => array('Game.' . $this->Game->primaryKey => $id));
             $this->request->data = $this->Game->find('first', $options);
+//            debug($this->request->data);
         }
     }
 
@@ -139,7 +149,6 @@ class GamesController extends AppController {
                 //Ahora verifico quien gano o perdio en todas las filas
                 $this->loadModel("Row");
                 $rows = $this->Row->findAllByGameId($id);
-                debug($rows);
                 foreach ($rows as $row) {
                     //VAriable que determina quien gano, si local, visitante o empate
                     $gano = "";
