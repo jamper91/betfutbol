@@ -146,6 +146,9 @@ class UsersController extends AppController {
         }
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
+                $user=  $this->User->findByUsername($this->request->data["User"]["username"]);
+                $this->Session->write('User.id', $user["User"]["id"]);
+                $this->Session->write('User.username', $user["User"]["username"]);
                 return $this->redirect($this->Auth->redirect());
             }
             $this->Session->setFlash(__('Your username or password was incorrect.'));

@@ -183,8 +183,8 @@
                                 <?= $partido["Game"]["logro_mline_visitante"] ?>
                             </a>
                             <br>
-                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_rline_empate"] ?>', 'Empate', 'ML',<?= $partido["Game"]["id"] ?>, 'Empate vs <?= substr($partido["Game"]["visitante"], 0, 2) ?>','0')">
-                                <?= $partido["Game"]["logro_rline_empate"] ?>
+                            <a onclick="agregarApuesta('<?= $partido["Game"]["logro_mline_empate"] ?>', 'Empate', 'ML',<?= $partido["Game"]["id"] ?>, 'Empate vs <?= substr($partido["Game"]["visitante"], 0, 2) ?>','0')">
+                                <?= $partido["Game"]["logro_mline_empate"] ?>
                             </a>
                         </td>
                         </td>
