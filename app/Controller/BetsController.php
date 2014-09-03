@@ -50,6 +50,8 @@ class BetsController extends AppController {
     public function add() {
         if ($this->request->is('post')) {
             $this->Bet->create();
+            $fecha = date("Y-m-d H:i:s");
+            $this->request->data["Bet"]["created"]=$fecha;
             if ($this->Bet->save($this->request->data)) {
 
                 //Luego de crear la apuesta, agrego las filas
