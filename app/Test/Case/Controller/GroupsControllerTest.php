@@ -1,11 +1,11 @@
 <?php
-App::uses('UsersController', 'Controller');
+App::uses('GroupsController', 'Controller');
 
 /**
- * UsersController Test Case
+ * GroupsController Test Case
  *
  */
-class UsersControllerTest extends ControllerTestCase {
+class GroupsControllerTest extends ControllerTestCase {
 
 /**
  * Fixtures
@@ -13,8 +13,8 @@ class UsersControllerTest extends ControllerTestCase {
  * @var array
  */
 	public $fixtures = array(
-		'app.user',
 		'app.group',
+		'app.user',
 		'app.bet',
 		'app.row',
 		'app.game'
@@ -63,24 +63,6 @@ class UsersControllerTest extends ControllerTestCase {
  */
 	public function testDelete() {
 		$this->markTestIncomplete('testDelete not implemented.');
-	}
-
-/**
- * testLogin method
- *
- * @return void
- */
-	public function testLogin() {
-		$this->markTestIncomplete('testLogin not implemented.');
-	}
-
-/**
- * testLogout method
- *
- * @return void
- */
-	public function testLogout() {
-		$this->markTestIncomplete('testLogout not implemented.');
 	}
 
 }
