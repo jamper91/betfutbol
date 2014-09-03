@@ -231,13 +231,8 @@ echo $this->Form->input('ganancia', array(
         'style' => 'display:none'
     )
 ));
-echo $this->Form->input('texto', array(
-    'type' => 'text',
-    'div' => array(
-        'style' => 'display:none'
-    )
-));
 ?>
+<input type="text" name="data['Bet']['vendedor_id']" value="<?= $this->Session->read('User.id') ?>" style="display: none" />
 <div class="mws-panel grid_4">
     <div class="mws-panel-header">
         <span class="mws-i-24 i-table-1">Apuesta</span>
