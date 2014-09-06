@@ -53,8 +53,8 @@ class AppController extends Controller {
             'action' => 'login'
         );
         $this->Auth->loginRedirect = array(
-            'controller' => 'posts',
-            'action' => 'add'
+            'controller' => 'Games',
+            'action' => 'listar'
         );
     }
 

@@ -260,6 +260,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 <div id="mws-navigation">
                     <ul>
                         <li class="active"><a href="dashboard.html" class="mws-i-24 i-home">Inicio</a></li>
+                        <?php if($this->Session->read('User.group_id')==2){?>
                         <li>
                             <a href="charts.html" class="mws-i-24 i-chart">Ventas</a>
                             <ul>
@@ -277,6 +278,14 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </ul>
                         </li>
                         <li>
+                            <a href="#" class="mws-i-24 i-list">Usuarios</a>
+                            <ul>
+                                <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "add")) ?>">Crear Cajero</a></li>
+                                <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "index")) ?>">Editar Usuarios</a></li>
+                            </ul>
+                        </li>
+                        <?php }?>
+                        <li>
                             <a href="#" class="mws-i-24 i-file-cabinet">Apuesta</a>
                             <ul>
                                 <li>
@@ -287,13 +296,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                             </ul>
                         </li>
                         <!--<li><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>-->
-                        <li>
-                            <a href="#" class="mws-i-24 i-list">Usuarios</a>
-                            <ul>
-                                <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "add")) ?>">Crear Cajero</a></li>
-                                <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "index")) ?>">Editar Usuarios</a></li>
-                            </ul>
-                        </li>
+                        
                         <!--                        <li><a href="typography.html" class="mws-i-24 i-text-styling">Apuesta</a></li>
                                                 <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
                                                 <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>

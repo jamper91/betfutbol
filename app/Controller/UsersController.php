@@ -21,7 +21,7 @@ class UsersController extends AppController {
         parent::beforeFilter();
 
         // For CakePHP 2.1 and up
-//        $this->Auth->allow('initDB');
+        $this->Auth->allow('initDB');
     }
 
     public function initDB() {
@@ -37,6 +37,8 @@ class UsersController extends AppController {
         $this->Acl->allow($group, 'controllers/Games/listar');
         $this->Acl->allow($group, 'controllers/Bets/add');
         $this->Acl->allow($group, 'controllers/Bets/pagar');
+        $this->Acl->allow($group, 'controllers/Bets/estado');
+        $this->Acl->allow($group, 'controllers/Rows/estado');
         $this->Acl->allow($group, 'controllers/Bets/getbets');
         $this->Acl->allow($group, 'controllers/Bets/habilitarbet');
 
@@ -140,6 +142,7 @@ class UsersController extends AppController {
     }
 
     public function login() {
+        $this->layout="login";
         if ($this->Session->read('Auth.User')) {
             $this->Session->setFlash('You are logged in!');
             return $this->redirect('/');
@@ -149,6 +152,7 @@ class UsersController extends AppController {
                 $user=  $this->User->findByUsername($this->request->data["User"]["username"]);
                 $this->Session->write('User.id', $user["User"]["id"]);
                 $this->Session->write('User.username', $user["User"]["username"]);
+                $this->Session->write('User.group_id', $user["User"]["group_id"]);
                 return $this->redirect($this->Auth->redirect());
             }
             $this->Session->setFlash(__('Your username or password was incorrect.'));

@@ -139,7 +139,7 @@ class BetsController extends AppController {
             $this->Bet->set("fecha_pagado", $fecha);
             if ($this->Bet->save()) {
                 $this->Session->setFlash(__('La apuesta ha sido pagada'));
-                $this->redirect(array('controller'=>'rows', 'action' => 'estado'));
+                $this->redirect(array('controller'=>'bets', 'action' => 'estado'));
             } else {
                 $this->Session->setFlash(__('La apuesta no se ha podido actualizar'));
                 debug($this->Bet->validationErrors);
