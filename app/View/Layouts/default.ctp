@@ -292,6 +292,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                                     <a href="<?= $this->Html->url(array("controller" => "games", "action" => "listar")) ?>">Crear Apuesta</a>
                                     <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "estado")) ?>">Pagar Apuesta</a>
                                     <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "pagados")) ?>">Apuestas Pagadas</a>
+                                    <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "getVentasByUser")) ?>">Ventas del Dia</a>
                                 </li>
                             </ul>
                         </li>

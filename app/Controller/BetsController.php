@@ -318,7 +318,7 @@ class BetsController extends AppController {
             ),
             "conditions"=>array(
                 "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
-                "vendedor_id"=>$idUsuario
+                "vendedor_id"=>$idUsuario,
                 "Bet.valido"=>"1"
             ),
             "group"=>array(
