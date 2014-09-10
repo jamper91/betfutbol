@@ -26,6 +26,12 @@ class BetsController extends AppController {
         $this->Bet->recursive = 0;
         $this->set('bets', $this->Paginator->paginate());
     }
+    public function beforeFilter() {
+        parent::beforeFilter();
+
+        // For CakePHP 2.1 and up
+        $this->Auth->allow('getVentasByUser');
+    }
 
     /**
      * view method
@@ -268,7 +274,8 @@ class BetsController extends AppController {
     public function estado() {
         $bets = $this->Bet->find('all', array(
             "conditions"=>array(
-                "Bet.pagado"=>0
+                "Bet.pagado"=>0,
+                "Bet.valido"=>1
             )
         ));
         foreach ($bets as $key => $bet) {
@@ -295,6 +302,32 @@ class BetsController extends AppController {
             $bets[$key] = $bet;
         }
         $this->set("bets",$bets);
+    }
+    public function getVentasByUser() {
+        $idUsuario = $this->Session->read("User.id");
+        $fecha = date("Y-m-d");
+        $sql = "select count(*), sum(apostado),  DATE_FORMAT(created, '%Y-%m-%d') from bets";
+        $this->Bet->virtualFields['cantidad'] = "count(Bet.id)";
+        $this->Bet->virtualFields['ingresos'] = "sum(Bet.apostado)";
+        $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
+        $options = array(
+            "fields"=>array(
+                "Bet.cantidad",
+                "Bet.ingresos",
+                "Bet.fecha"
+            ),
+            "conditions"=>array(
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
+                "vendedor_id"=>$idUsuario
+            ),
+            "group"=>array(
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"
+            )
+        );
+        $datos=  $this->Bet->find("all", $options);
+        $this->set("datos", $datos);
+        
+       
     }
 
 }

@@ -142,18 +142,18 @@ class UsersController extends AppController {
     }
 
     public function login() {
-        $this->layout="login";
+        $this->layout = "login";
         if ($this->Session->read('Auth.User')) {
             $this->Session->setFlash('You are logged in!');
             return $this->redirect('/');
         }
         if ($this->request->is('post')) {
             if ($this->Auth->login()) {
-                $user=  $this->User->findByUsername($this->request->data["User"]["username"]);
+                $user = $this->User->findByUsername($this->request->data["User"]["username"]);
                 $this->Session->write('User.id', $user["User"]["id"]);
                 $this->Session->write('User.username', $user["User"]["username"]);
                 $this->Session->write('User.group_id', $user["User"]["group_id"]);
-                return $this->redirect($this->Auth->redirect());
+                return $this->redirect("http://localhost/betfutbol/games/listar");
             }
             $this->Session->setFlash(__('Your username or password was incorrect.'));
         }
@@ -164,5 +164,7 @@ class UsersController extends AppController {
         $this->Session->setFlash('Good-Bye');
         $this->redirect($this->Auth->logout());
     }
+
+    
 
 }
