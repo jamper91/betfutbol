@@ -247,15 +247,30 @@ class BetsController extends AppController {
     public function habilitarbet() {
         $this->layout = "webservice";
         if ($this->request->is('post')) {
-            //debug(print_r($this->request->data));
             $this->Bet->id = $this->request->data["idBet"];
-            //$this->Bet->id=$this->request->data["Bet"]["id"];
             $this->Bet->set("valido", "1");
             if ($this->Bet->save()) {
-//                $this->Session->setFlash(__('La apuesta ha sido creada'));
                 $datos = array("Resultado" => "ok");
             } else {
-//                $this->Session->setFlash(__('La apuesta no se ha podido crear'));
+                $datos = array("Resultado" => "Error");
+                debug($this->Bet->validationErrors);
+            }
+
+            $this->set(
+                    array(
+                        'datos' => $datos,
+                        '_serialize' => array('datos')
+            ));
+        }
+    }
+    public function cancelarbet() {
+        $this->layout = "webservice";
+        if ($this->request->is('post')) {
+            $this->Bet->id = $this->request->data["idBet"];
+            $this->Bet->set("valido", "0");
+            if ($this->Bet->save()) {
+                $datos = array("Resultado" => "ok");
+            } else {
                 $datos = array("Resultado" => "Error");
                 debug($this->Bet->validationErrors);
             }

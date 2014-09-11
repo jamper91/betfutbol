@@ -1,17 +1,17 @@
 <table width="100%">
     <tr>
         <td>
-            Ticket Nro:<?=$id?>
+            Ticket Nro:<?= $id ?>
         </td>
     </tr>
     <tr>
         <td>
-            Fecha: <?=$fecha?> - Hora: <?=$hora?>
+            Fecha: <?= $fecha ?> - Hora: <?= $hora ?>
         </td>
     </tr>
     <tr>
         <td>
-            Jugada Pesos: <?= number_format($apuesta)?>
+            Jugada Pesos: <?= number_format($apuesta) ?>
         </td>
     </tr>
     <tr>
@@ -31,20 +31,26 @@
                         Logro
                     </td>
                 </tr>
-            <?=$texto?>
+                <?= $texto ?>
             </table>
         </td>
     </tr>
     <tr>
         <td>
-            Premio Pesos: <?= number_format($ganancia)?>
+            Premio Pesos: <?= number_format($ganancia) ?>
         </td>
     </tr>
-    
+
 </table>
 
 <input id="btnImprimir" type="button" onclick="imprimir(<?= $id ?>)" value="Imprimir"/>
+<input id="btnRegresar" type="button" onclick="regresar()" value="Regresar"/>
+<input id="btnCancelar" type="button" onclick="cancelar(<?= $id ?>)" value="Cancelar Venta"/>
 <script>
+    function regresar()
+    {
+        window.location = "/games/listar";
+    }
     function imprimir(id)
     {
         $("#BetId").val(id);
@@ -54,11 +60,52 @@
         };
         ajax(url, datos, function(xml)
         {
+
             if (xml != null)
             {
-                $("#btnImprimir").css("display", "none");
-                window.print();
-                window.location = "/games/listar";
+                $("datos", xml).each(function() {
+                    var resultado;
+                    resultado = $("Resultado", this).text();
+                    if (resultado == "ok")
+                    {
+                        $("#btnImprimir").css("display", "none");
+                        window.print();
+                        
+                    } else {
+                        alert("La venta no se pudo habilitar por favor contactar con el administrador, codigo apuesta: " + id);
+                    }
+
+
+                });
+            }
+
+        });
+
+    }
+    function cancelar(id)
+    {
+        $("#BetId").val(id);
+        var url = "cancelarbet.xml";
+        var datos = {
+            idBet: id
+        };
+        ajax(url, datos, function(xml)
+        {
+            if (xml != null)
+            {
+                $("datos", xml).each(function() {
+                    var resultado;
+                    resultado = $("Resultado", this).text();
+                    if (resultado == "ok")
+                    {
+                        alert("Venta cancelada");
+                    } else {
+                        alert("La venta no se pudo cancelar, por favor contacte con el administrador, codigo apuesta: " + id);
+                    }
+
+
+                });
+
             }
 
         });

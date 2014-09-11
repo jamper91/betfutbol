@@ -41,6 +41,7 @@ class UsersController extends AppController {
         $this->Acl->allow($group, 'controllers/Rows/estado');
         $this->Acl->allow($group, 'controllers/Bets/getbets');
         $this->Acl->allow($group, 'controllers/Bets/habilitarbet');
+        $this->Acl->allow($group, 'controllers/Bets/cancelarbet');
 
         // allow basic users to log out
         $this->Acl->allow($group, 'controllers/users/logout');
