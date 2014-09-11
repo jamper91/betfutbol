@@ -153,7 +153,7 @@ class UsersController extends AppController {
                 $this->Session->write('User.id', $user["User"]["id"]);
                 $this->Session->write('User.username', $user["User"]["username"]);
                 $this->Session->write('User.group_id', $user["User"]["group_id"]);
-                return $this->redirect($this->webroot."/games/listar");
+                return $this->redirect("/games/listar");
             }
             $this->Session->setFlash(__('Your username or password was incorrect.'));
         }

@@ -13,8 +13,8 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
-$cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework');
-$cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
+$cakeDescription = __d('cake_dev', 'BetFutbol: Apuestas en linea');
+$cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
 ?>
 <!DOCTYPE html>
 <html>
@@ -44,7 +44,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         ?>
     </head>
     <body>
-        <!-- Themer -->  
+<!--         Themer   
         <div id="mws-themer">
             <div id="mws-themer-hide"></div>
             <div id="mws-themer-content">
@@ -80,7 +80,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                 </div>
             </div>
         </div>
-        <!-- Themer End -->
+         Themer End -->
 
 
         <!-- Header Wrapper -->
@@ -225,7 +225,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
                     </div>
                     <div id="mws-user-functions">
                         <div id="mws-username">
-                            Hello, John Doe
+                            <?= $this->Session->read("User.username")?>
                         </div>
                         <ul>
                             <li><a href="#">Perfil</a></li>
