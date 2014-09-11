@@ -164,6 +164,12 @@ class UsersController extends AppController {
         $this->Session->setFlash('Good-Bye');
         $this->redirect($this->Auth->logout());
     }
+    
+    public function listarCajeros()
+    {
+        $datos=  $this->User->findAllByGroupId("3");
+        $this->set("datos",$datos);
+    }
 
     
 
