@@ -330,5 +330,31 @@ class BetsController extends AppController {
         
        
     }
+    public function getVentasByCajero($idUsuario) {
+        $fecha = date("Y-m-d");
+        $this->Bet->virtualFields['cantidad'] = "count(Bet.id)";
+        $this->Bet->virtualFields['ingresos'] = "sum(Bet.apostado)";
+        $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
+        $options = array(
+            "fields"=>array(
+                "Bet.cantidad",
+                "Bet.ingresos",
+                "Bet.fecha"
+            ),
+            "conditions"=>array(
+//                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
+                "vendedor_id"=>$idUsuario,
+                "Bet.valido"=>"1"
+            ),
+            "group"=>array(
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"
+            )
+        );
+        $datos=  $this->Bet->find("all", $options);
+        debug($datos);
+        $this->set("datos", $datos);
+        
+       
+    }
 
 }

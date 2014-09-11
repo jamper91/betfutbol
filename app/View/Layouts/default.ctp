@@ -266,6 +266,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                             <ul>
                                 <li><a href="">Generales</a></li>
                                 <li><a href="">Personalizadas</a></li>
+                                <li><a href="<?=$this->Html->url(array("controller"=>"bets","action"=>"getVentasByCajero"))?>">Diarias por cajero</a></li>
                             </ul>
                         </li>
                         <li>
