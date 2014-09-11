@@ -321,7 +321,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                 <!-- Main Container -->
                 <div class="container">
 
-                    <div class="mws-report-container clearfix">
+<!--                    <div class="mws-report-container clearfix">
 
 
                         <a class="mws-report" href="#">
@@ -336,7 +336,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
 
                         </a>
 
-                    </div>
+                    </div>-->
 
 
 
