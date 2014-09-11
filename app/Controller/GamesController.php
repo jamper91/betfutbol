@@ -204,6 +204,9 @@ class GamesController extends AppController {
                                     else
                                         $row["Row"]["estado"] = "1";
                                 }
+                            }else if ($row["Row"]["goles"] == 0) {
+                                        $row["Row"]["estado"] = "0";
+                                
                             }
                             break;
                         case "A":
