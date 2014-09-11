@@ -58,7 +58,7 @@
             {
                 $("#btnImprimir").css("display", "none");
                 window.print();
-                window.location = "/betfutbol/games/listar";
+                window.location = "<?=$this->webroot?>/games/listar";
             }
 
         });
