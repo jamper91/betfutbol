@@ -366,7 +366,6 @@ class BetsController extends AppController {
             )
         );
         $datos=  $this->Bet->find("all", $options);
-        debug($datos);
         $this->set("datos", $datos);
         
        
