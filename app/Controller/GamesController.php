@@ -205,7 +205,13 @@ class GamesController extends AppController {
                                         $row["Row"]["estado"] = "1";
                                 }
                             }else if ($row["Row"]["goles"] == 0) {
-                                        $row["Row"]["estado"] = "0";
+                                if($diferencia==0)
+                                {
+                                    $row["Row"]["estado"] = "0";
+                                }else{
+                                    $row["Row"]["estado"] = "1";
+                                }
+                                        
                                 
                             }
                             break;

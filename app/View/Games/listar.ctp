@@ -157,6 +157,7 @@
             <thead>
                 <tr>
                     <th>Partido</th>
+                    <th>Fecha</th>
                     <th>MLine</th>
                     <th>RLine</th>
                     <th>A/B</th>
@@ -173,6 +174,9 @@
                         <td> <?= $partido["Game"]["local"] ?><br>
                             <?= $partido["Game"]["visitante"] ?><br>
                             Empate
+                        </td>
+                        <td>
+                            <?=$partido["Game"]["fecha_juego"]?>
                         </td>
                         <td>
                             <a onclick="agregarApuesta('<?= $partido["Game"]["logro_mline_local"] ?>', '<?= $partido["Game"]["local"] ?>', 'ML',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["local"] . " Vs " . substr($partido["Game"]["visitante"], 0, 2) ?>','0')">
