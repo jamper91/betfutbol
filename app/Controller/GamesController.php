@@ -123,6 +123,9 @@ class GamesController extends AppController {
         $options = array(
             "conditions" => array(
                 "Game.fecha_juego >" => $fecha
+            ),
+            "order"=>array(
+                "Game.fecha_juego"
             )
         );
         $partidos = $this->Game->find('all', $options);

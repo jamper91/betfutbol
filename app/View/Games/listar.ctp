@@ -176,7 +176,7 @@
                             Empate
                         </td>
                         <td>
-                            <?=$partido["Game"]["fecha_juego"]?>
+                            <?=$partido["Game"]["fecha_juego"]->format('Y-m-d');?>
                         </td>
                         <td>
                             <a onclick="agregarApuesta('<?= $partido["Game"]["logro_mline_local"] ?>', '<?= $partido["Game"]["local"] ?>', 'ML',<?= $partido["Game"]["id"] ?>, '<?= $partido["Game"]["local"] . " Vs " . substr($partido["Game"]["visitante"], 0, 2) ?>','0')">
