@@ -67,6 +67,12 @@ class GamesController extends AppController {
                 $this->Session->setFlash(__('The game could not be saved. Please, try again.'));
             }
         }
+        $ligas = $this->Game->Liga->find('all',array(
+            "order"=>array(
+                "Deporte.id"
+            )
+        ));
+        $this->set('ligas',$ligas);
     }
 
     /**
@@ -90,8 +96,15 @@ class GamesController extends AppController {
         } else {
             $options = array('conditions' => array('Game.' . $this->Game->primaryKey => $id));
             $this->request->data = $this->Game->find('first', $options);
+            
 //            debug($this->request->data);
         }
+        $ligas = $this->Game->Liga->find('all',array(
+            "order"=>array(
+                "Deporte.id"
+            )
+        ));
+        $this->set('ligas',$ligas);
     }
 
     /**
@@ -119,18 +132,22 @@ class GamesController extends AppController {
      * Se encarga de listar los partidos, para que se puedan crear las apuestas
      */
     public function listar() {
+//        $this->layout=false;
         $fecha = date("Y-m-d H:i:s");
         $options = array(
             "conditions" => array(
                 "Game.fecha_juego >" => $fecha
             ),
             "order"=>array(
+//                "Game.fecha_juego",
+                "Liga.id",
                 "Game.fecha_juego"
             )
         );
         $partidos = $this->Game->find('all', $options);
-        //$partidos=  $this->Game->findAllByVisible("1");
         $this->set("partidos", $partidos);
+        $deportes = $this->Game->Liga->Deporte->find("all");
+        $this->set("deportes", $deportes);
     }
 
     public function encurso() {

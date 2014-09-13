@@ -44,43 +44,43 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
         ?>
     </head>
     <body>
-<!--         Themer   
-        <div id="mws-themer">
-            <div id="mws-themer-hide"></div>
-            <div id="mws-themer-content">
-                <div class="mws-themer-section">
-                    <label for="mws-theme-presets">Presets</label> <select id="mws-theme-presets"></select>
-                </div>
-                <div class="mws-themer-separator"></div>
-                <div class="mws-themer-section">
-                    <ul>
-                        <li><span>Base Color</span> <div id="mws-base-cp" class="mws-cp-trigger"></div></li>
-                        <li><span>Text Color</span> <div id="mws-text-cp" class="mws-cp-trigger"></div></li>
-                        <li><span>Text Glow Color</span> <div id="mws-textglow-cp" class="mws-cp-trigger"></div></li>
-                    </ul>
-                </div>
-                <div class="mws-themer-separator"></div>
-                <div class="mws-themer-section">
-                    <ul>
-                        <li><span>Text Glow Opacity</span> <div id="mws-textglow-op"></div></li>
-                    </ul>
-                </div>
-                <div class="mws-themer-separator"></div>
-                <div class="mws-themer-section">
-                    <button class="mws-button red small" id="mws-themer-getcss">Get CSS</button>
-                </div>
-            </div>
-            <div id="mws-themer-css-dialog">
-                <div class="mws-form">
-                    <div class="mws-form-row" style="padding:0;">
-                        <div class="mws-form-item">
-                            <textarea cols="auto" rows="auto" readonly="readonly"></textarea>
+        <!--         Themer   
+                <div id="mws-themer">
+                    <div id="mws-themer-hide"></div>
+                    <div id="mws-themer-content">
+                        <div class="mws-themer-section">
+                            <label for="mws-theme-presets">Presets</label> <select id="mws-theme-presets"></select>
+                        </div>
+                        <div class="mws-themer-separator"></div>
+                        <div class="mws-themer-section">
+                            <ul>
+                                <li><span>Base Color</span> <div id="mws-base-cp" class="mws-cp-trigger"></div></li>
+                                <li><span>Text Color</span> <div id="mws-text-cp" class="mws-cp-trigger"></div></li>
+                                <li><span>Text Glow Color</span> <div id="mws-textglow-cp" class="mws-cp-trigger"></div></li>
+                            </ul>
+                        </div>
+                        <div class="mws-themer-separator"></div>
+                        <div class="mws-themer-section">
+                            <ul>
+                                <li><span>Text Glow Opacity</span> <div id="mws-textglow-op"></div></li>
+                            </ul>
+                        </div>
+                        <div class="mws-themer-separator"></div>
+                        <div class="mws-themer-section">
+                            <button class="mws-button red small" id="mws-themer-getcss">Get CSS</button>
+                        </div>
+                    </div>
+                    <div id="mws-themer-css-dialog">
+                        <div class="mws-form">
+                            <div class="mws-form-row" style="padding:0;">
+                                <div class="mws-form-item">
+                                    <textarea cols="auto" rows="auto" readonly="readonly"></textarea>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-         Themer End -->
+                 Themer End -->
 
 
         <!-- Header Wrapper -->
@@ -225,7 +225,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                     </div>
                     <div id="mws-user-functions">
                         <div id="mws-username">
-                            <?= $this->Session->read("User.username")?>
+                            <?= $this->Session->read("User.username") ?>
                         </div>
                         <ul>
                             <li><a href="#">Perfil</a></li>
@@ -260,32 +260,32 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                 <div id="mws-navigation">
                     <ul>
                         <li class="active"><a href="dashboard.html" class="mws-i-24 i-home">Inicio</a></li>
-                        <?php if($this->Session->read('User.group_id')==2){?>
-                        <li>
-                            <a href="charts.html" class="mws-i-24 i-chart">Ventas</a>
-                            <ul>
-                                <li><a href="">Generales</a></li>
-                                <li><a href="">Personalizadas</a></li>
-                                <li><a href="<?=$this->Html->url(array("controller"=>"users","action"=>"listarCajeros"))?>">Diarias por cajero</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#" class="mws-i-24 i-day-calendar">Partidos</a>
-                            <ul>
-                                <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "add")) ?>" >Crear Partido</a></li>
-                                <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "index")) ?>">Editar Partido</a></li>
-                                <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "encurso")) ?>" >Finalizar Partido</a></li>
+                        <?php if ($this->Session->read('User.group_id') == 2) { ?>
+                            <li>
+                                <a href="charts.html" class="mws-i-24 i-chart">Ventas</a>
+                                <ul>
+                                    <li><a href="">Generales</a></li>
+                                    <li><a href="">Personalizadas</a></li>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "listarCajeros")) ?>">Diarias por cajero</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-day-calendar">Partidos</a>
+                                <ul>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "add")) ?>" >Crear Partido</a></li>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "index")) ?>">Editar Partido</a></li>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "encurso")) ?>" >Finalizar Partido</a></li>
 
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="#" class="mws-i-24 i-list">Usuarios</a>
-                            <ul>
-                                <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "add")) ?>">Crear Cajero</a></li>
-                                <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "index")) ?>">Editar Usuarios</a></li>
-                            </ul>
-                        </li>
-                        <?php }?>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" class="mws-i-24 i-list">Usuarios</a>
+                                <ul>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "add")) ?>">Crear Cajero</a></li>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "index")) ?>">Editar Usuarios</a></li>
+                                </ul>
+                            </li>
+                        <?php } ?>
                         <li>
                             <a href="#" class="mws-i-24 i-file-cabinet">Apuesta</a>
                             <ul>
@@ -298,7 +298,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                             </ul>
                         </li>
                         <!--<li><a href="table.html" class="mws-i-24 i-table-1">Table</a></li>-->
-                        
+
                         <!--                        <li><a href="typography.html" class="mws-i-24 i-text-styling">Apuesta</a></li>
                                                 <li><a href="grids.html" class="mws-i-24 i-blocks-images">Grids &amp; Panels</a></li>
                                                 <li><a href="gallery.html" class="mws-i-24 i-polaroids">Gallery</a></li>
@@ -321,22 +321,22 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                 <!-- Main Container -->
                 <div class="container">
 
-<!--                    <div class="mws-report-container clearfix">
-
-
-                        <a class="mws-report" href="#">
-                            <span class="mws-report-icon mws-ic ic-bug"></span>
-                            <span class="mws-report-content">
-
-                                <span class="mws-report-title">Mensaje</span>
-                                <span class="mws-report-value up">
-                                        <?php echo $this->Session->flash(); ?>
-                                </span>
-                            </span>
-
-                        </a>
-
-                    </div>-->
+                    <!--                    <div class="mws-report-container clearfix">
+                    
+                    
+                                            <a class="mws-report" href="#">
+                                                <span class="mws-report-icon mws-ic ic-bug"></span>
+                                                <span class="mws-report-content">
+                    
+                                                    <span class="mws-report-title">Mensaje</span>
+                                                    <span class="mws-report-value up">
+                    <?php echo $this->Session->flash(); ?>
+                                                    </span>
+                                                </span>
+                    
+                                            </a>
+                    
+                                        </div>-->
 
 
 
