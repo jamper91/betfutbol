@@ -290,7 +290,8 @@ class BetsController extends AppController {
         $bets = $this->Bet->find('all', array(
             "conditions"=>array(
                 "Bet.pagado"=>0,
-                "Bet.valido"=>1
+                "Bet.valido"=>1,
+                "Bet.vendedor_id"=>  $this->Session->read("User.id")
             )
         ));
         foreach ($bets as $key => $bet) {
@@ -308,6 +309,9 @@ class BetsController extends AppController {
                     $salir = true;
                 } else if ($row["estado"] == "-1") {
                     $estado = "En curso";
+                    $salir = true;
+                } else if ($row["estado"] == "-2") {
+                    $estado = "Partido Suspendido";
                     $salir = true;
                 }
                 if ($salir)

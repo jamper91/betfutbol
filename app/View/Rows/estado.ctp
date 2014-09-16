@@ -57,6 +57,10 @@ $total = $apuesta;
                                 $estado = "En Curso";
                                 $background = "#E6A92F";
                                 break;
+                            case "-2":
+                                $estado = "Partido Suspendido";
+                                $background = "#F2F2F2";
+                                break;
 
                             default:
                                 break;

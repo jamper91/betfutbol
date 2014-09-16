@@ -272,6 +272,8 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                             <li>
                                 <a href="#" class="mws-i-24 i-day-calendar">Partidos</a>
                                 <ul>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "deportes", "action" => "add")) ?>" >Crear Deporte</a></li>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "ligas", "action" => "add")) ?>" >Crear Liga</a></li>
                                     <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "add")) ?>" >Crear Partido</a></li>
                                     <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "index")) ?>">Editar Partido</a></li>
                                     <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "encurso")) ?>" >Finalizar Partido</a></li>

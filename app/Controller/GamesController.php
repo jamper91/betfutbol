@@ -25,14 +25,14 @@ class GamesController extends AppController {
     public function index() {
 //        $this->Game->recursive = 0;
 //        $this->set('games', $this->Paginator->paginate());
-        
-        $options=array(
-            "order"=>array(
+
+        $options = array(
+            "order" => array(
                 "Game.fecha_juego DESC"
             ),
-            "recursive"=>"0"
+            "recursive" => "0"
         );
-        $games=  $this->Game->find('all', $options);
+        $games = $this->Game->find('all', $options);
         $this->set('games', $games);
     }
 
@@ -67,12 +67,12 @@ class GamesController extends AppController {
                 $this->Session->setFlash(__('The game could not be saved. Please, try again.'));
             }
         }
-        $ligas = $this->Game->Liga->find('all',array(
-            "order"=>array(
+        $ligas = $this->Game->Liga->find('all', array(
+            "order" => array(
                 "Deporte.id"
             )
         ));
-        $this->set('ligas',$ligas);
+        $this->set('ligas', $ligas);
     }
 
     /**
@@ -96,15 +96,15 @@ class GamesController extends AppController {
         } else {
             $options = array('conditions' => array('Game.' . $this->Game->primaryKey => $id));
             $this->request->data = $this->Game->find('first', $options);
-            
+
 //            debug($this->request->data);
         }
-        $ligas = $this->Game->Liga->find('all',array(
-            "order"=>array(
+        $ligas = $this->Game->Liga->find('all', array(
+            "order" => array(
                 "Deporte.id"
             )
         ));
-        $this->set('ligas',$ligas);
+        $this->set('ligas', $ligas);
     }
 
     /**
@@ -138,7 +138,7 @@ class GamesController extends AppController {
             "conditions" => array(
                 "Game.fecha_juego >" => $fecha
             ),
-            "order"=>array(
+            "order" => array(
 //                "Game.fecha_juego",
                 "Liga.id",
                 "Game.fecha_juego"
@@ -183,77 +183,83 @@ class GamesController extends AppController {
                         $gano = $this->request->data["Game"]["visitante"];
                         $diferencia = $this->request->data["Game"]["goles_visitante"] - $this->request->data["Game"]["goles_local"];
                     } else {
-                        $gano = "Empate";
-                        $diferencia = 0;
+                        if ($this->request->data["Game"]["goles_local"] == -1) {
+                            $gano = "Suspendido";
+                            $diferencia = 0;
+                        } else {
+                            $gano = "Empate";
+                            $diferencia = 0;
+                        }
                     }
-                    $totalGoles=$this->request->data["Game"]["goles_visitante"] + $this->request->data["Game"]["goles_local"];
-                    
-                    switch ($row["Row"]["tipo"]) {
-                        case "ML":
-                            //Para determinar si gano con ML, el equipo por el que aposto debio ganar
+                    $totalGoles = $this->request->data["Game"]["goles_visitante"] + $this->request->data["Game"]["goles_local"];
+                    if ($gano != "Suspendido") {
+                        switch ($row["Row"]["tipo"]) {
+                            case "ML":
+                                //Para determinar si gano con ML, el equipo por el que aposto debio ganar
 
-                            if ($row["Row"]["equipo"] == $gano)
-                                $row["Row"]["estado"] = "2";
-                            else
-                                $row["Row"]["estado"] = "1";
-
-                            break;
-                        case "RL":
-                            /**
-                             * Para determinar si gano con RL debo:
-                             * Si goles son negativos, el equipo debe perder
-                             * Si goles son positivos, el equipo debe ganar
-                             * Si goles de diferencia son mayores a los goles, gana
-                             * Si goles de diferencia son iguales a los goles, empata
-                             */
-                            if ($row["Row"]["goles"] < 0) {
-                                if ($row["Row"]["equipo"] == $gano) {
-                                    if ($diferencia > $row["Row"]["goles"])
-                                        $row["Row"]["estado"] = "2";
-                                    else if ($diferencia == $row["Row"]["goles"])
-                                        $row["Row"]["estado"] = "0";
-                                    else
-                                        $row["Row"]["estado"] = "1";
-                                }
-                            }else if ($row["Row"]["goles"] > 0) {
-                                if ($row["Row"]["equipo"] != $gano) {
-                                    if ($diferencia < abs($row["Row"]["goles"]))
-                                        $row["Row"]["estado"] = "2";
-                                    else if ($diferencia == abs($row["Row"]["goles"]))
-                                        $row["Row"]["estado"] = "0";
-                                    else
-                                        $row["Row"]["estado"] = "1";
-                                }
-                            }else if ($row["Row"]["goles"] == 0) {
-                                if($diferencia==0)
-                                {
-                                    $row["Row"]["estado"] = "0";
-                                }else{
+                                if ($row["Row"]["equipo"] == $gano)
+                                    $row["Row"]["estado"] = "2";
+                                else
                                     $row["Row"]["estado"] = "1";
+
+                                break;
+                            case "RL":
+                                /**
+                                 * Para determinar si gano con RL debo:
+                                 * Si goles son negativos, el equipo debe perder
+                                 * Si goles son positivos, el equipo debe ganar
+                                 * Si goles de diferencia son mayores a los goles, gana
+                                 * Si goles de diferencia son iguales a los goles, empata
+                                 */
+                                if ($row["Row"]["goles"] < 0) {
+                                    if ($row["Row"]["equipo"] == $gano) {
+                                        if ($diferencia > $row["Row"]["goles"])
+                                            $row["Row"]["estado"] = "2";
+                                        else if ($diferencia == $row["Row"]["goles"])
+                                            $row["Row"]["estado"] = "0";
+                                        else
+                                            $row["Row"]["estado"] = "1";
+                                    }
+                                }else if ($row["Row"]["goles"] > 0) {
+                                    if ($row["Row"]["equipo"] != $gano) {
+                                        if ($diferencia < abs($row["Row"]["goles"]))
+                                            $row["Row"]["estado"] = "2";
+                                        else if ($diferencia == abs($row["Row"]["goles"]))
+                                            $row["Row"]["estado"] = "0";
+                                        else
+                                            $row["Row"]["estado"] = "1";
+                                    }
+                                }else if ($row["Row"]["goles"] == 0) {
+                                    if ($diferencia == 0) {
+                                        $row["Row"]["estado"] = "0";
+                                    } else {
+                                        $row["Row"]["estado"] = "1";
+                                    }
                                 }
-                                        
-                                
-                            }
-                            break;
-                        case "A":
-                            if($totalGoles> $row["Row"]["goles"])
-                                $row["Row"]["estado"] = "2";
-                            else if($totalGoles== $row["Row"]["goles"])
-                                $row["Row"]["estado"] = "0";
-                            else if($totalGoles < $row["Row"]["goles"])
-                                $row["Row"]["estado"] = "1";
-                            break;
-                        case "B":
-                            if($totalGoles< $row["Row"]["goles"])
-                                $row["Row"]["estado"] = "2";
-                            else if($totalGoles== $row["Row"]["goles"])
-                                $row["Row"]["estado"] = "0";
-                            else if($totalGoles > $row["Row"]["goles"])
-                                $row["Row"]["estado"] = "1";
-                            break;
-                        default:
-                            break;
+                                break;
+                            case "A":
+                                if ($totalGoles > $row["Row"]["goles"])
+                                    $row["Row"]["estado"] = "2";
+                                else if ($totalGoles == $row["Row"]["goles"])
+                                    $row["Row"]["estado"] = "0";
+                                else if ($totalGoles < $row["Row"]["goles"])
+                                    $row["Row"]["estado"] = "1";
+                                break;
+                            case "B":
+                                if ($totalGoles < $row["Row"]["goles"])
+                                    $row["Row"]["estado"] = "2";
+                                else if ($totalGoles == $row["Row"]["goles"])
+                                    $row["Row"]["estado"] = "0";
+                                else if ($totalGoles > $row["Row"]["goles"])
+                                    $row["Row"]["estado"] = "1";
+                                break;
+                            default:
+                                break;
+                        }
+                    }else{
+                        $row["Row"]["estado"] = "-2";
                     }
+
                     $this->Row->save($row);
                 }
                 return $this->redirect(array('action' => 'encurso'));
