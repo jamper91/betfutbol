@@ -374,5 +374,25 @@ class BetsController extends AppController {
         
        
     }
+    
+    public function getStadistics($fecha_inicio=null, $fecha_fin=null)
+    {
+        $this->Bet->virtualFields['apostado'] = "sum(Bet.apostado)";
+        $this->Bet->virtualFields['ganancia'] = "sum(Bet.ganancia)";
+        $options=array(
+            "fields"=>array(
+              "Bet.apostado",  
+              "Bet.ganancia"  
+            ),
+            "conditions"=>array(
+                "fecha_pagado >="=>$fecha_inicio,
+                "fecha_pagado <="=>$fecha_fin,
+            )
+        );
+        $datos=  $this->Bet->find("all", $options);
+        debug("\n");
+        debug($datos);
+        $this->set("datos", $datos);
+    }
 
 }
