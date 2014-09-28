@@ -343,6 +343,40 @@ class BetsController extends AppController {
     public function getVentasByUser() {
         $idUsuario = $this->Session->read("User.id");
         $fecha = date("Y-m-d");
+        $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
+        $this->Bet->virtualFields['hora'] = "DATE_FORMAT(Bet.created, '%H-%I')";
+        $options = array(
+            "conditions" => array(
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
+                "vendedor_id" => $idUsuario,
+                "Bet.valido" => "1"
+            ),
+            "recursive"=>-1
+        );
+        $datos = $this->Bet->find("all", $options);
+        //Obtengo el total de ventas, ventas pagadas, ingresos y salidas
+        $totalVentas=0;
+        $ventasPagadas=0;
+        $ingresos=0;
+        $salidas=0;
+        foreach ($datos as $dato) {
+            $totalVentas++;
+            $ingresos+=$dato["Bet"]["apostado"];
+            if($dato["Bet"]["pagado"]==1)
+            {
+                $ventasPagadas++;
+                $salidas+=$dato["Bet"]["ganancia"];
+            }
+        }
+        $this->set("datos", $datos);
+        $this->set("totalVentas", $totalVentas);
+        $this->set("ventasPagadas", $ventasPagadas);
+        $this->set("ingresos", $ingresos);
+        $this->set("salidas", $salidas);
+    }
+    public function getVentasByUser2() {
+        $idUsuario = $this->Session->read("User.id");
+        $fecha = date("Y-m-d");
         $sql = "select count(*), sum(apostado),  DATE_FORMAT(created, '%Y-%m-%d') from bets";
         $this->Bet->virtualFields['cantidad'] = "count(Bet.id)";
         $this->Bet->virtualFields['ingresos'] = "sum(Bet.apostado)";
