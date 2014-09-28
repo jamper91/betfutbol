@@ -35,7 +35,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
 
         echo $this->Html->script(array('jquery-1.7.1.min', '/plugins/jimgareaselect/jquery.imgareaselect.min', '/plugins/jquery.dualListBox-1.3.min', '/plugins/jgrowl/jquery.jgrowl', '/plugins/jquery.filestyle', '/plugins/fullcalendar/fullcalendar.min', '/plugins/jquery.dataTables'));
         echo $this->Html->script(array('/plugins/flot/jquery.flot.min', '/plugins/flot/jquery.flot.pie.min', '/plugins/flot/jquery.flot.stack.min', '/plugins/flot/jquery.flot.resize.min', '/plugins/colorpicker/colorpicker', '/plugins/tipsy/jquery.tipsy', '/plugins/sourcerer/Sourcerer-1.2', '/plugins/jquery.placeholder', '/plugins/jquery.validate', '/plugins/jquery.mousewheel', '/plugins/spinner/ui.spinner'));
-        echo $this->Html->script(array('jquery-ui', 'mws', 'demo', 'themer', 'demo.dashboard', 'jquery-ui-timepicker-addon'));
+        echo $this->Html->script(array('jquery-ui', 'mws', 'demo', 'themer', 'demo.dashboard', 'jquery-ui-timepicker-addon', 'notify.min','comun'));
 
 
         echo $this->fetch('meta');
@@ -44,45 +44,6 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
         ?>
     </head>
     <body>
-        <!--         Themer   
-                <div id="mws-themer">
-                    <div id="mws-themer-hide"></div>
-                    <div id="mws-themer-content">
-                        <div class="mws-themer-section">
-                            <label for="mws-theme-presets">Presets</label> <select id="mws-theme-presets"></select>
-                        </div>
-                        <div class="mws-themer-separator"></div>
-                        <div class="mws-themer-section">
-                            <ul>
-                                <li><span>Base Color</span> <div id="mws-base-cp" class="mws-cp-trigger"></div></li>
-                                <li><span>Text Color</span> <div id="mws-text-cp" class="mws-cp-trigger"></div></li>
-                                <li><span>Text Glow Color</span> <div id="mws-textglow-cp" class="mws-cp-trigger"></div></li>
-                            </ul>
-                        </div>
-                        <div class="mws-themer-separator"></div>
-                        <div class="mws-themer-section">
-                            <ul>
-                                <li><span>Text Glow Opacity</span> <div id="mws-textglow-op"></div></li>
-                            </ul>
-                        </div>
-                        <div class="mws-themer-separator"></div>
-                        <div class="mws-themer-section">
-                            <button class="mws-button red small" id="mws-themer-getcss">Get CSS</button>
-                        </div>
-                    </div>
-                    <div id="mws-themer-css-dialog">
-                        <div class="mws-form">
-                            <div class="mws-form-row" style="padding:0;">
-                                <div class="mws-form-item">
-                                    <textarea cols="auto" rows="auto" readonly="readonly"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                 Themer End -->
-
-
         <!-- Header Wrapper -->
         <div id="mws-header" class="clearfix">
 
@@ -96,129 +57,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
             <!-- User Area Wrapper -->
             <div id="mws-user-tools" class="clearfix">
 
-                <!-- User Notifications -->
-                <!--                <div id="mws-user-notif" class="mws-dropdown-menu">
-                                    <a href="#" class="mws-i-24 i-alert-2 mws-dropdown-trigger">Notifications</a>
-                                    <span class="mws-dropdown-notif">35</span>
-                                    <div class="mws-dropdown-box">
-                                        <div class="mws-dropdown-content">
-                                            <ul class="mws-notifications">
-                
-                                                 Notification Content 
-                                                <li class="read">
-                                                    <a href="#">
-                                                        <span class="message">
-                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                                        </span>
-                                                        <span class="time">
-                                                            January 21, 2012
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li class="read">
-                                                    <a href="#">
-                                                        <span class="message">
-                                                            Lorem ipsum dolor sit amet
-                                                        </span>
-                                                        <span class="time">
-                                                            January 21, 2012
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li class="unread">
-                                                    <a href="#">
-                                                        <span class="message">
-                                                            Lorem ipsum dolor sit amet
-                                                        </span>
-                                                        <span class="time">
-                                                            January 21, 2012
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li class="unread">
-                                                    <a href="#">
-                                                        <span class="message">
-                                                            Lorem ipsum dolor sit amet
-                                                        </span>
-                                                        <span class="time">
-                                                            January 21, 2012
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                 End Notification Content 
-                
-                                            </ul>
-                                            <div class="mws-dropdown-viewall">
-                                                <a href="#">View All Notifications</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
 
-                <!-- User Messages -->
-                <!--                <div id="mws-user-message" class="mws-dropdown-menu">
-                                    <a href="#" class="mws-i-24 i-message mws-dropdown-trigger">Messages</a>
-                                    <span class="mws-dropdown-notif">35</span>
-                                    <div class="mws-dropdown-box">
-                                        <div class="mws-dropdown-content">
-                                            <ul class="mws-messages">
-                
-                                                 Message Content 
-                                                <li class="read">
-                                                    <a href="#">
-                                                        <span class="sender">John Doe</span>
-                                                        <span class="message">
-                                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                                        </span>
-                                                        <span class="time">
-                                                            January 21, 2012
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li class="read">
-                                                    <a href="#">
-                                                        <span class="sender">John Doe</span>
-                                                        <span class="message">
-                                                            Lorem ipsum dolor sit amet
-                                                        </span>
-                                                        <span class="time">
-                                                            January 21, 2012
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li class="unread">
-                                                    <a href="#">
-                                                        <span class="sender">John Doe</span>
-                                                        <span class="message">
-                                                            Lorem ipsum dolor sit amet
-                                                        </span>
-                                                        <span class="time">
-                                                            January 21, 2012
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                <li class="unread">
-                                                    <a href="#">
-                                                        <span class="sender">John Doe</span>
-                                                        <span class="message">
-                                                            Lorem ipsum dolor sit amet
-                                                        </span>
-                                                        <span class="time">
-                                                            January 21, 2012
-                                                        </span>
-                                                    </a>
-                                                </li>
-                                                 End Messages 
-                
-                                            </ul>
-                                            <div class="mws-dropdown-viewall">
-                                                <a href="#">View All Messages</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>-->
-
-                <!-- User Functions -->
                 <div id="mws-user-info" class="mws-inset">
                     <div id="mws-user-photo">
                         <img src="example/profile.jpg" alt="User Photo" />

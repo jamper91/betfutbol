@@ -35,8 +35,10 @@
                         <td class="center"><?= $bet['Bet']['estado']?></td>
                         <td class="center">
                              <?php 
-                             if($bet['Bet']['estado']=="Ganador")
-                                echo $this->Html->link(__('Pagar'), array("controller"=>"rows",'action' => 'estado', $bet['Bet']['id'])); 
+                             if($bet['Bet']['estado']=="Ganador" || $bet['Bet']['estado']=="Suspendido")
+                                echo $this->Html->link(__('Pagar'), array("controller"=>"rows",'action' => 'pagar', $bet['Bet']['id'])); 
+                             else
+                                 echo $this->Html->link(__('Estado'), array("controller"=>"rows",'action' => 'estado', $bet['Bet']['id'])); 
                              ?>
                         </td>
                     </tr>

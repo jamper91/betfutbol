@@ -15,7 +15,7 @@ class BetsController extends AppController {
      *
      * @var array
      */
-    public $components = array('Paginator','RequestHandler');
+    public $components = array('Paginator', 'RequestHandler');
 
     /**
      * index method
@@ -26,6 +26,7 @@ class BetsController extends AppController {
         $this->Bet->recursive = 0;
         $this->set('bets', $this->Paginator->paginate());
     }
+
     public function beforeFilter() {
         parent::beforeFilter();
 
@@ -57,7 +58,7 @@ class BetsController extends AppController {
         if ($this->request->is('post')) {
             $this->Bet->create();
             $fecha = date("Y-m-d H:i:s");
-            $this->request->data["Bet"]["created"]=$fecha;
+            $this->request->data["Bet"]["created"] = $fecha;
             if ($this->Bet->save($this->request->data)) {
 
                 //Luego de crear la apuesta, agrego las filas
@@ -140,12 +141,12 @@ class BetsController extends AppController {
             $this->Bet->id = $this->request->data["Bet"]["id"];
             //$this->Bet->id=$this->request->data["Bet"]["id"];
             $this->Bet->set("pagado", "1");
-            $this->Bet->set("ganancia",$this->request->data["Bet"]["ganancia"]);
+            $this->Bet->set("ganancia", $this->request->data["Bet"]["ganancia"]);
             $fecha = date("Y-m-d H:i:s");
             $this->Bet->set("fecha_pagado", $fecha);
             if ($this->Bet->save()) {
                 $this->Session->setFlash(__('La apuesta ha sido pagada'));
-                $this->redirect(array('controller'=>'bets', 'action' => 'estado'));
+                $this->redirect(array('controller' => 'bets', 'action' => 'estado'));
             } else {
                 $this->Session->setFlash(__('La apuesta no se ha podido actualizar'));
                 debug($this->Bet->validationErrors);
@@ -263,35 +264,51 @@ class BetsController extends AppController {
             ));
         }
     }
-    public function cancelarbet() {
-        $this->layout = "webservice";
-        if ($this->request->is('post')) {
-            $this->Bet->id = $this->request->data["idBet"];
-            $this->Bet->set("valido", "0");
-            if ($this->Bet->save()) {
-                $datos = array("Resultado" => "ok");
-            } else {
-                $datos = array("Resultado" => "Error");
-                debug($this->Bet->validationErrors);
-            }
 
-            $this->set(
-                    array(
-                        'datos' => $datos,
-                        '_serialize' => array('datos')
-            ));
+    public function cancelarbet() {
+        if ($this->RequestHandler->isXml()) {
+            $this->layout = "webservice";
+            if ($this->request->is('post')) {
+                $this->Bet->id = $this->request->data["idBet"];
+                $this->Bet->set("valido", "0");
+                if ($this->Bet->save()) {
+                    $datos = array("Resultado" => "ok");
+                } else {
+                    $datos = array("Resultado" => "Error");
+                    debug($this->Bet->validationErrors);
+                }
+
+                $this->set(
+                        array(
+                            'datos' => $datos,
+                            '_serialize' => array('datos')
+                ));
+            }
+        }else{
+            if ($this->request->is('post')) {
+                $this->Bet->id = $this->request->data["Bet"]["id"];
+                $this->Bet->set("valido", "0");
+                if ($this->Bet->save()) {
+                    $datos = array("Resultado" => "ok");
+                    $this->Session->setFlash("Ok","",null);
+                } else {
+                    $this->Session->setFlash("Error","",null);
+                    debug($this->Bet->validationErrors);
+                }
+            }
         }
     }
+
     /**
      * Lista todas aquellas apuestas que ganaron, estan suspendidas, o aun no han 
      * finalizado y que aun no se han pagado
      */
     public function estado() {
         $bets = $this->Bet->find('all', array(
-            "conditions"=>array(
-                "Bet.pagado"=>0,
-                "Bet.valido"=>1,
-                "Bet.vendedor_id"=>  $this->Session->read("User.id")
+            "conditions" => array(
+                "Bet.pagado" => 0,
+                "Bet.valido" => 1,
+                "Bet.vendedor_id" => $this->Session->read("User.id")
             )
         ));
         foreach ($bets as $key => $bet) {
@@ -320,8 +337,9 @@ class BetsController extends AppController {
             $bet["Bet"]["estado"] = $estado;
             $bets[$key] = $bet;
         }
-        $this->set("bets",$bets);
+        $this->set("bets", $bets);
     }
+
     public function getVentasByUser() {
         $idUsuario = $this->Session->read("User.id");
         $fecha = date("Y-m-d");
@@ -330,66 +348,62 @@ class BetsController extends AppController {
         $this->Bet->virtualFields['ingresos'] = "sum(Bet.apostado)";
         $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
         $options = array(
-            "fields"=>array(
+            "fields" => array(
                 "Bet.cantidad",
                 "Bet.ingresos",
                 "Bet.fecha"
             ),
-            "conditions"=>array(
-                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
-                "vendedor_id"=>$idUsuario,
-                "Bet.valido"=>"1"
+            "conditions" => array(
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')" => $fecha,
+                "vendedor_id" => $idUsuario,
+                "Bet.valido" => "1"
             ),
-            "group"=>array(
+            "group" => array(
                 "DATE_FORMAT(Bet.created, '%Y-%m-%d')"
             )
         );
-        $datos=  $this->Bet->find("all", $options);
+        $datos = $this->Bet->find("all", $options);
         $this->set("datos", $datos);
-        
-       
     }
+
     public function getVentasByCajero($idUsuario) {
         $fecha = date("Y-m-d");
         $this->Bet->virtualFields['cantidad'] = "count(Bet.id)";
         $this->Bet->virtualFields['ingresos'] = "sum(Bet.apostado)";
         $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
         $options = array(
-            "fields"=>array(
+            "fields" => array(
                 "Bet.cantidad",
                 "Bet.ingresos",
                 "Bet.fecha"
             ),
-            "conditions"=>array(
+            "conditions" => array(
 //                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
-                "vendedor_id"=>$idUsuario,
-                "Bet.valido"=>"1"
+                "vendedor_id" => $idUsuario,
+                "Bet.valido" => "1"
             ),
-            "group"=>array(
+            "group" => array(
                 "DATE_FORMAT(Bet.created, '%Y-%m-%d')"
             )
         );
-        $datos=  $this->Bet->find("all", $options);
+        $datos = $this->Bet->find("all", $options);
         $this->set("datos", $datos);
-        
-       
     }
-    
-    public function getStadistics($fecha_inicio=null, $fecha_fin=null)
-    {
+
+    public function getStadistics($fecha_inicio = null, $fecha_fin = null) {
         $this->Bet->virtualFields['apostado'] = "sum(Bet.apostado)";
         $this->Bet->virtualFields['ganancia'] = "sum(Bet.ganancia)";
-        $options=array(
-            "fields"=>array(
-              "Bet.apostado",  
-              "Bet.ganancia"  
+        $options = array(
+            "fields" => array(
+                "Bet.apostado",
+                "Bet.ganancia"
             ),
-            "conditions"=>array(
-                "fecha_pagado >="=>$fecha_inicio,
-                "fecha_pagado <="=>$fecha_fin,
+            "conditions" => array(
+                "fecha_pagado >=" => $fecha_inicio,
+                "fecha_pagado <=" => $fecha_fin,
             )
         );
-        $datos=  $this->Bet->find("all", $options);
+        $datos = $this->Bet->find("all", $options);
         debug("\n");
         debug($datos);
         $this->set("datos", $datos);

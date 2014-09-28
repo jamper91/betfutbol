@@ -89,6 +89,44 @@ $total = $apuesta;
     </div>
 </div>
 
+<div class="mws-panel grid_4">
+    <div class="mws-panel-header">
+        <span class="mws-i-24 i-pencil">Apuesta</span>
+    </div>
+    <div class="mws-panel-body">
+        <table class="mws-table">
+            <thead>
+                <tr>
+                    <th>Codigo</th>
+                    <th>Apostado</th>
+                    <th>Ganancia Inicial</th>
+                    <th>Ganancial Final</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="gradeX even">
+                    <td><?= $bet["id"] ?></td>
+                    <td><?= $bet["apostado"] ?></td>
+                    <td><?= $bet["ganancia"] ?></td>
+                    <td><?= $total ?></td>
+                </tr>
+            </tbody>
+        </table>
+        <?php
+        echo $this->Form->create('Bet', array(
+            "action"=>"pagar",
+            "Class" => "mws-form"
+        ));
+        ?>
+        <input name="data[Bet][id]" style="display:none" id="BetId"  value="<?= $bet["id"] ?>">
+        <input name="data[Bet][ganancia]" style="display:none" id="BetGanancia"  value="<?= $total ?>">
+        <div class="mws-button-row">
+            <input class="mws-button green" type="submit" value="Pagar">
+        </div>
+        </form>
+    </div>
+</div>
+
 
 
 <script>

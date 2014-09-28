@@ -62,7 +62,7 @@ class GamesController extends AppController {
             if ($this->Game->save($this->request->data)) {
 
                 $this->Session->setFlash(__('The game has been saved.'));
-                return $this->redirect(array('action' => 'index'));
+                return $this->redirect(array('action' => 'add'));
             } else {
                 $this->Session->setFlash(__('The game could not be saved. Please, try again.'));
             }
