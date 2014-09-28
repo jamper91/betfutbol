@@ -116,6 +116,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                                     <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "add")) ?>" >Crear Partido</a></li>
                                     <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "index")) ?>">Editar Partido</a></li>
                                     <li><a href="<?= $this->Html->url(array("controller" => "games", "action" => "encurso")) ?>" >Finalizar Partido</a></li>
+                                    <li><a href="<?= $this->Html->url(array("controller" => "bets", "action" => "cancelarbet")) ?>">Cancelar Apuesta</a></li>
 
                                 </ul>
                             </li>
@@ -135,6 +136,7 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                                     <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "estado")) ?>">Pagar Apuesta</a>
                                     <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "pagados")) ?>">Apuestas Pagadas</a>
                                     <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "getVentasByUser")) ?>">Ventas del Dia</a>
+                                    
                                 </li>
                             </ul>
                         </li>

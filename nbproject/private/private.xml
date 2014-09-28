@@ -5,10 +5,12 @@
         <group>
             <file>file:/C:/xampp/htdocs/betfutbol/app/config/database.php</file>
             <file>file:/C:/xampp/htdocs/betfutbol/app/View/Bets/estado.ctp</file>
-            <file>file:/C:/xampp/htdocs/betfutbol/app/View/Rows/estado.ctp</file>
             <file>file:/C:/xampp/htdocs/betfutbol/app/View/Rows/pagar.ctp</file>
-            <file>file:/C:/xampp/htdocs/betfutbol/app/Controller/GamesController.php</file>
+            <file>file:/C:/xampp/htdocs/betfutbol/app/View/Bets/get_ventas_by_cajero.ctp</file>
             <file>file:/C:/xampp/htdocs/betfutbol/app/Controller/BetsController.php</file>
+            <file>file:/C:/xampp/htdocs/betfutbol/app/View/Layouts/default.ctp</file>
+            <file>file:/C:/xampp/htdocs/betfutbol/app/View/Bets/detalles_diarios_by_cajero.ctp</file>
+            <file>file:/C:/xampp/htdocs/betfutbol/app/Controller/UsersController.php</file>
             <file>file:/C:/xampp/htdocs/betfutbol/app/Controller/RowsController.php</file>
         </group>
     </open-files>

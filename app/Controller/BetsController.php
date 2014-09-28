@@ -417,11 +417,29 @@ class BetsController extends AppController {
                 "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
                 "vendedor_id" => $idUsuario,
                 "Bet.valido" => "1"
-            )
+            ),
+            "recursive"=>-1
         );
         $datos = $this->Bet->find("all", $options);
-//        debug($datos);
+        //Obtengo el total de ventas, ventas pagadas, ingresos y salidas
+        $totalVentas=0;
+        $ventasPagadas=0;
+        $ingresos=0;
+        $salidas=0;
+        foreach ($datos as $dato) {
+            $totalVentas++;
+            $ingresos+=$dato["Bet"]["apostado"];
+            if($dato["Bet"]["pagado"]==1)
+            {
+                $ventasPagadas++;
+                $salidas+=$dato["Bet"]["ganancia"];
+            }
+        }
         $this->set("datos", $datos);
+        $this->set("totalVentas", $totalVentas);
+        $this->set("ventasPagadas", $ventasPagadas);
+        $this->set("ingresos", $ingresos);
+        $this->set("salidas", $salidas);
     }
 
 }
