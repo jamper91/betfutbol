@@ -388,6 +388,7 @@ class BetsController extends AppController {
         );
         $datos = $this->Bet->find("all", $options);
         $this->set("datos", $datos);
+        $this->set("cajeroId", $idUsuario);
     }
 
     public function getStadistics($fecha_inicio = null, $fecha_fin = null) {
@@ -406,6 +407,20 @@ class BetsController extends AppController {
         $datos = $this->Bet->find("all", $options);
         debug("\n");
         debug($datos);
+        $this->set("datos", $datos);
+    }
+    public function detallesDiariosByCajero($idUsuario,$fecha)
+    {
+        $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
+        $options = array(
+            "conditions" => array(
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
+                "vendedor_id" => $idUsuario,
+                "Bet.valido" => "1"
+            )
+        );
+        $datos = $this->Bet->find("all", $options);
+//        debug($datos);
         $this->set("datos", $datos);
     }
 

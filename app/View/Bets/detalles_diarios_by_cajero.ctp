@@ -1,3 +1,7 @@
+<?php
+
+$acumulado=0;
+?>
 <div class="mws-panel grid_8">
     <div class="mws-panel-header">
         <span class="mws-i-24 i-table-1">Ventas</span>
@@ -7,9 +11,11 @@
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Cantidad Apuestas Creadas</th>
-                    <th>Dinero recaudado</th>
-                    <th>Opciones</th>
+                    <th>Tiquete</th>
+                    <th>Apostado</th>
+                    <th>Pagado</th>
+                    <th>Fecha de Pago</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,14 +30,27 @@
                             <?= $dato["Bet"]["fecha"] ?>
                         </td>
                         <td> 
-                            <?= $dato["Bet"]["cantidad"] ?>
+                            <?= $dato["Bet"]["id"] ?>
                         </td>
                         <td> 
-                            <?= number_format($dato["Bet"]["ingresos"]) ?>
+                            <?= $dato["Bet"]["apostado"] ?>
+                        </td>
+                        <td> 
+                            <?php
+                                if($dato["Bet"]["pagado"]==1)
+                                {
+                                    echo number_format($dato["Bet"]["ganancia"]);
+                                }else{
+                                    echo "0";
+                                }
+                            ?>
+                        </td>
+                        <td> 
+                            <?= $dato["Bet"]["fecha_pagado"] ?>
                         </td>
                         <td> 
                             
-                            <a href="<?=$this->Html->url("detallesDiariosByCajero")?>/<?=$cajeroId?>/<?=$dato["Bet"]["fecha"]?>">Detalles</a>
+                            <?=$this->Html->link(__('Estado'), array("controller"=>"rows",'action' => 'estado', $dato['Bet']['id']))?>
                         </td>
                         
                     </tr>
