@@ -5,6 +5,7 @@
 $total = 0;
 $apuesta = $bet["apostado"];
 $total = $apuesta;
+$texto = "";
 ?>
 
 <div class="mws-panel grid_4">
@@ -31,7 +32,7 @@ $total = $apuesta;
                     $cant = 0;
                     foreach ($rows as $row):
 
-
+                        $texto = $row["Bet"]["texto"];
                         switch ($row["Row"]["estado"]) {
                             case "2":
                                 $estado = "Gano";
@@ -89,8 +90,60 @@ $total = $apuesta;
     </div>
 </div>
 
+<div class="mws-panel grid_4">
+    <div class="mws-panel-header">
+        <span class="mws-i-24 i-table-1">Apuesta</span>
+    </div>
+    <div class="mws-panel-body">
+        <table style="width: 100%;font-size: 14px;">
+            <?= $texto ?>
+        </table>
 
+    </div>
+</div>
 
+<?php
+if ($this->Session->read("User.group_id") == "2") {
+    echo $this->Form->create('Bet', array(
+        "action" => "pagar",
+        "Class" => "mws-form"
+    ));
+    ?>
+    <div class="mws-panel grid_4">
+        <div class="mws-panel-header">
+            <span class="mws-i-24 i-pencil">Apuesta</span>
+        </div>
+        <div class="mws-panel-body">
+            <table class="mws-table">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Apostado</th>
+                        <th>Ganancia Inicial</th>
+                        <th>Ganancial Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="gradeX even">
+                        <td><?= $bet["id"] ?></td>
+                        <td><?= $bet["apostado"] ?></td>
+                        <td><?= $bet["ganancia"] ?></td>
+                        <td><input name="data[Bet][ganancia]" id="BetGanancia"  value="<?= $total ?>"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <input name="data[Bet][id]" style="display:none" id="BetId"  value="<?= $bet["id"] ?>">
+            
+            <div class="mws-button-row">
+                <input class="mws-button green" type="submit" value="Pagar">
+            </div>
+            
+        </div>
+    </div>
+</form>
+    <?php
+}
+?>
 <script>
     (function()
     {

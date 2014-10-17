@@ -53,6 +53,7 @@
     }
     function imprimir(id)
     {
+
         $("#BetId").val(id);
         var url = "habilitarbet.xml";
         var datos = {
@@ -69,8 +70,15 @@
                     if (resultado == "ok")
                     {
                         $("#btnImprimir").css("display", "none");
+                        $("#btnRegresar").css("display", "none");
+                        $("#btnCancelar").css("display", "none");
                         window.print();
-                        
+                        setTimeout(function()
+                        {
+                            $("#btnRegresar").css("display", "block");
+                            $("#btnCancelar").css("display", "block");
+                        }, 1000);
+
                     } else {
                         alert("La venta no se pudo habilitar por favor contactar con el administrador, codigo apuesta: " + id);
                     }

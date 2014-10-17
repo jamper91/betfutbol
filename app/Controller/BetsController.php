@@ -56,32 +56,37 @@ class BetsController extends AppController {
      */
     public function add() {
         if ($this->request->is('post')) {
-            $this->Bet->create();
-            $fecha = date("Y-m-d H:i:s");
-            $this->request->data["Bet"]["created"] = $fecha;
-            if ($this->Bet->save($this->request->data)) {
+            if ($this->request->data["Row"][0]["game_id"]) {
+                $this->Bet->create();
+                $fecha = date("Y-m-d H:i:s");
+                $this->request->data["Bet"]["created"] = $fecha;
+                if ($this->Bet->save($this->request->data)) {
 
-                //Luego de crear la apuesta, agrego las filas
-                $newBetID = $this->Bet->getLastInsertId();
-                $cont = 0;
-                foreach ($this->request->data["Row"] as $value) {
-                    $this->request->data["Row"][$cont]["bet_id"] = $newBetID;
-                    $cont++;
+                    //Luego de crear la apuesta, agrego las filas
+                    $newBetID = $this->Bet->getLastInsertId();
+                    $cont = 0;
+                    foreach ($this->request->data["Row"] as $value) {
+                        $this->request->data["Row"][$cont]["bet_id"] = $newBetID;
+                        $cont++;
+                    }
+                    $this->loadModel("Row");
+                    $this->Row->saveAll($this->request->data['Row']);
+
+                    //Muestro los datos para generar la factura
+                    $this->layout = "impresora";
+                    $this->set("id", $this->Bet->id);
+                    $this->set("texto", $this->request->data["Bet"]["texto"]);
+                    $this->set("apuesta", $this->request->data["Bet"]["apostado"]);
+                    $this->set("ganancia", $this->request->data["Bet"]["ganancia"]);
+                    $fecha = getdate();
+                    $this->set("fecha", $fecha["mday"] . "/" . $fecha["mon"] . "/" . $fecha["year"]);
+                    $this->set("hora", $fecha["hours"] . ":" . $fecha["minutes"]);
+                } else {
+                    $this->Session->setFlash(__('La apuesta no pudo ser creada.'));
+                    $this->redirect(array("controller"=>"games","action"=>"listar"));
                 }
-                $this->loadModel("Row");
-                $this->Row->saveAll($this->request->data['Row']);
-
-                //Muestro los datos para generar la factura
-                $this->layout = "impresora";
-                $this->set("id", $this->Bet->id);
-                $this->set("texto", $this->request->data["Bet"]["texto"]);
-                $this->set("apuesta", $this->request->data["Bet"]["apostado"]);
-                $this->set("ganancia", $this->request->data["Bet"]["ganancia"]);
-                $fecha = getdate();
-                $this->set("fecha", $fecha["mday"] . "/" . $fecha["mon"] . "/" . $fecha["year"]);
-                $this->set("hora", $fecha["hours"] . ":" . $fecha["minutes"]);
-            } else {
-                $this->Session->setFlash(__('The bet could not be saved. Please, try again.'));
+            }else{
+                $this->redirect(array("controller"=>"games","action"=>"listar"));
             }
         }
         $users = $this->Bet->User->find('list');
@@ -284,15 +289,15 @@ class BetsController extends AppController {
                             '_serialize' => array('datos')
                 ));
             }
-        }else{
+        } else {
             if ($this->request->is('post')) {
                 $this->Bet->id = $this->request->data["Bet"]["id"];
                 $this->Bet->set("valido", "0");
                 if ($this->Bet->save()) {
                     $datos = array("Resultado" => "ok");
-                    $this->Session->setFlash("Ok","",null);
+                    $this->Session->setFlash("Ok", "", null);
                 } else {
-                    $this->Session->setFlash("Error","",null);
+                    $this->Session->setFlash("Error", "", null);
                     debug($this->Bet->validationErrors);
                 }
             }
@@ -347,23 +352,22 @@ class BetsController extends AppController {
         $this->Bet->virtualFields['hora'] = "DATE_FORMAT(Bet.created, '%H-%I')";
         $options = array(
             "conditions" => array(
-                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')" => $fecha,
                 "vendedor_id" => $idUsuario,
                 "Bet.valido" => "1"
             ),
-            "recursive"=>-1
+            "recursive" => -1
         );
         $datos = $this->Bet->find("all", $options);
         //Obtengo el total de ventas, ventas pagadas, ingresos y salidas
-        $totalVentas=0;
-        $ventasPagadas=0;
-        $ingresos=0;
-        $salidas=0;
+        $totalVentas = 0;
+        $ventasPagadas = 0;
+        $ingresos = 0;
+        $salidas = 0;
         foreach ($datos as $dato) {
             $totalVentas++;
             $ingresos+=$dato["Bet"]["apostado"];
-            if($dato["Bet"]["pagado"]==1)
-            {
+            if ($dato["Bet"]["pagado"] == 1) {
                 $ventasPagadas++;
                 $salidas+=$dato["Bet"]["ganancia"];
             }
@@ -374,6 +378,7 @@ class BetsController extends AppController {
         $this->set("ingresos", $ingresos);
         $this->set("salidas", $salidas);
     }
+
     public function getVentasByUser2() {
         $idUsuario = $this->Session->read("User.id");
         $fecha = date("Y-m-d");
@@ -443,28 +448,27 @@ class BetsController extends AppController {
         debug($datos);
         $this->set("datos", $datos);
     }
-    public function detallesDiariosByCajero($idUsuario,$fecha)
-    {
+
+    public function detallesDiariosByCajero($idUsuario, $fecha) {
         $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
         $options = array(
             "conditions" => array(
-                "DATE_FORMAT(Bet.created, '%Y-%m-%d')"=>$fecha,
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')" => $fecha,
                 "vendedor_id" => $idUsuario,
                 "Bet.valido" => "1"
             ),
-            "recursive"=>-1
+            "recursive" => -1
         );
         $datos = $this->Bet->find("all", $options);
         //Obtengo el total de ventas, ventas pagadas, ingresos y salidas
-        $totalVentas=0;
-        $ventasPagadas=0;
-        $ingresos=0;
-        $salidas=0;
+        $totalVentas = 0;
+        $ventasPagadas = 0;
+        $ingresos = 0;
+        $salidas = 0;
         foreach ($datos as $dato) {
             $totalVentas++;
             $ingresos+=$dato["Bet"]["apostado"];
-            if($dato["Bet"]["pagado"]==1)
-            {
+            if ($dato["Bet"]["pagado"] == 1) {
                 $ventasPagadas++;
                 $salidas+=$dato["Bet"]["ganancia"];
             }
