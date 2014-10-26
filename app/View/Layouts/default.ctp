@@ -104,9 +104,9 @@ $cakeVersion = __d('cake_dev', 'BetFutbol %s', "1.0")
                             <li>
                                 <a href="charts.html" class="mws-i-24 i-chart">Ventas</a>
                                 <ul>
-                                    <li><a href="">Generales</a></li>
-                                    <li><a href="">Personalizadas</a></li>
-                                    <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "listarCajeros")) ?>">Diarias por cajero</a></li>
+<!--                                    <li><a href="">Generales</a></li>
+                                    <li><a href="">Personalizadas</a></li>-->
+                                    <li><a href="<?= $this->Html->url(array("controller" => "users", "action" => "listarCajeros")) ?>">Por Cajero</a></li>
                                 </ul>
                             </li>
                             <li>

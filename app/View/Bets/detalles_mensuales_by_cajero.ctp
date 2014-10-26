@@ -9,21 +9,15 @@ $acumulado = 0;
     <div class="mws-panel-body">
         <ul class="mws-summary">
             <li>
-                <span><?=$totalVentas?></span> Cantidad Ventas
+                <span><?= number_format($ingresos) ?></span> Ingresos
             </li>
             <li>
-                <span><?=$ventasPagadas?></span> Apuestas Pagadas
+                <span><?= number_format($salidas) ?></span> Salidas
             </li>
             <li>
-                <span><?=number_format($ingresos)?></span> Ingresos
+                <span><?= number_format($ingresos - $salidas) ?></span> Total
             </li>
-            <li>
-                <span><?=number_format($salidas)?></span> Salidas
-            </li>
-            <li>
-                <span><?=number_format($ingresos-$salidas)?></span> Total
-            </li>
-            
+
         </ul>
     </div>
 </div>
@@ -33,15 +27,13 @@ $acumulado = 0;
         <span class="mws-i-24 i-table-1">Ventas</span>
     </div>
     <div class="mws-panel-body">
-        <table class="mws-table" id="partidos" style="font-size: 18px;">
+        <table class="mws-table" id="partidos"  style="font-size: 18px">
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Tiquete</th>
                     <th>Apostado</th>
                     <th>Pagado</th>
-                    <th>Fecha de Pago</th>
-                    <th>Acciones</th>
+                    <!--<th>Acciones</th>-->
                 </tr>
             </thead>
             <tbody>
@@ -56,27 +48,17 @@ $acumulado = 0;
                             <?= $dato["Bet"]["fecha"] ?>
                         </td>
                         <td> 
-                            <?= $dato["Bet"]["id"] ?>
-                        </td>
-                        <td> 
-                            <?= $dato["Bet"]["apostado"] ?>
+                            <?= number_format($dato["Bet"]["apostado"]) ?>
                         </td>
                         <td> 
                             <?php
-                            if ($dato["Bet"]["pagado"] == 1) {
-                                echo number_format($dato["Bet"]["ganancia"]);
-                            } else {
-                                echo "0";
-                            }
+                            echo number_format($dato["Bet"]["ganancia"]);
                             ?>
                         </td>
-                        <td> 
-                            <?= $dato["Bet"]["fecha_pagado"] ?>
-                        </td>
-                        <td> 
+    <!--                        <td> 
 
-                            <?= $this->Html->link(__('Estado'), array("controller" => "rows", 'action' => 'estado', $dato['Bet']['id'])) ?>
-                        </td>
+                        <?= $this->Html->link(__('Estado'), array("controller" => "rows", 'action' => 'estado', $dato['Bet']['id'])) ?>
+                        </td>-->
 
                     </tr>
                 <?php endforeach; ?>

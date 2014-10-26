@@ -1,6 +1,14 @@
 <table width="100%">
     <tr>
         <td>
+            <div align="center">
+                <?=$this->Html->image("logo.png")?>
+            </div>
+            
+        </td>
+    </tr>
+    <tr>
+        <td>
             Ticket Nro:<?= $id ?>
         </td>
     </tr>

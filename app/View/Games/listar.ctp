@@ -160,7 +160,7 @@ echo $this->Form->input('texto', array(
                         $<input id="txtApuesta"  onkeyup="calcularGanancias()" value="0" class="mws-textinput" type="number"/>
 
                     </label>
-                    <label style="float: right">Ganancia: 
+                    <label style="float: right; font-size: 20px;">Ganancia: 
                         <label id="lblGanancias">0</label>
                     </label>
                 </div>

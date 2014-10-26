@@ -3,7 +3,7 @@
         <span class="mws-i-24 i-table-1">Ventas</span>
     </div>
     <div class="mws-panel-body">
-        <table class="mws-table" id="partidos">
+        <table class="mws-table" id="partidos" style="font-size: 18px">
             <thead>
                 <tr>
                     <th>Usuario</th>
@@ -22,7 +22,8 @@
                             <?= $dato["User"]["username"] ?>
                         </td>
                         <td> 
-                            <?= $this->Html->link("Ventas", array("controller"=>"bets","action"=>"getVentasByCajero",$dato["User"]["id"]))?>
+                            <?= $this->Html->link("Ventas Diarias", array("controller"=>"bets","action"=>"getVentasByCajero",$dato["User"]["id"]))?>
+                            <?= $this->Html->link("Resumen Mensual", array("controller"=>"bets","action"=>"detallesMensualesByCajero",$dato["User"]["id"]))?>
                         </td>
                         
                     </tr>

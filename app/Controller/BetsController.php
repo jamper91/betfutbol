@@ -430,24 +430,6 @@ class BetsController extends AppController {
         $this->set("cajeroId", $idUsuario);
     }
 
-    public function getStadistics($fecha_inicio = null, $fecha_fin = null) {
-        $this->Bet->virtualFields['apostado'] = "sum(Bet.apostado)";
-        $this->Bet->virtualFields['ganancia'] = "sum(Bet.ganancia)";
-        $options = array(
-            "fields" => array(
-                "Bet.apostado",
-                "Bet.ganancia"
-            ),
-            "conditions" => array(
-                "fecha_pagado >=" => $fecha_inicio,
-                "fecha_pagado <=" => $fecha_fin,
-            )
-        );
-        $datos = $this->Bet->find("all", $options);
-        debug("\n");
-        debug($datos);
-        $this->set("datos", $datos);
-    }
 
     public function detallesDiariosByCajero($idUsuario, $fecha) {
         $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
@@ -472,6 +454,38 @@ class BetsController extends AppController {
                 $ventasPagadas++;
                 $salidas+=$dato["Bet"]["ganancia"];
             }
+        }
+        $this->set("datos", $datos);
+        $this->set("totalVentas", $totalVentas);
+        $this->set("ventasPagadas", $ventasPagadas);
+        $this->set("ingresos", $ingresos);
+        $this->set("salidas", $salidas);
+    }
+    public function detallesMensualesByCajero($idUsuario) {
+        $this->Bet->virtualFields['apostado'] = "sum(Bet.apostado)";
+        $this->Bet->virtualFields['ganancia'] = "sum(CASE Bet.pagado  WHEN 1 THEN Bet.ganancia ELSE '0' END)";
+        
+        $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m')";
+        $options = array(
+            "conditions" => array(
+                "vendedor_id" => $idUsuario,
+                "Bet.valido" => "1"
+            ),
+            "recursive" => -1,
+            "group"=>array(
+                "DATE_FORMAT(Bet.created, '%Y-%m')"
+            )
+        );
+        $datos = $this->Bet->find("all", $options);
+        //Obtengo el total de ventas, ventas pagadas, ingresos y salidas
+        $totalVentas = 0;
+        $ventasPagadas = 0;
+        $ingresos = 0;
+        $salidas = 0;
+        foreach ($datos as $dato) {
+            $totalVentas++;
+            $ingresos+=$dato["Bet"]["apostado"];
+            $salidas+=$dato["Bet"]["ganancia"];
         }
         $this->set("datos", $datos);
         $this->set("totalVentas", $totalVentas);

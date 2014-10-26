@@ -15,7 +15,7 @@ $texto = "";
     <div class="mws-panel-body">
         <div class="dataTables_wrapper">
 
-            <table class="mws-datatable mws-table">
+            <table class="mws-datatable mws-table" style="font-size: 18px">
                 <thead>
                     <tr>
                         <th style="width: 140px;" colspan="1" rowspan="1" class="sorting_asc">Codigo Juego</th>
