@@ -1,34 +1,56 @@
-<div class="mws-panel grid_8">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-table-1">Ventas</span>
-    </div>
-    <div class="mws-panel-body">
-        <table class="mws-table" id="partidos" style="font-size: 18px">
-            <thead>
-                <tr>
-                    <th>Usuario</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                <?php foreach ($datos as $i=>$dato): ?>
-                    <?php if($i%2==0){ ?>
-                    <tr class="gradeA even"  habilitado="true">
-                    <?php  }else{ ?>
-                    <tr class="gradeA odd"  habilitado="true">
-                    <?php } ?>
-                        <td> 
-                            <?= $dato["User"]["username"] ?>
-                        </td>
-                        <td> 
-                            <?= $this->Html->link("Ventas Diarias", array("controller"=>"bets","action"=>"getVentasByCajero",$dato["User"]["id"]))?>
-                            <?= $this->Html->link("Resumen Mensual", array("controller"=>"bets","action"=>"detallesMensualesByCajero",$dato["User"]["id"]))?>
-                        </td>
-                        
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">
+                Ventas
+            </h3>
+        </div>
+        <div class="box-body table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Opciones</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($datos as $i => $dato): ?>
+                        <?php if ($i % 2 == 0) { ?>
+                            <tr class="gradeA even"  habilitado="true">
+                            <?php } else { ?>
+                            <tr class="gradeA odd"  habilitado="true">
+                            <?php } ?>
+                            <td> 
+                                <?= $dato["User"]["username"] ?>
+                            </td>
+                            <td>
+                                <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "getVentasByCajero", $dato["User"]["id"])) ?>">
+                                    <button class="btn btn-info">Ventas Diarias</button>
+                                </a>
+                                <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "detallesMensualesByCajero", $dato["User"]["id"])) ?>">
+                                    <button class="btn btn-info">Resumen Mensual</button>
+                                </a>
+
+                            </td>
+
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
+
+<?php
+    $this->start('scripts');
+    echo $this->Html->css(array("datatables/dataTables.bootstrap"));
+    echo $this->Html->script(array("plugins/datatables/jquery.dataTables", "plugins/datatables/dataTables.bootstrap"));
+?>
+<script>
+    $(function() {
+        $("#example1").dataTable();
+    });
+</script>
+<?php
+    $this->end();
+?>

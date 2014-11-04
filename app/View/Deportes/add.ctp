@@ -1,19 +1,28 @@
-<div class="deportes form">
-<?php echo $this->Form->create('Deporte'); ?>
-	<fieldset>
-		<legend><?php echo __('Add Deporte'); ?></legend>
-	<?php
-		echo $this->Form->input('name');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Html->link(__('List Deportes'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Ligas'), array('controller' => 'ligas', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Liga'), array('controller' => 'ligas', 'action' => 'add')); ?> </li>
-	</ul>
+<div class="col-md-12">
+    <!-- general form elements disabled -->
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Crear Deporte</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <?php echo $this->Form->create('Deporte'); ?>
+            <?php
+            echo $this->Form->input('name', array(
+                "div" => array(
+                    "class" => "form-group"
+                ),
+                "class"=>"form-control",
+                "label"=>"Nombre"
+            ));
+            ?>
+            <div class="box-footer">
+                <?php echo $this->Form->end(array(
+                    "class"=>"btn btn-primary",
+                    "div"=>false,
+                    "label"=>"Crear"
+                )); ?>
+            </div>
+            
+        </div>
+    </div>
 </div>

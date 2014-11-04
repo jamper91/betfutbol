@@ -1,50 +1,59 @@
-<div class="mws-panel grid_8">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-table-1">Partidos</span>
-    </div>
-    <div class="mws-panel-body">
-        <div class="dataTables_wrapper">
 
-            <table class="mws-datatable mws-table">
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">
+                Apuestas
+            </h3>
+        </div>
+        <div class="box-body table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width: 140px;" colspan="1" rowspan="1" class="sorting_asc">Codigo</th>
-                        <th style="width: 191px;" colspan="1" rowspan="1" class="sorting">Apostado</th>
-                        <th style="width: 177px;" colspan="1" rowspan="1" class="sorting">Ganancia</th>
-                        <th style="width: 119px;" colspan="1" rowspan="1" class="sorting">Estado</th>
-                        <th style="width: 85px;" colspan="1" rowspan="1" >Acciones</th>
+                        <th>Codigo</th>
+                        <th>Apostado</th>
+                        <th>Ganancia</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
                     </tr>
                 </thead>
-
                 <tbody>
-                    <?php 
-                    $cant=0;
-                        foreach ($bets as $bet): 
-                            if($cant%2==0)
-                                $class="gradeA odd";
-                            else
-                                $class="gradeA even";
-                            $cant++;
-                    ?>
-                        
-                    
-                    <tr class="<?=$class?>">
-                        <td class=" sorting_1"><?= $bet['Bet']['id']?></td>
-                        <td><?= $bet['Bet']['apostado']?></td>
-                        <td><?= $bet['Bet']['ganancia']?></td>
-                        <td class="center"><?= $bet['Bet']['estado']?></td>
-                        <td class="center">
-                             <?php 
-                             if($bet['Bet']['estado']=="Ganador" || $bet['Bet']['estado']=="Suspendido")
-                                echo $this->Html->link(__('Pagar'), array("controller"=>"rows",'action' => 'pagar', $bet['Bet']['id'])); 
-                             else
-                                 echo $this->Html->link(__('Estado'), array("controller"=>"rows",'action' => 'estado', $bet['Bet']['id'])); 
-                             ?>
-                        </td>
-                    </tr>
+                    <?php foreach ($bets as $dato): ?>
+                        <tr >
+                            <td><?= $dato['Bet']['id'] ?></td>
+                            <td><?= $dato['Bet']['apostado'] ?></td>
+                            <td><?= $dato['Bet']['ganancia'] ?></td>
+                            <td><?= $dato['Bet']['estado'] ?></td>
+                            <td>
+                                <?php
+                                if ($dato['Bet']['estado'] == "Ganador" || $dato['Bet']['estado'] == "Suspendido")
+                                    echo $this->Html->link(__('Pagar'), array("controller" => "rows", 'action' => 'pagar', $dato['Bet']['id']), array(
+                                        "class" => "btn btn-success"
+                                    ));
+                                else
+                                    echo $this->Html->link(__('Estado'), array("controller" => "rows", 'action' => 'estado', $dato['Bet']['id']), array(
+                                        "class" => "btn btn-info"
+                                    ));
+                                ?>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
+
+<?php
+$this->start('scripts');
+echo $this->Html->css(array("datatables/dataTables.bootstrap"));
+echo $this->Html->script(array("plugins/datatables/jquery.dataTables", "plugins/datatables/dataTables.bootstrap"));
+?>
+<script>
+    $(function() {
+        $("#example1").dataTable();
+    });
+</script>
+<?php
+$this->end();
+?>

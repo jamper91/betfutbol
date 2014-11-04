@@ -27,6 +27,9 @@ class GamesController extends AppController {
 //        $this->set('games', $this->Paginator->paginate());
 
         $options = array(
+            "conditions"=>array(
+              "Game.fecha_juego>DATE_SUB(CURDATE(), INTERVAL 7 DAY)"  
+            ),
             "order" => array(
                 "Game.fecha_juego DESC"
             ),

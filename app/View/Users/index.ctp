@@ -1,54 +1,90 @@
-<div class="users index">
-	<h2><?php echo __('Users'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<thead>
-	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('username'); ?></th>
-			<th><?php echo $this->Paginator->sort('password'); ?></th>
-			<th><?php echo $this->Paginator->sort('group_id'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	</thead>
-	<tbody>
-	<?php foreach ($users as $user): ?>
-	<tr>
-		<td><?php echo h($user['User']['id']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['username']); ?>&nbsp;</td>
-		<td><?php echo h($user['User']['password']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($user['Group']['name'], array('controller' => 'groups', 'action' => 'view', $user['Group']['id'])); ?>
-		</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $user['User']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $user['User']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $user['User']['id']), array(), __('Are you sure you want to delete # %s?', $user['User']['id'])); ?>
-		</td>
-	</tr>
+<div class="col-lg-3 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-yellow">
+        <div class="inner">
+            <h3>
+                44
+            </h3>
+            <p>
+                Usuario
+            </p>
+        </div>
+        <div class="icon">
+            <i class="ion ion-person-add"></i>
+        </div>
+        <a href="<?=$this->Html->url("add")?>" class="small-box-footer">
+            Crear Cajero <i class="fa fa-arrow-circle-right"></i>
+        </a>
+    </div>
+</div>  
+<div class="col-xs-12">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">
+                Usuario
+            </h3>
+        </div>
+        <div class="box-body table-responsive">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre de Usuario</th>
+                        <th>Grupo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($users as $i => $dato): ?>
+                        <?php if ($i % 2 == 0) { ?>
+                            <tr class="gradeA even"  habilitado="true">
+                            <?php } else { ?>
+                            <tr class="gradeA odd"  habilitado="true">
+                            <?php } ?>
+                            <td> 
+                                <?= $dato["User"]["username"] ?>
+                            </td>
+                            <td> 
+                                <?= $dato["Group"]["name"] ?>
+                            </td>
+                            <td>
+    <!--                                <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "getVentasByCajero", $dato["User"]["id"])) ?>">
+                                    <button class="btn btn-info">Ventas Diarias</button>
+                                </a>
+                                <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "detallesMensualesByCajero", $dato["User"]["id"])) ?>">
+                                    <button class="btn btn-info">Resumen Mensual</button>
+                                </a>-->
+                                <?php
+                                echo $this->Html->link(__('Editar'), array('action' => 'edit', $dato['User']['id']), array(
+                                    "class" => "btn btn-info"
+                                ));
+                                ?>
+                                <?php
+                                echo $this->Form->postLink(__('Eliminar'), array('action' => 'delete', $dato['User']['id']), array(
+                                    "class" => "btn btn-danger"
+                                        ), __('Estas seguro que deseas eliminar el usuario  # %s?', $dato['User']['username']));
+                                ?>
+
+                            </td>
+
+                        </tr>
 <?php endforeach; ?>
-	</tbody>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
-	</div>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New User'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Groups'), array('controller' => 'groups', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Group'), array('controller' => 'groups', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Bets'), array('controller' => 'bets', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Bet'), array('controller' => 'bets', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
+
+<?php
+$this->start('scripts');
+echo $this->Html->css(array("datatables/dataTables.bootstrap"));
+echo $this->Html->script(array("plugins/datatables/jquery.dataTables", "plugins/datatables/dataTables.bootstrap"));
+?>
+<script>
+    $(function() {
+        $("#example1").dataTable();
+    });
+</script>
+<?php
+$this->end();
+?>
+

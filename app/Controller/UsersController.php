@@ -59,7 +59,7 @@ class UsersController extends AppController {
      */
     public function index() {
         $this->User->recursive = 0;
-        $this->set('users', $this->Paginator->paginate());
+        $this->set('users', $this->User->findAllByGroupId("3"));
     }
 
     /**
@@ -144,7 +144,7 @@ class UsersController extends AppController {
     }
 
     public function login() {
-        $this->layout = "login";
+        $this->layout = null;
         if ($this->Session->read('Auth.User')) {
             $this->Session->setFlash('You are logged in!');
             return $this->redirect('/');

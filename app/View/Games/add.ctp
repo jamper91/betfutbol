@@ -1,261 +1,153 @@
-<div class="mws-panel grid_8">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-pencil">Crear Juego</span>
-    </div>
-    <div class="mws-panel-body">
-
-        <?php
-        echo $this->Form->create('Game', array(
-            "Class" => "mws-form"
-        ));
-        ?>
-        <div class="mws-form-inline">
-            <div class="mws-form-row">
-
-                <div class="mws-panel grid_4">
-                    <div class="mws-panel-header">
-                        <span class="mws-i-24 i-pencil">Informacion del Juego</span>
-                    </div>
-                    <div class="mws-panel-body">
-                        <div class="mws-form-inline">
-                            <div class="mws-form-row">
-                                <label>Liga</label>
-
-                                <select name="data[Game][liga_id]">
-                                    <?php
-                                    $primero=true;
-                                    $ligaActual="";
-                                            foreach ($ligas as $liga) {
-                                                if($liga["Deporte"]["name"]!=$ligaActual)
-                                                {
-                                                    $ligaActual=$liga["Deporte"]["name"];
-                                                    if(!$primero)
-                                                        echo '</optgroup>';
-                                                    else
-                                                        $primero=false;
-                                                    echo '<optgroup label="'.$liga["Deporte"]["name"].'">';
-                                                }
-                                                echo '<option value="'.$liga["Liga"]["id"].'">'.$liga["Liga"]["name"].'</option>';
-                                            }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="mws-form-row">
-                                <label>Nombre Local</label>
-                                <?php
-                                echo $this->Form->input('local', array(
-                                    "div" => array(
-                                        "class" => "mws-form-item large"
-                                    ),
-                                    "class" => "mws-textinput",
-                                    "label" => ""
-                                ));
-                                ?>
-                            </div>
-                            <div class="mws-form-row">
-                                <label>Nombre Visitante</label>
-                                <?php
-                                echo $this->Form->input('visitante', array(
-                                    "div" => array(
-                                        "class" => "mws-form-item large"
-                                    ),
-                                    "class" => "mws-textinput",
-                                    "label" => ""
-                                ));
-                                ?>
-                            </div>
-                            <div class="mws-form-row">
-                                <label>Fecha Juego</label>
-                                <div class="mws-form-item large">
-                                    <input name="data[Game][fecha_juego]" class="mws-textinput" maxlength="20" id="GameFechaJuego" type="text">
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>    	
-                </div>
-
-                <div class="mws-panel grid_4">
-                    <div class="mws-panel-header">
-                        <span class="mws-i-24 i-pencil">MLine</span>
-                    </div>
-                    <div class="mws-panel-body">
-                        <div class="mws-form-inline">
-                            <div class="mws-form-inline">
-                                <div class="mws-form-row">
-                                    <label>Logro Local</label>
-                                    <?php
-                                    echo $this->Form->input('logro_mline_local', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                                <div class="mws-form-row">
-                                    <label>Logro Visitante</label>
-                                    <?php
-                                    echo $this->Form->input('logro_mline_visitante', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item large"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                                <div class="mws-form-row">
-                                    <label>Logro Empate</label>
-                                    <?php
-                                    echo $this->Form->input('logro_mline_empate', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item large"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>    	
-                </div>
-
-                <div class="mws-panel grid_4">
-                    <div class="mws-panel-header">
-                        <span class="mws-i-24 i-pencil">RLine</span>
-                    </div>
-                    <div class="mws-panel-body">
-                        <div class="mws-form-inline">
-                            <div class="mws-form-inline">
-                                <div class="mws-form-row">
-                                    <label>Logro Local</label>
-                                    <?php
-                                    echo $this->Form->input('logro_rline_local', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                                <div class="mws-form-row">
-                                    <label>Goles Local</label>
-                                    <?php
-                                    echo $this->Form->input('goles_rline_local', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item large"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                                <div class="mws-form-row">
-                                    <label>Logro Visitante</label>
-                                    <?php
-                                    echo $this->Form->input('logro_rline_visitante', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item large"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                                <div class="mws-form-row">
-                                    <label>Goles Visitante</label>
-                                    <?php
-                                    echo $this->Form->input('goles_rline_visitante', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item large"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>    	
-                </div>
-
-                <div class="mws-panel grid_4">
-                    <div class="mws-panel-header">
-                        <span class="mws-i-24 i-pencil">A/B</span>
-                    </div>
-                    <div class="mws-panel-body">
-                        <div class="mws-form-inline">
-                            <div class="mws-form-inline">
-                                <div class="mws-form-row">
-                                    <label>Logro Altas</label>
-                                    <?php
-                                    echo $this->Form->input('altas', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                                <div class="mws-form-row">
-                                    <label>Goles Altas</label>
-                                    <?php
-                                    echo $this->Form->input('goles_alta', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item large"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                                <div class="mws-form-row">
-                                    <label>Logro Baja</label>
-                                    <?php
-                                    echo $this->Form->input('bajas', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item large"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-                                <div class="mws-form-row">
-                                    <label>Goles Baja</label>
-                                    <?php
-                                    echo $this->Form->input('goles_baja', array(
-                                        "div" => array(
-                                            "class" => "mws-form-item large"
-                                        ),
-                                        "class" => "mws-textinput",
-                                        "label" => ""
-                                    ));
-                                    ?>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>    	
-                </div>
+<div class="col-md-12">
+    <!-- general form elements disabled -->
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Crear Juego</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <?php
+            echo $this->Form->create('Game', array(
+                'inputDefaults' => array(
+                    'div' => array(
+                        "class" => "col-xs-6"
+                    ),
+                    "class" => "form-control"
+                )
+            ));
+            ?>
+            <div class="row">
+            <div class="col-xs-6">
+                <label>Liga</label>
+                <select name="data[Game][liga_id]" class="form-control">
+                    <?php
+                    $primero = true;
+                    $ligaActual = "";
+                    foreach ($ligas as $liga) {
+                        if ($liga["Deporte"]["name"] != $ligaActual) {
+                            $ligaActual = $liga["Deporte"]["name"];
+                            if (!$primero)
+                                echo '</optgroup>';
+                            else
+                                $primero = false;
+                            echo '<optgroup label="' . $liga["Deporte"]["name"] . '">';
+                        }
+                        echo '<option value="' . $liga["Liga"]["id"] . '">' . $liga["Liga"]["name"] . '</option>';
+                    }
+                    ?>
+                </select>
             </div>
+            <div class="col-xs-6">
+                <label>Fecha Juego</label>
+                <input name="data[Game][fecha_juego]" class="form-control" maxlength="20" id="GameFechaJuego" type="text">
+
+            </div>
+ 
+                <?php
+                echo $this->Form->input('local', array(
+                    "label" => "Nombre del Local",
+                ));
+                echo $this->Form->input('visitante', array(
+                    "label" => "Nombre del Visitante"
+                ));
+                ?> 
+
+
+            
+            
+            
+                <?php
+                //MLINE
+                echo $this->Form->input('logro_mline_local', array(
+                    "label" => "Logro MLine Local",
+                    'div' => array(
+                        "class" => "col-xs-4"
+                    )
+                ));
+                echo $this->Form->input('logro_mline_empate', array(
+                    "label" => "Logro MLine Empate",
+                    'div' => array(
+                        "class" => "col-xs-4"
+                    )
+                ));
+                echo $this->Form->input('logro_mline_visitante', array(
+                    "label" => "Logro MLine Visitante",
+                    'div' => array(
+                        "class" => "col-xs-4"
+                    )
+                ));
+                
+                //RLINE
+                echo $this->Form->input('goles_rline_local', array(
+                    "label" => "Goles rLine Local",
+                    'div' => array(
+                        "class" => "col-xs-2"
+                    )
+                ));
+                echo $this->Form->input('logro_rline_local', array(
+                    "label" => "Logro rLine Local",
+                    'div' => array(
+                        "class" => "col-xs-4"
+                    )
+                ));
+                echo $this->Form->input('goles_rline_visitante', array(
+                    "label" => "Goles rLine Visitante",
+                    'div' => array(
+                        "class" => "col-xs-2"
+                    )
+                ));
+                echo $this->Form->input('logro_rline_visitante', array(
+                    "label" => "Logro rLine Visitante",
+                    'div' => array(
+                        "class" => "col-xs-4"
+                    )
+                ));
+                
+                //ALTAS
+                echo $this->Form->input('goles_alta', array(
+                    "label" => "Goles Altas",
+                    'div' => array(
+                        "class" => "col-xs-2"
+                    )
+                ));
+                echo $this->Form->input('altas', array(
+                    "label" => "Logro Altas",
+                    'div' => array(
+                        "class" => "col-xs-4"
+                    )
+                ));
+                echo $this->Form->input('goles_baja', array(
+                    "label" => "Goles Baja",
+                    'div' => array(
+                        "class" => "col-xs-2"
+                    )
+                ));
+                echo $this->Form->input('bajas', array(
+                    "label" => "Logro Bajas",
+                    'div' => array(
+                        "class" => "col-xs-4"
+                    )
+                ));
+                ?> 
+            </div>
+
+            <div class="box-footer">
+                <?php
+                echo $this->Form->end(array(
+                    "class" => "btn btn-primary",
+                    "div" => false,
+                    "label" => "Crear"
+                ));
+                ?>
+            </div>
+
         </div>
-        <div class="mws-button-row">
-            <input class="mws-button red" type="submit" value="Crear">
-        </div>
-        </form>
     </div>
 </div>
-
-
-
+<?php
+    $this->start('scripts');
+    echo $this->Html->css("https://code.jquery.com/ui/jquery-ui-git.css");
+    echo $this->Html->script(array("jquery-ui-timepicker-addon"));
+?>
 <script>
     (function()
     {
@@ -264,3 +156,9 @@
         });
     })();
 </script>
+<?php
+    $this->end();
+?>
+
+
+

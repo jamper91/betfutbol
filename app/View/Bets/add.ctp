@@ -9,17 +9,19 @@
     </tr>
     <tr>
         <td>
-            Ticket Nro:<?= $id ?>
+            ___________________________<br>
+            <strong> Ticket Nro:<?= $id ?></strong>
         </td>
     </tr>
     <tr>
         <td>
-            Fecha: <?= $fecha ?> - Hora: <?= $hora ?>
+            <strong>Fecha: <?= $fecha ?> - Hora: <?= $hora ?></strong>
         </td>
     </tr>
     <tr>
         <td>
-            Jugada Pesos: <?= number_format($apuesta) ?>
+            <strong>Jugada Pesos: $<?= number_format($apuesta) ?></strong>
+            ___________________________<br>
         </td>
     </tr>
     <tr>
@@ -45,7 +47,11 @@
     </tr>
     <tr>
         <td>
-            Premio Pesos: <?= number_format($ganancia) ?>
+            <strong>Premio Pesos: $<?= number_format($ganancia) ?></strong>
+            <p style="font-size: 12px">
+                Este tiquet caduca  alos 10 días.<br>
+                Partido suspendido anula la apuesta
+            </p>
         </td>
     </tr>
 

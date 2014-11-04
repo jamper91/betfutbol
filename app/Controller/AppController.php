@@ -43,6 +43,7 @@ class AppController extends Controller {
     );
 
     public function beforeFilter() {
+        $this->layout="adminLTE";
         //Configure AuthComponent
         $this->Auth->loginAction = array(
             'controller' => 'users',

@@ -83,10 +83,10 @@ class BetsController extends AppController {
                     $this->set("hora", $fecha["hours"] . ":" . $fecha["minutes"]);
                 } else {
                     $this->Session->setFlash(__('La apuesta no pudo ser creada.'));
-                    $this->redirect(array("controller"=>"games","action"=>"listar"));
+                    $this->redirect(array("controller" => "games", "action" => "listar"));
                 }
-            }else{
-                $this->redirect(array("controller"=>"games","action"=>"listar"));
+            } else {
+                $this->redirect(array("controller" => "games", "action" => "listar"));
             }
         }
         $users = $this->Bet->User->find('list');
@@ -170,7 +170,8 @@ class BetsController extends AppController {
                 "Bet.fecha_pagado"
             ),
             "conditions" => array(
-                "Bet.pagado" => 1
+                "Bet.pagado" => 1,
+                "Bet.user_id" => $this->Session->read("User.id")
             )
         );
         $datos = $this->Bet->find('all', $options);
@@ -313,7 +314,8 @@ class BetsController extends AppController {
             "conditions" => array(
                 "Bet.pagado" => 0,
                 "Bet.valido" => 1,
-                "Bet.vendedor_id" => $this->Session->read("User.id")
+                "Bet.vendedor_id" => $this->Session->read("User.id"),
+				"Bet.created>DATE_SUB(CURDATE(), INTERVAL 10 DAY)"
             )
         ));
         foreach ($bets as $key => $bet) {
@@ -345,7 +347,7 @@ class BetsController extends AppController {
         $this->set("bets", $bets);
     }
 
-    public function getVentasByUser() {
+    public function getVentasByUser2() {
         $idUsuario = $this->Session->read("User.id");
         $fecha = date("Y-m-d");
         $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
@@ -377,32 +379,77 @@ class BetsController extends AppController {
         $this->set("ventasPagadas", $ventasPagadas);
         $this->set("ingresos", $ingresos);
         $this->set("salidas", $salidas);
+        $this->set("fecha", $fecha);
     }
 
-    public function getVentasByUser2() {
+    public function getVentasByUser() {
+//        Datos Generales
         $idUsuario = $this->Session->read("User.id");
-        $fecha = date("Y-m-d");
-        $sql = "select count(*), sum(apostado),  DATE_FORMAT(created, '%Y-%m-%d') from bets";
-        $this->Bet->virtualFields['cantidad'] = "count(Bet.id)";
+//        $idUsuario = 17;
+//        $this->Bet->virtualFields['cantidad'] = "count(Bet.id)";
         $this->Bet->virtualFields['ingresos'] = "sum(Bet.apostado)";
+        $this->Bet->virtualFields['salidas'] = "sum(CASE Bet.pagado  WHEN 1 THEN Bet.ganancia ELSE '0' END)";
         $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
         $options = array(
             "fields" => array(
-                "Bet.cantidad",
+//                "Bet.cantidad",
                 "Bet.ingresos",
+                "Bet.salidas",
                 "Bet.fecha"
             ),
             "conditions" => array(
-                "DATE_FORMAT(Bet.created, '%Y-%m-%d')" => $fecha,
                 "vendedor_id" => $idUsuario,
                 "Bet.valido" => "1"
             ),
             "group" => array(
                 "DATE_FORMAT(Bet.created, '%Y-%m-%d')"
-            )
+            ),
+            "recursive" => -1
+        );
+        $generales = $this->Bet->find("all", $options);
+
+        $this->set("generales", $generales);
+		$fecha = date("Y-m-d");
+        //Datos del dia de hoy
+        $this->Bet->virtualFields['hora'] = "DATE_FORMAT(Bet.created, '%H-%I')";
+        $options = array(
+            "conditions" => array(
+                "DATE_FORMAT(Bet.created, '%Y-%m-%d')" => $fecha,
+                "Bet.vendedor_id" => $idUsuario,
+                "Bet.valido" => "1",
+            ),
+            "fields"=>array(
+                "Bet.id",
+                "Bet.apostado",
+                "Bet.ganancia",
+                "Bet.pagado",
+				"Bet.created",
+				"Bet.fecha_pagado"
+            ),
+            "recursive" => -1
         );
         $datos = $this->Bet->find("all", $options);
+        //Obtengo el total de ventas, ventas pagadas, ingresos y salidas
+        $totalVentas = 0;
+        $ventasPagadas = 0;
+        $ingresos = 0;
+        $salidas = 0;
+        if ($datos) {
+            foreach ($datos as $dato) {
+                $totalVentas++;
+                $ingresos+=$dato["Bet"]["apostado"];
+                if ($dato["Bet"]["pagado"] == 1) {
+                    $ventasPagadas++;
+                    $salidas+=$dato["Bet"]["ganancia"];
+                }
+            }
+        }
         $this->set("datos", $datos);
+        $this->set("totalVentas", $totalVentas);
+        $this->set("ventasPagadas", $ventasPagadas);
+        $this->set("ingresos", $ingresos);
+        $this->set("salidas", $salidas);
+        $this->set("fecha", $fecha);
     }
 
     public function getVentasByCajero($idUsuario) {
@@ -429,7 +476,6 @@ class BetsController extends AppController {
         $this->set("datos", $datos);
         $this->set("cajeroId", $idUsuario);
     }
-
 
     public function detallesDiariosByCajero($idUsuario, $fecha) {
         $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m-%d')";
@@ -461,10 +507,11 @@ class BetsController extends AppController {
         $this->set("ingresos", $ingresos);
         $this->set("salidas", $salidas);
     }
+
     public function detallesMensualesByCajero($idUsuario) {
         $this->Bet->virtualFields['apostado'] = "sum(Bet.apostado)";
         $this->Bet->virtualFields['ganancia'] = "sum(CASE Bet.pagado  WHEN 1 THEN Bet.ganancia ELSE '0' END)";
-        
+
         $this->Bet->virtualFields['fecha'] = "DATE_FORMAT(Bet.created, '%Y-%m')";
         $options = array(
             "conditions" => array(
@@ -472,7 +519,7 @@ class BetsController extends AppController {
                 "Bet.valido" => "1"
             ),
             "recursive" => -1,
-            "group"=>array(
+            "group" => array(
                 "DATE_FORMAT(Bet.created, '%Y-%m')"
             )
         );

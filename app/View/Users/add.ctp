@@ -1,88 +1,25 @@
-<!--<div class="users form">
-
-        <fieldset>
-                <legend><?php echo __('Add User'); ?></legend>
-<?php
-echo $this->Form->input('username');
-echo $this->Form->input('password');
-echo $this->Form->input('group_id');
-?>
-        </fieldset>
-
-</div>
-<?php echo $this->Form->create('User'); ?>
-<div class="mws-panel grid_8">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-pencil">Crear Juego</span>
-    </div>
-    <div class="mws-panel-body">
-
-        <div class="mws-form-inline">
-            <div class="mws-form-row">
-                <div class="mws-panel grid_4">
-                    <div class="mws-panel-header">
-                        <span class="mws-i-24 i-pencil">Informacion del Juego</span>
-                    </div>
-                    <div class="mws-panel-body">
-                        <div class="mws-form-inline">
-                            <div class="mws-form-row">
-                                <label>Nombre Usuario</label>
-
-                            </div>
-                            <div class="mws-form-row">
-                                <label>Contraseña</label>
-
-                            </div>
-
-                        </div>
-                    </div>    	
-                </div>
-            </div>
-        </div>
-        <div class="mws-button-row">
-            <input class="mws-button red" type="submit" value="Crear">
-        </div>
-        </form>
-    </div>
-</div>-->
-
-
-<div class="mws-panel grid_8">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-list">Crear Cajero</span>
-    </div>
-    <div class="mws-panel-body">
-        <?php
-        echo $this->Form->create('User', array(
-            "Class" => "mws-form"
-        ));
-        ?>
-        <div class="mws-form-inline">
-            <div class="mws-form-row">
-                <label>Username</label>
-                <?php
-                echo $this->Form->input('username', array(
-                    "div" => array(
-                        "class" => "mws-form-item large"
+<div class="col-md-12">
+    <!-- general form elements disabled -->
+    <div class="box box-warning">
+        <div class="box-header">
+            <h3 class="box-title">Crear Cajero</h3>
+        </div><!-- /.box-header -->
+        <div class="box-body">
+            <?php echo $this->Form->create('User', array(
+                'inputDefaults' => array(
+                    'div' => array(
+                        "class" => "form-group"
                     ),
-                    "class" => "mws-textinput",
-                    "label" => ""
-                ));
-                ?>
-            </div>
-            <div class="mws-form-row">
-                <label>Clave</label>
-                <?php
-                echo $this->Form->input('password', array(
-                    "div" => array(
-                        "class" => "mws-form-item large"
-                    ),
-                    "class" => "mws-textinput",
-                    "label" => ""
-                ));
-                ?>
-            </div>
+                    "class" => "form-control"
+                )
+            )); ?>
             <?php
+            echo $this->Form->input('username', array(
+                "label"=>"Nombre de Usuario"
+            ));
+            echo $this->Form->input('password', array(
+                "label"=>"Contraseña"
+            ));
             echo $this->Form->input('group_id', array(
                 "style" => array(
                     "display:none"
@@ -91,10 +28,15 @@ echo $this->Form->input('group_id');
                 "selected" => "3"
             ));
             ?>
+            <div class="box-footer">
+                <?php echo $this->Form->end(array(
+                    "class"=>"btn btn-primary",
+                    "div"=>false,
+                    "label"=>"Crear"
+                )); ?>
+            </div>
+            
         </div>
-        <div class="mws-button-row">
-            <input type="submit" value="Submit" class="mws-button green" value="Crear Usuario" />
-        </div>
-        </form>
-    </div>    	
+    </div>
 </div>
+
