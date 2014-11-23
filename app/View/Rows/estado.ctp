@@ -158,15 +158,16 @@ $gano=true;
                     ));
                     ?>
                 </div>
+                
+                <?php
+                    if($this->Session->read("Group.name")=="Administrador" || $gano){
+                ?>
                 <div class="row">
                     <div class="col-xs-6">
                         <label>Clave</label>
                         <input type="text" class="form-control" value=""  id="BetClave">
                     </div>
                 </div>
-                <?php
-                    if($this->Session->read("Group.name")=="Administrador" || $gano){
-                ?>
                 <div class="box-footer">
                     <?php
                     echo $this->Form->end(array(

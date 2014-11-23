@@ -1,12 +1,8 @@
 <div class="col-md-12">
-    <div class="box box-info">
+    <!-- Success box -->
+    <div class="box box-solid bg-yellow">
         <div class="box-body">
-            <br>
-            <div class="alert alert-warning alert-dismissable">
-                <i class="fa fa-ban"></i>
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <?php echo h($message); ?>
-            </div>
-        </div>
-    </div>
+            <?php echo h($message); ?>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
 </div>

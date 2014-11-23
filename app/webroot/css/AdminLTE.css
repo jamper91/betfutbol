@@ -1764,7 +1764,7 @@ body > .header .logo .icon {
 }
 .box > .loading-img {
   z-index: 1020;
-  background: transparent url('../img/ajax-loader1.gif') 50% 50% no-repeat;
+  background: transparent url('../img/bloqueo.png') 50% 10% no-repeat;
 }
 /*
 Component: timeline

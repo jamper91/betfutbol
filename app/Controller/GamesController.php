@@ -151,6 +151,12 @@ class GamesController extends AppController {
         $this->set("partidos", $partidos);
         $deportes = $this->Game->Liga->Deporte->find("all");
         $this->set("deportes", $deportes);
+        
+        $this->loadModel("User");
+        $bloqueado=  $this->User->field("bloqueado",array(
+            "id"=>  $this->Session->read("User.id")
+        ));
+        $this->set("bloqueado",$bloqueado);
     }
 
     public function encurso() {
@@ -164,6 +170,7 @@ class GamesController extends AppController {
         $games = $this->Game->find('all', $options);
         $this->set("games", $games);
     }
+
     public function cambiarResultado() {
         $options = array(
             "conditions" => array(

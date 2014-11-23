@@ -47,22 +47,23 @@
                                 <?= $dato["Group"]["name"] ?>
                             </td>
                             <td>
-    <!--                                <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "getVentasByCajero", $dato["User"]["id"])) ?>">
-                                    <button class="btn btn-info">Ventas Diarias</button>
-                                </a>
-                                <a href="<?= $this->Html->url(array("controller" => "bets", "action" => "detallesMensualesByCajero", $dato["User"]["id"])) ?>">
-                                    <button class="btn btn-info">Resumen Mensual</button>
-                                </a>-->
                                 <?php
                                 echo $this->Html->link(__('Editar'), array('action' => 'edit', $dato['User']['id']), array(
                                     "class" => "btn btn-info"
                                 ));
                                 ?>
                                 <?php
-                                echo $this->Form->postLink(__('Eliminar'), array('action' => 'delete', $dato['User']['id']), array(
-                                    "class" => "btn btn-danger"
-                                        ), __('Estas seguro que deseas eliminar el usuario  # %s?', $dato['User']['username']));
+                                echo $this->Form->postLink(__('Eliminar'), array('action' => 'delete', $dato['User']['id']), array("class" => "btn btn-danger"), __('Estas seguro que deseas eliminar el usuario  # %s?', $dato['User']['username']));
                                 ?>
+                                <?php
+                                if($dato["User"]["bloqueado"]=="0")
+                                {
+                                    echo $this->Form->postLink(__('Bloquear'), array('action' => 'bloquear', $dato['User']['id']), array("class" => "btn btn-danger"), __('Estas seguro que deseas bloquear al usuario   %s?', $dato['User']['username']));
+                                }else{
+                                    echo $this->Form->postLink(__('Desbloquear'), array('action' => 'desbloquear', $dato['User']['id']), array("class" => "btn btn-success"), __('Estas seguro que deseas desbloquear al usuario %s?', $dato['User']['username']));
+                                }
+                                ?>
+                                
 
                             </td>
 

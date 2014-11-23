@@ -143,6 +143,32 @@ class UsersController extends AppController {
         }
         return $this->redirect(array('action' => 'index'));
     }
+    public function bloquear($id = null) {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Usuario no valido'));
+        }
+        $this->request->allowMethod('post', 'delete');
+        if ($this->User->save(array("bloqueado"=>"1"))) {
+            $this->Session->setFlash(__('Usuario bloqueado con exito.'),'good');
+        } else {
+            $this->Session->setFlash(__('Usuario no se pudo bloquear.'),'warning');
+        }
+        return $this->redirect(array('action' => 'index'));
+    }
+    public function desbloquear($id = null) {
+        $this->User->id = $id;
+        if (!$this->User->exists()) {
+            throw new NotFoundException(__('Usuario no valido'));
+        }
+        $this->request->allowMethod('post', 'delete');
+        if ($this->User->save(array("bloqueado"=>"0"))) {
+            $this->Session->setFlash(__('Usuario desbloqueado con exito.'),'good');
+        } else {
+            $this->Session->setFlash(__('Usuario no se pudo desbloquear.'),'warning');
+        }
+        return $this->redirect(array('action' => 'index'));
+    }
 
     public function login() {
         $this->layout = null;
