@@ -116,8 +116,10 @@ class RowsController extends AppController {
         {
             
             $rows= $this->Row->findAllByBetId($bet_id);
+            $clave=  $this->Row->Bet->field("clave");
             $this->set("rows",$rows);
             $this->set("bet",$rows[0]["Bet"]);
+            $this->set("clave",$clave);
         }
         /**
          * Esta funcion se encarga de listar todas las fila de una apuesta basado
@@ -127,8 +129,13 @@ class RowsController extends AppController {
         public function pagar($bet_id)
         {
             
+            
             $rows= $this->Row->findAllByBetId($bet_id);
+            //Busco la clave de la apuesta
+            
             $this->set("rows",$rows);
             $this->set("bet",$rows[0]["Bet"]);
+            $this->set("clave",$clave);
+            debug($clave);
         }
 }

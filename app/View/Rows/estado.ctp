@@ -135,7 +135,8 @@ $gano=true;
                 <div class="row">
                     <div class="col-xs-6">
                         <label>Codigo</label>
-                        <input type="text" name="data[Bet][id]" class="form-control" value="<?= $bet["id"] ?>" >
+                        <input type="text" name="data[Bet][id2]" class="form-control" value="<?= $bet["id"] ?>" disabled>
+                        <input type="text" name="data[Bet][id]" class="form-control" value="<?= $bet["id"] ?>" style="display: none">
                     </div>
                     <div class="col-xs-6">
                         <label>Apostado</label>
@@ -156,6 +157,12 @@ $gano=true;
                         )
                     ));
                     ?>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label>Clave</label>
+                        <input type="text" class="form-control" value=""  id="BetClave">
+                    </div>
                 </div>
                 <?php
                     if($this->Session->read("Group.name")=="Administrador" || $gano){
@@ -179,5 +186,35 @@ $gano=true;
     </div>
 
 </div>
+<?php
+$this->start('scripts');
+?>
+<script>
+    $(document).ready(function()
+    {
+       $("#BetPagarForm").submit(function()
+       {
+           var clave=$("#BetClave").val();
+           var aux='<?=$clave?>';
+           console.log("clave: "+clave);
+           console.log("aux: "+aux);
+           if(clave===aux)
+           {
+               console.log("entre if");
+               return true;
+           }else
+           {
+               console.log("entre else");
+               alert("Clave no valida");
+               return false;
+           }
+           
+       }); 
+    });
+</script>
+
+<?php
+$this->end();
+?>
 
 
