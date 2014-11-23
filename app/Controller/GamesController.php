@@ -27,8 +27,8 @@ class GamesController extends AppController {
 //        $this->set('games', $this->Paginator->paginate());
 
         $options = array(
-            "conditions"=>array(
-              "Game.fecha_juego>DATE_SUB(CURDATE(), INTERVAL 7 DAY)"  
+            "conditions" => array(
+                "Game.fecha_juego>DATE_SUB(CURDATE(), INTERVAL 7 DAY)"
             ),
             "order" => array(
                 "Game.fecha_juego DESC"
@@ -154,15 +154,27 @@ class GamesController extends AppController {
     }
 
     public function encurso() {
-        $fecha = date("Y-m-d H:i:s");
         $options = array(
             "conditions" => array(
 //                "Game.fecha_juego >" => $fecha,
-                "Game.finalizado" => 0
+                "Game.finalizado" => 0,
+                "Game.fecha_juego>DATE_SUB(CURDATE(), INTERVAL 7 DAY)"
             )
         );
         $games = $this->Game->find('all', $options);
         $this->set("games", $games);
+    }
+    public function cambiarResultado() {
+        $options = array(
+            "conditions" => array(
+//                "Game.fecha_juego >" => $fecha,
+                "Game.finalizado" => 1,
+                "Game.fecha_juego>DATE_SUB(CURDATE(), INTERVAL 7 DAY)"
+            )
+        );
+        $games = $this->Game->find('all', $options);
+        $this->set("games", $games);
+        $this->render("encurso");
     }
 
     public function finalizar($id) {
@@ -172,29 +184,30 @@ class GamesController extends AppController {
                 //Ahora verifico quien gano o perdio en todas las filas
                 $this->loadModel("Row");
                 $rows = $this->Row->findAllByGameId($id);
-                foreach ($rows as $row) {
-                    //VAriable que determina quien gano, si local, visitante o empate
-                    $gano = "";
-                    //Diferencia de goles
-                    $diferencia = "";
-                    //Total de goles
-                    $totalGoles = "";
-                    if ($this->request->data["Game"]["goles_local"] > $this->request->data["Game"]["goles_visitante"]) {
-                        $gano = $this->request->data["Game"]["local"];
-                        $diferencia = $this->request->data["Game"]["goles_local"] - $this->request->data["Game"]["goles_visitante"];
-                    } else if ($this->request->data["Game"]["goles_local"] < $this->request->data["Game"]["goles_visitante"]) {
-                        $gano = $this->request->data["Game"]["visitante"];
-                        $diferencia = $this->request->data["Game"]["goles_visitante"] - $this->request->data["Game"]["goles_local"];
+                //VAriable que determina quien gano, si local, visitante o empate
+                $gano = "";
+                //Diferencia de goles
+                $diferencia = "";
+                //Total de goles
+                $totalGoles = "";
+                if ($this->request->data["Game"]["goles_local"] > $this->request->data["Game"]["goles_visitante"]) {
+                    $gano = $this->request->data["Game"]["local"];
+                    $diferencia = $this->request->data["Game"]["goles_local"] - $this->request->data["Game"]["goles_visitante"];
+                } else if ($this->request->data["Game"]["goles_local"] < $this->request->data["Game"]["goles_visitante"]) {
+                    $gano = $this->request->data["Game"]["visitante"];
+                    $diferencia = $this->request->data["Game"]["goles_visitante"] - $this->request->data["Game"]["goles_local"];
+                } else {
+                    if ($this->request->data["Game"]["goles_local"] == -1) {
+                        $gano = "Suspendido";
+                        $diferencia = 0;
                     } else {
-                        if ($this->request->data["Game"]["goles_local"] == -1) {
-                            $gano = "Suspendido";
-                            $diferencia = 0;
-                        } else {
-                            $gano = "Empate";
-                            $diferencia = 0;
-                        }
+                        $gano = "Empate";
+                        $diferencia = 0;
                     }
-                    $totalGoles = $this->request->data["Game"]["goles_visitante"] + $this->request->data["Game"]["goles_local"];
+                }
+                $totalGoles = $this->request->data["Game"]["goles_visitante"] + $this->request->data["Game"]["goles_local"];
+                foreach ($rows as $row) {
+
                     if ($gano != "Suspendido") {
                         switch ($row["Row"]["tipo"]) {
                             case "ML":
@@ -209,16 +222,16 @@ class GamesController extends AppController {
                             case "RL":
                                 /**
                                  * Para determinar si gano con RL debo:
-                                 * Si goles son negativos, el equipo debe perder
-                                 * Si goles son positivos, el equipo debe ganar
+                                 * Si goles son negativos, el equipo debe ganar
+                                 * Si goles son positivos, el equipo debe perder
                                  * Si goles de diferencia son mayores a los goles, gana
                                  * Si goles de diferencia son iguales a los goles, empata
                                  */
                                 if ($row["Row"]["goles"] < 0) {
                                     if ($row["Row"]["equipo"] == $gano) {
-                                        if ($diferencia > $row["Row"]["goles"])
+                                        if ($diferencia > abs($row["Row"]["goles"]))
                                             $row["Row"]["estado"] = "2";
-                                        else if ($diferencia == $row["Row"]["goles"])
+                                        else if ($diferencia == abs($row["Row"]["goles"]))
                                             $row["Row"]["estado"] = "0";
                                         else
                                             $row["Row"]["estado"] = "1";
@@ -259,7 +272,7 @@ class GamesController extends AppController {
                             default:
                                 break;
                         }
-                    }else{
+                    }else {
                         $row["Row"]["estado"] = "-2";
                     }
 

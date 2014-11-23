@@ -47,7 +47,8 @@
     </tr>
     <tr>
         <td>
-            <strong>Premio Pesos: $<?= number_format($ganancia) ?></strong>
+            <strong>Premio Pesos: $<?= number_format($ganancia) ?></strong><br>
+            <strong>Clave: <?=$clave?></strong>
             <p style="font-size: 12px">
                 Este tiquet caduca  alos 10 días.<br>
                 Partido suspendido anula la apuesta

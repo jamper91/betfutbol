@@ -1,68 +1,93 @@
-<!--<div class="mws-panel grid_3">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-books-2">Detalles Diarios</span>
-    </div>
-    <div class="mws-panel-body">
-        <ul class="mws-summary">
-            <li>
-                <span><?=$totalVentas?></span> Cantidad Ventas
-            </li>
-            <li>
-                <span><?=$ventasPagadas?></span> Apuestas Pagadas
-            </li>
-            <li>
-                <span><?=number_format($ingresos)?></span> Ingresos
-            </li>
-            <li>
-                <span><?=number_format($salidas)?></span> Salidas
-            </li>
-            <li>
-                <span><?=number_format($ingresos-$salidas)?></span> Total
-            </li>
-            
-        </ul>
-    </div>
-</div>-->
+<?php
+$acumulado = 0;
+?>
 
-<div class="mws-panel grid_8">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-table-1">Ventas</span>
-    </div>
-    <div class="mws-panel-body">
-        <table class="mws-table" id="partidos" style="font-size: 18px">
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Cantidad Apuestas Creadas</th>
-                    <th>Dinero recaudado</th>
-                    <th>Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
+<div class="col-md-12">
+    <!-- AREA CHART -->
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Ventas</h3>
+        </div>
+        <div class="box-body chart-responsive">
+            <div class="chart" id="revenue-chart" style="height: 300px;"></div>
+        </div><!-- /.box-body -->
+    </div><!-- /.box -->
 
-                <?php foreach ($datos as $i=>$dato): ?>
-                    <?php if($i%2==0){ ?>
-                    <tr class="gradeA even"  habilitado="true">
-                    <?php  }else{ ?>
-                    <tr class="gradeA odd"  habilitado="true">
-                    <?php } ?>
-                        <td> 
-                            <?= $dato["Bet"]["fecha"] ?>
-                        </td>
-                        <td> 
-                            <?= $dato["Bet"]["cantidad"] ?>
-                        </td>
-                        <td> 
-                            <?= number_format($dato["Bet"]["ingresos"]) ?>
-                        </td>
-                        <td> 
-                            
-                            <a href="<?=$this->Html->url("detallesDiariosByCajero")?>/<?=$cajeroId?>/<?=$dato["Bet"]["fecha"]?>">Detalles</a>
-                        </td>
-                        
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+</div><!-- /.col (LEFT) -->
+
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">
+                    Apuestas
+                </h3>
+            </div>
+            <div class="box-body table-responsive">
+                <table id="example1" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Apuestas Creadas</th>
+                            <th>Dinero Recaudado</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($datos as $dato): ?>
+                            <tr >
+                                <td> 
+                                    <?= $dato["Bet"]["fecha"] ?>
+                                </td>
+                                <td> 
+                                    <?= $dato["Bet"]["cantidad"] ?>
+                                </td>
+                                <td> 
+                                    <?= number_format($dato["Bet"]["ingresos"]) ?>
+                                </td>
+                                <td> 
+
+                                    <a class="btn btn-info" href="<?= $this->Html->url("detallesDiariosByCajero") ?>/<?= $cajeroId ?>/<?= $dato["Bet"]["fecha"] ?>">Detalles</a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
+<?php
+$this->start('scripts');
+echo $this->Html->css(array("morris/morris"));
+echo $this->Html->script(array("http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js", "plugins/morris/morris.min"));
+?>
+<script>
+    $(function() {
+    "use strict";
+            // AREA CHART
+            var area = new Morris.Area({
+            element: 'revenue-chart',
+                    resize: true,
+                    data: [
+<?php
+foreach ($datos as $key => $dato) {
+    if ($key > 0)
+        echo ",";
+    ?>
+                        {y: '<?= $dato["Bet"]["fecha"] ?>', item1: <?= $dato["Bet"]["ingresos"] ?>}
+<?php } ?>
+                    ],
+                    xkey: 'y',
+                    ykeys: ['item1'],
+                    labels: ['Ingresos'],
+                    lineColors: ['green'],
+                    hideHover: 'auto'
+            });
+    });
+</script>
+<?php
+$this->end();
+?>

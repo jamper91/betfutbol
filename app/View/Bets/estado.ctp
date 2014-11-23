@@ -13,30 +13,38 @@
                         <th>Codigo</th>
                         <th>Apostado</th>
                         <th>Ganancia</th>
-                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($bets as $dato): ?>
+                    <?php if($dato['Bet']['estado'] != "Perdedor"){ ?>
                         <tr >
                             <td><?= $dato['Bet']['id'] ?></td>
-                            <td><?= $dato['Bet']['apostado'] ?></td>
-                            <td><?= $dato['Bet']['ganancia'] ?></td>
-                            <td><?= $dato['Bet']['estado'] ?></td>
+                            <td><?= number_format($dato['Bet']['apostado']) ?></td>
+                            <td><?= number_format($dato['Bet']['ganancia']) ?></td>
                             <td>
                                 <?php
-                                if ($dato['Bet']['estado'] == "Ganador" || $dato['Bet']['estado'] == "Suspendido")
-                                    echo $this->Html->link(__('Pagar'), array("controller" => "rows", 'action' => 'pagar', $dato['Bet']['id']), array(
+                                if ($dato['Bet']['estado'] == "Ganador")
+                                    echo $this->Html->link(__($dato['Bet']['estado']), array("controller" => "rows", 'action' => 'estado', $dato['Bet']['id']), array(
                                         "class" => "btn btn-success"
                                     ));
-                                else
-                                    echo $this->Html->link(__('Estado'), array("controller" => "rows", 'action' => 'estado', $dato['Bet']['id']), array(
+                                else if($dato['Bet']['estado'] == "Perdedor")
+                                    echo $this->Html->link(__($dato['Bet']['estado']), "#", array(
+                                        "class" => "btn btn-danger"
+                                    ));
+                                else if($dato['Bet']['estado'] == "Suspendido" || $dato['Bet']['estado'] == "Partido Suspendido" )
+                                    echo $this->Html->link(__($dato['Bet']['estado']), array("controller" => "rows", 'action' => 'estado', $dato['Bet']['id']), array(
+                                        "class" => "btn btn-warning"
+                                    ));
+                                else if($dato['Bet']['estado'] == "En curso")
+                                    echo $this->Html->link(__($dato['Bet']['estado']), array("controller" => "rows", 'action' => 'estado', $dato['Bet']['id']), array(
                                         "class" => "btn btn-info"
                                     ));
                                 ?>
                             </td>
                         </tr>
+                    <?php } ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>

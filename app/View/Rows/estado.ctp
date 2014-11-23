@@ -6,27 +6,29 @@ $total = 0;
 $apuesta = $bet["apostado"];
 $total = $apuesta;
 $texto = "";
+$gano=true;
 ?>
-
-<div class="mws-panel grid_4">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-table-1">Apuesta</span>
-    </div>
-    <div class="mws-panel-body">
-        <div class="dataTables_wrapper">
-
-            <table class="mws-datatable mws-table" style="font-size: 18px">
+<div class="col-md-8">
+    <!-- Info box -->
+    <div class="box box-info">
+        <div class="box-header">
+            <h3 class="box-title">Apuesta</h3>
+            <div class="box-tools pull-right">
+                <div class="label bg-aqua">Apuesta</div>
+            </div>
+        </div>
+        <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th style="width: 140px;" colspan="1" rowspan="1" class="sorting_asc">Codigo Juego</th>
-                        <th style="width: 191px;" colspan="1" rowspan="1" class="sorting">Tipo</th>
-                        <th style="width: 177px;" colspan="1" rowspan="1" class="sorting">Equipo</th>
-                        <th style="width: 177px;" colspan="1" rowspan="1" class="sorting">Goles</th>
-                        <th style="width: 119px;" colspan="1" rowspan="1" class="sorting">Logro</th>
-                        <th style="width: 85px;" colspan="1" rowspan="1" >Estado</th>
+                        <th>Codigo Juego</th>
+                        <th>Tipo</th>
+                        <th>Equipo</th>
+                        <th>Goles</th>
+                        <th>Logro</th>
+                        <th>Estado</th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <?php
                     $cant = 0;
@@ -35,8 +37,8 @@ $texto = "";
                         $texto = $row["Bet"]["texto"];
                         switch ($row["Row"]["estado"]) {
                             case "2":
-                                $estado = "Gano";
-                                $background = "#A6ED41";
+                                $estado = '<button class="btn btn-success">Gano</button>';
+//                                $background = "#A6ED41";
                                 $parley = $row['Row']['logro'];
                                 if ($parley < 0) {
 
@@ -47,35 +49,30 @@ $texto = "";
                                 }
                                 break;
                             case "1":
-                                $estado = "Perdio";
-                                $background = "#ED4741";
+                                $estado = '<button class="btn btn-danger">Perdio</button>';
+//                                $background = "#ED4741";
+                                $gano=false;
                                 break;
                             case "0":
-                                $estado = "Empato";
-                                $background = "#F2F2F2";
+                                $estado = '<button class="btn btn-primary">Empato</button>';
+//                                $background = "#F2F2F2";
                                 break;
                             case "-1":
-                                $estado = "En Curso";
-                                $background = "#E6A92F";
+                                $estado = '<button class="btn btn-warning">En curso</button>';
+//                                $background = "#E6A92F";
+                                $gano=false;
                                 break;
                             case "-2":
-                                $estado = "Partido Suspendido";
-                                $background = "#F2F2F2";
+                                $estado = '<button class="btn btn-warning">Partido Suspendido</button>';
+//                                $background = "#F2F2F2";
                                 break;
 
                             default:
                                 break;
                         }
-
-                        if ($cant % 2 == 0)
-                            $class = "gradeA odd";
-                        else
-                            $class = "gradeA even";
                         $cant++;
                         ?>
-
-
-                        <tr class="<?= $class ?>" style="background-color: <?= $background ?>">
+                        <tr>
                             <td class=" sorting_1"><?= $row['Game']['id'] ?></td>
                             <td><?= $row['Row']['tipo'] ?></td>
                             <td><?= $row['Row']['equipo'] ?></td>
@@ -86,70 +83,101 @@ $texto = "";
                     <?php endforeach; ?>
                 </tbody>
             </table>
-        </div>
-    </div>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            <code>.box-footer</code>
+        </div><!-- /.box-footer-->
+    </div><!-- /.box -->
 </div>
-
-<div class="mws-panel grid_4">
-    <div class="mws-panel-header">
-        <span class="mws-i-24 i-table-1">Apuesta</span>
-    </div>
-    <div class="mws-panel-body">
-        <table style="width: 100%;font-size: 14px;">
-            <?= $texto ?>
-        </table>
-
-    </div>
-</div>
-
-<?php
-if ($this->Session->read("User.group_id") == "2") {
-    echo $this->Form->create('Bet', array(
-        "action" => "pagar",
-        "Class" => "mws-form"
-    ));
-    ?>
-    <div class="mws-panel grid_4">
-        <div class="mws-panel-header">
-            <span class="mws-i-24 i-pencil">Apuesta</span>
-        </div>
-        <div class="mws-panel-body">
-            <table class="mws-table">
-                <thead>
-                    <tr>
-                        <th>Codigo</th>
-                        <th>Apostado</th>
-                        <th>Ganancia Inicial</th>
-                        <th>Ganancial Final</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="gradeX even">
-                        <td><?= $bet["id"] ?></td>
-                        <td><?= $bet["apostado"] ?></td>
-                        <td><?= $bet["ganancia"] ?></td>
-                        <td><input name="data[Bet][ganancia]" id="BetGanancia"  value="<?= $total ?>"></td>
-                    </tr>
-                </tbody>
-            </table>
-            <input name="data[Bet][id]" style="display:none" id="BetId"  value="<?= $bet["id"] ?>">
-            
-            <div class="mws-button-row">
-                <input class="mws-button green" type="submit" value="Pagar">
+<div class="col-md-4">
+    <!-- Info box -->
+    <div class="box box-info">
+        <div class="box-header">
+            <h3 class="box-title">Tiquete</h3>
+            <div class="box-tools pull-right">
+                <div class="label bg-aqua">Tiquete</div>
             </div>
-            
+        </div>
+        <div class="box-body">
+            <table class="table table-bordered table-striped">
+                <?= $texto ?>
+            </table>
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+            <code>.box-footer</code>
+        </div><!-- /.box-footer-->
+    </div><!-- /.box -->
+</div>
+
+</div> <!--Fin de la fila -->
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="box box-info">
+            <div class="box-header">
+                <h3 class="box-title">Pagar</h3>
+                <div class="box-tools pull-right">
+                    <div class="label bg-aqua">Pagar</div>
+                </div>
+            </div>
+            <div class="box-body">
+                <?php
+                echo $this->Form->create('Bet', array(
+                    "action" => "pagar",
+                    'inputDefaults' => array(
+                        'div' => array(
+                            "class" => "form-group"
+                        ),
+                        "class" => "form-control"
+                    )
+                ));
+                ?>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label>Codigo</label>
+                        <input type="text" name="data[Bet][id]" class="form-control" value="<?= $bet["id"] ?>" >
+                    </div>
+                    <div class="col-xs-6">
+                        <label>Apostado</label>
+                        <input type="text" class="form-control" value="<?= $bet["apostado"] ?>" disabled>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <label>Ganancia Inicial</label>
+                        <input type="text" class="form-control" value="<?= $bet["ganancia"] ?>" disabled>
+                    </div>
+                    <?php
+                    echo $this->Form->input('ganancia', array(
+                        "label" => "Ganancia Final",
+                        "value" => $total,
+                        'div' => array(
+                            "class" => "col-xs-6"
+                        )
+                    ));
+                    ?>
+                </div>
+                <?php
+                    if($this->Session->read("Group.name")=="Administrador" || $gano){
+                ?>
+                <div class="box-footer">
+                    <?php
+                    echo $this->Form->end(array(
+                        "class" => "btn btn-primary",
+                        "div" => false,
+                        "label" => "Pagar"
+                    ));
+                    ?>
+                </div>
+                    <?php } ?>
+                
+            </div>
+            <div class = "box-footer">
+                <code>.Estado</code>
+            </div>
         </div>
     </div>
-</form>
-    <?php
-}
-?>
-<script>
-    (function()
-    {
-        $('#GameFechaJuego').datetimepicker({
-            dateFormat: "yy-mm-dd"
-        });
-    })();
-</script>
+
+</div>
+
 

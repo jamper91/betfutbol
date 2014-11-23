@@ -63,5 +63,11 @@ function validateDocument(document) {
         return true;
     else
         return false;
-} 
+}
+
+function getRandomArbitrary() {
+    var min=1000,max=9999;
+    return Math.random() * (max - min) + min;
+}
+
 

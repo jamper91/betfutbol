@@ -27,11 +27,11 @@ class UsersController extends AppController {
     public function initDB() {
         $group = $this->User->Group;
 
-        // Allow admins to everything
+        // Administradores
         $group->id = 2;
         $this->Acl->allow($group, 'controllers');
 
-        // allow managers to posts and widgets
+        // Cajerps
         $group->id = 3;
         $this->Acl->deny($group, 'controllers');
         $this->Acl->allow($group, 'controllers/Games/listar');
@@ -43,6 +43,7 @@ class UsersController extends AppController {
         $this->Acl->allow($group, 'controllers/Bets/habilitarbet');
         $this->Acl->allow($group, 'controllers/Bets/cancelarbet');
         $this->Acl->allow($group, 'controllers/Rows/pagar');
+        $this->Acl->allow($group, 'controllers/Bets/detallesMensualesByCajero');
 
         // allow basic users to log out
         $this->Acl->allow($group, 'controllers/users/logout');
@@ -155,6 +156,7 @@ class UsersController extends AppController {
                 $this->Session->write('User.id', $user["User"]["id"]);
                 $this->Session->write('User.username', $user["User"]["username"]);
                 $this->Session->write('User.group_id', $user["User"]["group_id"]);
+                $this->Session->write('Group.name', $user["Group"]["name"]);
                 return $this->redirect("/games/listar");
             }
             $this->Session->setFlash(__('Your username or password was incorrect.'));
