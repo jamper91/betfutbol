@@ -209,8 +209,16 @@
             <div class="box-footer">
                 <input class="btn btn-success" type="submit" value="Crear">
             </div>
+            </form>
         </div>
-        </form>
+        <?php
+        if ($bloqueado) {
+            ?>
+            <div class="overlay"></div>
+            <div class="loading-img"></div>
+
+        <?php } ?>
+        
     </div>
 </div>
 
