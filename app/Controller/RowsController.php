@@ -116,6 +116,7 @@ class RowsController extends AppController {
         {
             
             $rows= $this->Row->findAllByBetId($bet_id);
+            $clave=  $this->Row->Bet->id=$bet_id;
             $clave=  $this->Row->Bet->field("clave");
             $this->set("rows",$rows);
             $this->set("bet",$rows[0]["Bet"]);

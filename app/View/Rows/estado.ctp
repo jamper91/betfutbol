@@ -165,7 +165,7 @@ $gano=true;
                 <div class="row">
                     <div class="col-xs-6">
                         <label>Clave</label>
-                        <input type="text" class="form-control" value=""  id="BetClave">
+                        <input type="text" class="form-control"   id="BetClave" value="<?=$clave?>">
                     </div>
                 </div>
                 <div class="box-footer">
@@ -197,8 +197,6 @@ $this->start('scripts');
        {
            var clave=$("#BetClave").val();
            var aux='<?=$clave?>';
-           console.log("clave: "+clave);
-           console.log("aux: "+aux);
            if(clave===aux)
            {
                console.log("entre if");

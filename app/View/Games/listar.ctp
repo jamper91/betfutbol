@@ -1,3 +1,7 @@
+<?php
+    header('Refresh: 600; URL='.$this->Html->url(array("action"=>"listar")));
+?>
+
 <div class="col-md-8">
     <div class="box">
         <div class="box-body">

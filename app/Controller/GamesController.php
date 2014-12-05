@@ -64,7 +64,7 @@ class GamesController extends AppController {
             $this->Game->create();
             if ($this->Game->save($this->request->data)) {
 
-                $this->Session->setFlash(__('The game has been saved.'));
+                $this->Session->setFlash(__('Juego creado con exito.'),"good");
                 return $this->redirect(array('action' => 'add'));
             } else {
                 $this->Session->setFlash(__('The game could not be saved. Please, try again.'));
@@ -75,7 +75,13 @@ class GamesController extends AppController {
                 "Deporte.id"
             )
         ));
+        $groups = $this->Game->Group->find('list',array(
+            "conditions"=>array(
+                "Group.id >"=>"2"
+            )
+        ));
         $this->set('ligas', $ligas);
+        $this->set('groups', $groups);
     }
 
     /**
@@ -108,6 +114,12 @@ class GamesController extends AppController {
             )
         ));
         $this->set('ligas', $ligas);
+        $groups = $this->Game->Group->find('list',array(
+            "conditions"=>array(
+                "Group.id >"=>"2"
+            )
+        ));
+        $this->set('groups', $groups);
     }
 
     /**
@@ -135,14 +147,14 @@ class GamesController extends AppController {
      * Se encarga de listar los partidos, para que se puedan crear las apuestas
      */
     public function listar() {
-//        $this->layout=false;
         $fecha = date("Y-m-d H:i:s");
         $options = array(
             "conditions" => array(
-                "Game.fecha_juego >" => $fecha
+                "Game.fecha_uso >" => $fecha,
+                "Game.fecha_juego >" => $fecha,
+                "Game.group_id "=> $this->Session->read("User.group_id")
             ),
             "order" => array(
-//                "Game.fecha_juego",
                 "Liga.id",
                 "Game.fecha_juego"
             )

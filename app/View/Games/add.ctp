@@ -16,32 +16,44 @@
             ));
             ?>
             <div class="row">
-            <div class="col-xs-6">
-                <label>Liga</label>
-                <select name="data[Game][liga_id]" class="form-control">
-                    <?php
-                    $primero = true;
-                    $ligaActual = "";
-                    foreach ($ligas as $liga) {
-                        if ($liga["Deporte"]["name"] != $ligaActual) {
-                            $ligaActual = $liga["Deporte"]["name"];
-                            if (!$primero)
-                                echo '</optgroup>';
-                            else
-                                $primero = false;
-                            echo '<optgroup label="' . $liga["Deporte"]["name"] . '">';
+                <div class="col-xs-5">
+                    <label>Liga</label>
+                    <select name="data[Game][liga_id]" class="form-control">
+                        <?php
+                        $primero = true;
+                        $ligaActual = "";
+                        foreach ($ligas as $liga) {
+                            if ($liga["Deporte"]["name"] != $ligaActual) {
+                                $ligaActual = $liga["Deporte"]["name"];
+                                if (!$primero)
+                                    echo '</optgroup>';
+                                else
+                                    $primero = false;
+                                echo '<optgroup label="' . $liga["Deporte"]["name"] . '">';
+                            }
+                            echo '<option value="' . $liga["Liga"]["id"] . '">' . $liga["Liga"]["name"] . '</option>';
                         }
-                        echo '<option value="' . $liga["Liga"]["id"] . '">' . $liga["Liga"]["name"] . '</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="col-xs-6">
-                <label>Fecha Juego</label>
-                <input name="data[Game][fecha_juego]" class="form-control" maxlength="20" id="GameFechaJuego" type="text">
+                        ?>
+                    </select>
+                </div>
+                <div class="col-xs-3">
+                    <label>Fecha del Juego</label>
+                    <input name="data[Game][fecha_juego]" class="form-control" maxlength="20" id="GameFechaJuego" type="text">
+                    
+                </div>
+                <div class="col-xs-1">
+                    <label>Copiar</label><br>
+                    <a href="#" class="btn btn-success" id="btnCopiar">
+                        >
+                    </a>
+                </div>
+                <div class="col-xs-3">
+                    
+                    <label>Fecha para poder usar</label>
+                    <input name="data[Game][fecha_uso]" class="form-control" maxlength="20" id="GameFechaUso" type="text">
 
-            </div>
- 
+                </div>
+
                 <?php
                 echo $this->Form->input('local', array(
                     "label" => "Nombre del Local",
@@ -52,9 +64,9 @@
                 ?> 
 
 
-            
-            
-            
+
+
+
                 <?php
                 //MLINE
                 echo $this->Form->input('logro_mline_local', array(
@@ -75,7 +87,7 @@
                         "class" => "col-xs-4"
                     )
                 ));
-                
+
                 //RLINE
                 echo $this->Form->input('goles_rline_local', array(
                     "label" => "Goles rLine Local",
@@ -101,7 +113,7 @@
                         "class" => "col-xs-4"
                     )
                 ));
-                
+
                 //ALTAS
                 echo $this->Form->input('goles_alta', array(
                     "label" => "Goles Altas",
@@ -127,6 +139,10 @@
                         "class" => "col-xs-4"
                     )
                 ));
+                
+                echo $this->Form->input('group_id', array(
+                    "label" => "Visible para"
+                ));
                 ?> 
             </div>
 
@@ -144,20 +160,25 @@
     </div>
 </div>
 <?php
-    $this->start('scripts');
-    echo $this->Html->css("https://code.jquery.com/ui/jquery-ui-git.css");
-    echo $this->Html->script(array("jquery-ui-timepicker-addon"));
+$this->start('scripts');
+echo $this->Html->css("https://code.jquery.com/ui/jquery-ui-git.css");
+echo $this->Html->script(array("jquery-ui-timepicker-addon", 'jquery.textchange.min'));
 ?>
 <script>
     (function()
     {
-        $('#GameFechaJuego').datetimepicker({
+        $('#GameFechaJuego, #GameFechaUso').datetimepicker({
             dateFormat: "yy-mm-dd"
+        });
+        $("#btnCopiar").click(function(e)
+        {
+            console.log("di clic")
+            $("#GameFechaUso").val($("#GameFechaJuego").val());
         });
     })();
 </script>
 <?php
-    $this->end();
+$this->end();
 ?>
 
 
