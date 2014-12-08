@@ -14,6 +14,7 @@
                         <th>Local</th>
                         <th>Visitante</th>
                         <th>Fecha</th>
+                        <th>Grupo</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -24,6 +25,7 @@
                             <td><?= $game['Game']['local'] ?></td>
                             <td><?= $game['Game']['visitante'] ?></td>
                             <td><?= $game['Game']['fecha_juego'] ?></td>
+                            <td><?= $game['Group']['name'] ?></td>
                             <td>
                                 <a href="<?= $this->Html->url(array('action' => 'edit', $game['Game']['id'])) ?>">
                                     <button class="btn btn-info">Editar</button>

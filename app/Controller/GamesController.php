@@ -150,7 +150,7 @@ class GamesController extends AppController {
         $fecha = date("Y-m-d H:i:s");
         $options = array(
             "conditions" => array(
-                "Game.fecha_uso >" => $fecha,
+//                "Game.fecha_uso >" => $fecha,
                 "Game.fecha_juego >" => $fecha,
                 "Game.group_id "=> $this->Session->read("User.group_id")
             ),
@@ -196,6 +196,13 @@ class GamesController extends AppController {
         $this->render("encurso");
     }
 
+    /**
+     * 1 perdio
+     * 0 empato
+     * 2 Gano
+     * @param type $id
+     * @return type
+     */
     public function finalizar($id) {
         if ($this->request->is(array('post', 'put'))) {
             if ($this->Game->save($this->request->data)) {
@@ -241,10 +248,10 @@ class GamesController extends AppController {
                             case "RL":
                                 /**
                                  * Para determinar si gano con RL debo:
-                                 * Si goles son negativos, el equipo debe ganar
-                                 * Si goles son positivos, el equipo debe perder
-                                 * Si goles de diferencia son mayores a los goles, gana
-                                 * Si goles de diferencia son iguales a los goles, empata
+                                 * Si es negativo el equipo al que se aposto debe ganar por mas
+                                 * de los apsotado
+                                 * Si es positivo el equipo no puede perder por mas de lo indicado
+                                 * en los goles
                                  */
                                 if ($row["Row"]["goles"] < 0) {
                                     if ($row["Row"]["equipo"] == $gano) {
@@ -254,6 +261,8 @@ class GamesController extends AppController {
                                             $row["Row"]["estado"] = "0";
                                         else
                                             $row["Row"]["estado"] = "1";
+                                    }else{
+                                        $row["Row"]["estado"] = "1";
                                     }
                                 }else if ($row["Row"]["goles"] > 0) {
                                     if ($row["Row"]["equipo"] != $gano) {
@@ -263,6 +272,8 @@ class GamesController extends AppController {
                                             $row["Row"]["estado"] = "0";
                                         else
                                             $row["Row"]["estado"] = "1";
+                                    }else{
+                                        $row["Row"]["estado"] = "2";   
                                     }
                                 }else if ($row["Row"]["goles"] == 0) {
                                     if ($diferencia == 0) {

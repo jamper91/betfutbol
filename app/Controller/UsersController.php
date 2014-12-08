@@ -31,7 +31,7 @@ class UsersController extends AppController {
         $group->id = 2;
         $this->Acl->allow($group, 'controllers');
 
-        // Cajerps
+        // Cajeros
         $group->id = 3;
         $this->Acl->deny($group, 'controllers');
         $this->Acl->allow($group, 'controllers/Games/listar');
@@ -44,9 +44,39 @@ class UsersController extends AppController {
         $this->Acl->allow($group, 'controllers/Bets/cancelarbet');
         $this->Acl->allow($group, 'controllers/Rows/pagar');
         $this->Acl->allow($group, 'controllers/Bets/detallesMensualesByCajero');
-
         // allow basic users to log out
         $this->Acl->allow($group, 'controllers/users/logout');
+        // Cajeros
+        $group->id = 4;
+        $this->Acl->deny($group, 'controllers');
+        $this->Acl->allow($group, 'controllers/Games/listar');
+        $this->Acl->allow($group, 'controllers/Bets/add');
+        $this->Acl->allow($group, 'controllers/Bets/pagar');
+        $this->Acl->allow($group, 'controllers/Bets/estado');
+        $this->Acl->allow($group, 'controllers/Rows/estado');
+        $this->Acl->allow($group, 'controllers/Bets/getbets');
+        $this->Acl->allow($group, 'controllers/Bets/habilitarbet');
+        $this->Acl->allow($group, 'controllers/Bets/cancelarbet');
+        $this->Acl->allow($group, 'controllers/Rows/pagar');
+        $this->Acl->allow($group, 'controllers/Bets/detallesMensualesByCajero');
+        // allow basic users to log out
+        $this->Acl->allow($group, 'controllers/users/logout');
+        // Cajeros
+        $group->id = 5;
+        $this->Acl->deny($group, 'controllers');
+        $this->Acl->allow($group, 'controllers/Games/listar');
+        $this->Acl->allow($group, 'controllers/Bets/add');
+        $this->Acl->allow($group, 'controllers/Bets/pagar');
+        $this->Acl->allow($group, 'controllers/Bets/estado');
+        $this->Acl->allow($group, 'controllers/Rows/estado');
+        $this->Acl->allow($group, 'controllers/Bets/getbets');
+        $this->Acl->allow($group, 'controllers/Bets/habilitarbet');
+        $this->Acl->allow($group, 'controllers/Bets/cancelarbet');
+        $this->Acl->allow($group, 'controllers/Rows/pagar');
+        $this->Acl->allow($group, 'controllers/Bets/detallesMensualesByCajero');
+        // allow basic users to log out
+        $this->Acl->allow($group, 'controllers/users/logout');
+
 
         // we add an exit to avoid an ugly "missing views" error message
         echo "all done";
@@ -60,7 +90,7 @@ class UsersController extends AppController {
      */
     public function index() {
         $this->User->recursive = 0;
-        $this->set('users', $this->User->findAllByGroupId("3"));
+        $this->set('users', $this->User->find("all", array("conditions" => array("User.group_id >" => "2"))));
     }
 
     /**
@@ -119,7 +149,11 @@ class UsersController extends AppController {
             $options = array('conditions' => array('User.' . $this->User->primaryKey => $id));
             $this->request->data = $this->User->find('first', $options);
         }
-        $groups = $this->User->Group->find('list');
+        $groups = $this->User->Group->find('list', array(
+            "conditions" => array(
+                "Group.id >" => 2
+            )
+        ));
         $this->set(compact('groups'));
     }
 
@@ -143,29 +177,31 @@ class UsersController extends AppController {
         }
         return $this->redirect(array('action' => 'index'));
     }
+
     public function bloquear($id = null) {
         $this->User->id = $id;
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Usuario no valido'));
         }
         $this->request->allowMethod('post', 'delete');
-        if ($this->User->save(array("bloqueado"=>"1"))) {
-            $this->Session->setFlash(__('Usuario bloqueado con exito.'),'good');
+        if ($this->User->save(array("bloqueado" => "1"))) {
+            $this->Session->setFlash(__('Usuario bloqueado con exito.'), 'good');
         } else {
-            $this->Session->setFlash(__('Usuario no se pudo bloquear.'),'warning');
+            $this->Session->setFlash(__('Usuario no se pudo bloquear.'), 'warning');
         }
         return $this->redirect(array('action' => 'index'));
     }
+
     public function desbloquear($id = null) {
         $this->User->id = $id;
         if (!$this->User->exists()) {
             throw new NotFoundException(__('Usuario no valido'));
         }
         $this->request->allowMethod('post', 'delete');
-        if ($this->User->save(array("bloqueado"=>"0"))) {
-            $this->Session->setFlash(__('Usuario desbloqueado con exito.'),'good');
+        if ($this->User->save(array("bloqueado" => "0"))) {
+            $this->Session->setFlash(__('Usuario desbloqueado con exito.'), 'good');
         } else {
-            $this->Session->setFlash(__('Usuario no se pudo desbloquear.'),'warning');
+            $this->Session->setFlash(__('Usuario no se pudo desbloquear.'), 'warning');
         }
         return $this->redirect(array('action' => 'index'));
     }
@@ -194,13 +230,10 @@ class UsersController extends AppController {
         $this->Session->setFlash('Good-Bye');
         $this->redirect($this->Auth->logout());
     }
-    
-    public function listarCajeros()
-    {
-        $datos=  $this->User->findAllByGroupId("3");
-        $this->set("datos",$datos);
-    }
 
-    
+    public function listarCajeros() {
+        $datos = $this->User->findAllByGroupId("3");
+        $this->set("datos", $datos);
+    }
 
 }

@@ -545,13 +545,13 @@ class BetsController extends AppController {
                     $salir = true;
                 } else if ($row["estado"] === "0") {
                     $estado = "Suspendido";
-                    $salir = true;
+//                    $salir = true;
                 } else if ($row["estado"] == "-1") {
                     $estado = "En curso";
-                    $salir = true;
+//                    $salir = true;
                 } else if ($row["estado"] == "-2") {
                     $estado = "Partido Suspendido";
-                    $salir = true;
+//                    $salir = true;<div></div>
                 }
                 if ($salir)
                     $index = count($bet["Row"]);

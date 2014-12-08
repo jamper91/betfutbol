@@ -41,7 +41,7 @@
                     <input name="data[Game][fecha_juego]" class="form-control" maxlength="20" id="GameFechaJuego" type="text">
                     
                 </div>
-                <div class="col-xs-1">
+<!--                <div class="col-xs-1">
                     <label>Copiar</label><br>
                     <a href="#" class="btn btn-success" id="btnCopiar">
                         >
@@ -52,7 +52,7 @@
                     <label>Fecha para poder usar</label>
                     <input name="data[Game][fecha_uso]" class="form-control" maxlength="20" id="GameFechaUso" type="text">
 
-                </div>
+                </div>-->
 
                 <?php
                 echo $this->Form->input('local', array(

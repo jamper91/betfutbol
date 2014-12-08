@@ -23,9 +23,9 @@
             ));
             echo $this->Form->input('group_id', array(
                 "style" => array(
-                    "display:none"
+                    "display:block"
                 ),
-                "label" => "",
+                "label" => "Grupo",
                 "selected" => "3"
             ));
             ?>
