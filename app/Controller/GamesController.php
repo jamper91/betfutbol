@@ -64,7 +64,7 @@ class GamesController extends AppController {
             $this->Game->create();
             if ($this->Game->save($this->request->data)) {
 
-                $this->Session->setFlash(__('Juego creado con exito.'),"good");
+                $this->Session->setFlash(__('Juego creado con exito.'), "good");
                 return $this->redirect(array('action' => 'add'));
             } else {
                 $this->Session->setFlash(__('The game could not be saved. Please, try again.'));
@@ -75,9 +75,9 @@ class GamesController extends AppController {
                 "Deporte.id"
             )
         ));
-        $groups = $this->Game->Group->find('list',array(
-            "conditions"=>array(
-                "Group.id >"=>"2"
+        $groups = $this->Game->Group->find('list', array(
+            "conditions" => array(
+                "Group.id >" => "2"
             )
         ));
         $this->set('ligas', $ligas);
@@ -114,9 +114,9 @@ class GamesController extends AppController {
             )
         ));
         $this->set('ligas', $ligas);
-        $groups = $this->Game->Group->find('list',array(
-            "conditions"=>array(
-                "Group.id >"=>"2"
+        $groups = $this->Game->Group->find('list', array(
+            "conditions" => array(
+                "Group.id >" => "2"
             )
         ));
         $this->set('groups', $groups);
@@ -148,27 +148,42 @@ class GamesController extends AppController {
      */
     public function listar() {
         $fecha = date("Y-m-d H:i:s");
-        $options = array(
-            "conditions" => array(
+        if ($this->Session->read("User.group_id") == 2) {
+            $options = array(
+                "conditions" => array(
+                    "Game.fecha_juego >" => $fecha,
+                    "Game.group_id " => $this->Session->read("User.group_id")
+                ),
+                "order" => array(
+                    "Liga.id",
+                    "Game.fecha_juego"
+                )
+            );
+        } else {
+            $options = array(
+                "conditions" => array(
 //                "Game.fecha_uso >" => $fecha,
-                "Game.fecha_juego >" => $fecha,
-                "Game.group_id "=> $this->Session->read("User.group_id")
-            ),
-            "order" => array(
-                "Liga.id",
-                "Game.fecha_juego"
-            )
-        );
+                    "Game.fecha_juego >" => $fecha,
+                    "Game.group_id " => $this->Session->read("User.group_id")
+                ),
+                "order" => array(
+                    "Liga.id",
+                    "Game.fecha_juego"
+                )
+            );
+        }
+
+
         $partidos = $this->Game->find('all', $options);
         $this->set("partidos", $partidos);
         $deportes = $this->Game->Liga->Deporte->find("all");
         $this->set("deportes", $deportes);
-        
+
         $this->loadModel("User");
-        $bloqueado=  $this->User->field("bloqueado",array(
-            "id"=>  $this->Session->read("User.id")
+        $bloqueado = $this->User->field("bloqueado", array(
+            "id" => $this->Session->read("User.id")
         ));
-        $this->set("bloqueado",$bloqueado);
+        $this->set("bloqueado", $bloqueado);
     }
 
     public function encurso() {
@@ -261,10 +276,10 @@ class GamesController extends AppController {
                                             $row["Row"]["estado"] = "0";
                                         else
                                             $row["Row"]["estado"] = "1";
-                                    }else{
+                                    }else {
                                         $row["Row"]["estado"] = "1";
                                     }
-                                }else if ($row["Row"]["goles"] > 0) {
+                                } else if ($row["Row"]["goles"] > 0) {
                                     if ($row["Row"]["equipo"] != $gano) {
                                         if ($diferencia < abs($row["Row"]["goles"]))
                                             $row["Row"]["estado"] = "2";
@@ -272,10 +287,10 @@ class GamesController extends AppController {
                                             $row["Row"]["estado"] = "0";
                                         else
                                             $row["Row"]["estado"] = "1";
-                                    }else{
-                                        $row["Row"]["estado"] = "2";   
+                                    }else {
+                                        $row["Row"]["estado"] = "2";
                                     }
-                                }else if ($row["Row"]["goles"] == 0) {
+                                } else if ($row["Row"]["goles"] == 0) {
                                     if ($diferencia == 0) {
                                         $row["Row"]["estado"] = "0";
                                     } else {
